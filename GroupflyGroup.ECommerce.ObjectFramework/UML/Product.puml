@@ -1,0 +1,359 @@
+@startuml
+Title 生成时间: %date%
+namespace GroupflyGroup.Ecommerce.ObjectFramework{
+
+    class Principle as "Principle 主体"<< extends Objekt>>{
+    }
+
+    class Null{
+        
+    }
+
+    class EcBrand as "EcBrand 商品品牌"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Logo : object Logo图片 -> {EcFeLogo}
+        Url : string 网址
+        Remark : text 简介
+        Description : text 描述
+        BeforeSave() : 同一主体下的品牌名称不能重复
+        BeforeDelete() ：删除关联关系
+    }
+
+
+    '1、主体与主体的品牌的关联
+    '2、主体与上级主体的品牌的关联
+    Principle "*" -> "*" EcBrand 
+    (Principle,EcBrand) .. EcPrincipleBrand : EcPrincipleBrand 主体商品品牌
+    class  EcPrincipleBrand  as "EcPrincipleBrand 主体商品品牌"<<extends RelationshipObjekt>>{
+        source : objekt 主体  -> {EcPrinciple}
+        related : objekt 商品品牌  -> {EcBrand} 
+        SortOrder : integer 排序序号
+        IsEnable : boolean 是否启用
+        IsCommend : boolean 是否推荐
+        BeforeSave() :同一主体关联同一品牌只能关联一次,不能关联上级域以外的品牌
+    }
+
+    
+    class EcProductSpecification as "EcProductSpecification 商品规格"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Description : string 描述
+        ShowType : list 规格显示类型 [SpecificationShowType]
+        SortOrder : integer 排序序号
+        BeforeSave() : 不能重复
+        BeforeDelete() ：删除关联关系
+        GetCanUseValue() : 获取可使用的值
+    }
+
+  
+    (EcProductSpecification,Null) .. EcProductSpecificationValue : ProductSpecificationValue 商品规格值
+    class EcProductSpecificationValue as "EcProductSpecificationValue 商品规格值"<<extends RelationshipObjekt>>{
+        source : objekt 商品规格  -> {EcProductSpecification}
+        related : Null
+        Name : string 名称
+        Label : string 显示标签
+        Image : object 图片 -> {EcFile}
+        SortOrder : integer 排序序号
+        BeforeSave() : 不能重复
+        
+    }
+
+
+    class EcProductProperty as "EcProductProperty 商品属性"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Description : string 描述
+        ProductPropertyType : list 商品属性属性显示类型 [ProductPropertyType]
+        IsImport : boolean 是否必填
+        SortOrder : integer 排序序号
+        BeforeSave() : 不能重复
+        BeforeDelete() ：删除关联关系
+       
+    }
+
+
+    (EcProductProperty,Null) .. EcProductPropertyValue : ProductPropertyValue 商品属性值
+    class EcProductPropertyValue as "EcProductPropertyValue 商品属性值"<<extends RelationshipObjekt>>{
+        source : objekt 商品属性值  -> {EcProductPropertyValue}
+        related : Null
+        Name : string 名称
+        Label : string 显示标签
+        Image : object 图片 -> {EcFile}
+        SortOrder : integer 排序序号
+        BeforeSave() : 不能重复
+    }
+
+    class EcProductType as "EcProductType 商品类型"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Description : string 描述
+        IsEnable : boolean 是否启用
+        SortOrder : integer 排序序号
+        IsReal : boolean 是否实物
+        CanCustomProperty : boolean 是否允许自定义属性
+        GetCanUseSpecification() : 获取当前权限可使用的规格
+        BeforeSave() : 判断是否有权限处理
+    }
+
+    '1、所有主体均可以添加规格、规格值。
+    '2、可以发现上级域主体被设为可见的的类型、规格、规格值以及相互之间的关联，不能修改和删除。
+    '3、可以添加上级域主体的类型和自己的规格的关联，上级域的规格和自己规格值的关联，可以修改和删除由本身添加的关联。
+    '4、类型规格规格值，属于本主体和上级主体的对象和关联均可以被使用，除此之外不可见。
+    EcProductType "*" -> "*" EcProductSpecification 
+    (EcProductType,EcProductSpecification) .. EcProductTypeSpecification : EcProductTypeSpecification 商品类型规格
+    class EcProductTypeSpecification  as "EcProductTypeSpecification 商品类型规格"<<extends RelationshipObjekt>>{
+        source : objekt 商品类型  -> {EcProductType}
+        related : objekt 规格  -> {EcProductSpecification} 
+        SortOrder : integer 排序序号
+        BeforeSave() : 判断是否有权限处理
+    }
+
+    EcProductType "*" -> "*" EcProductProperty 
+    (EcProductType,EcProductProperty) .. EcProductTypeProperty : EcProductTypeProperty 商品类型属性
+    class EcProductTypeProperty  as "EcProductTypeProperty 商品类型属性"<<extends RelationshipObjekt>>{
+        source : objekt 商品类型  -> {EcProductType}
+        related : objekt 商品属性  -> {EcProductProperty} 
+        SortOrder : integer 排序序号
+        BeforeSave() : 判断是否有权限处理
+    }
+
+    EcProductType "*" -> "*" EcBrand 
+    (EcProductType,EcBrand) .. EcProductTypeBrand : ProductTypeBrand 商品类型品牌
+    class EcProductTypeBrand  as "EcProductTypeBrand 商品类型品牌"<<extends RelationshipObjekt>>{
+        source : objekt 商品类型  -> {EcProductType}
+        related : objekt 品牌  -> {EcBrand} 
+        SortOrder : integer 排序序号
+        BeforeSave() : 判断是否有权限处理
+    }
+
+    'UI
+    '品牌搜索：所属商品类型关联的品牌
+    '属性搜索：所属商品类型关联的类型为单选或多选并且IsSearch为True的属性
+    '价格区间：通过计算，与分类关联
+    class EcProductCategory as "EcProductCategory 商品分类"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Parent : object 父 -> {EcProductCategory}
+        path : string 路径
+        Description : string 描述
+        Image : object 分类图片 -> {EcFile}
+        ProductType : object 商品类型 -> {EcProductType}
+        IsEnable : boolean 是否启用
+        SortOrder : integer 排序序号
+        BeforeSave() : 判重
+    }
+
+
+    '自定义属性，通过对象特性实现
+    class EcProduct as "EcProduct 销售商品"<<extends Objekt>>{
+        Name : string 商品名称
+        Label : string 显示标签
+        ProductType : objekt 商品类型  -> {EcProductType}
+        Brand : objekt 品牌  -> {EcBrand} 
+        MarketPrice : decimal 市场价
+        RepertorySetType : list 库存计数类型 [RepertorySetType]
+        UnitName : string 计量单位
+        Detail : text 商品详细
+        Remark : text 商品简介
+        Description : string 详细页描述
+        Image : object 商品图片 -> {EcFile}
+        Location: objekt 地区  -> {EcLocation}
+        FeePayType : list 邮费承担方 [FeePayType]
+        FeeTemplate : object 邮费模板 -> {EcFeeTemplate} 
+        ProductStatus : list 商品状态 [ProductStatus]
+        PublishType : list 商品发布类型 [PublishType]
+        PublishTime : datetime 商品发布时间
+        BeforeSave() : 判重
+    }
+
+    EcProduct "*" -> "*" File 
+    (EcProduct,File) .. EcProductProductImages : EcProductProductImages 商品多图
+    class EcProductProductImages as "EcProductProductImages 商品多图"<<extends RelationshipObjekt>>{
+        source : objekt 商品  -> {EcProduct}
+        related : object 多图-> {EcFile}
+    }
+
+    EcProduct "*" -> "*" EcProductProperty 
+    (EcProduct,EcProductProperty) .. EcProductProductProperty : EcProductProductProperty 商品销售属性
+    class EcProductProductProperty as "EcProductProductProperty 商品属性"<<extends RelationshipObjekt>>{
+        source : objekt 商品  -> {EcProduct}
+        related : object 商品属性-> {EcProductProperty}
+        SelectValue : object 选择值-> {EcProductPropertyValue}
+        InputValue : string 输入值
+    }
+    
+    '同一商品，不同sku，不能出现完全相同的规格值组合
+
+
+    EcProduct "*" -> "*" null 
+    (EcProduct,null) .. EcSKU : SKU 库存
+    class EcSKU as "EcSKU 库存"<<extends RelationshipObjekt>>{
+        source : objekt 商品  -> {EcProduct}
+        related : null
+        ProductNum : string 货号
+        ShopPrice : decimal 售价
+        RepertoryCount : integer 库存
+        RepertoryAlertCount : integer 库存警告
+        BeforeSave() : 同一商品，不同sku，不能出现完全相同的规格值组合
+    }
+
+
+    '同一SKU号，不能出现完全相同的规格值
+    EcSKU "*" -> "*" EcProductSpecificationValue 
+    (EcSKU,EcProductSpecificationValue) .. EcSKUSpecificationValue : SKUProductSpecificationValue SKU规格值
+    class EcSKUSpecificationValue as "EcSKUSpecificationValue SKU规格值"<<extends RelationshipObjekt>>{
+        source : objekt SKU  -> {EcSKU}
+        related : object 规格值-> {EcProductSpecificationValue}
+        BeforeSave() : 同一SKU号，不能出现完全相同的规格值
+    }
+
+    'EcProduct "*" -> "*" Principle 
+    '(EcProduct,Principle) .. EcProductSellerProductStatusLog : ProductSellerProductStatusLog 商品状态处理记录
+    'class EcProductSellerProductStatusLog as "EcProductSellerProductStatusLog 商品状态处理记录"<<extends RelationshipObjekt>>{
+        'source : object 商品-> {EcProduct}
+        'related : object 主体-> {EcPrinciple}
+        'OldProductStatus : list 商品状态 [ProductStatus]
+        'NewProductStatus : list 商品状态 [ProductStatus]
+    '}
+
+    Principle "*" -> "*" EcProduct 
+    (Principle,EcProduct) .. EcPrincipleProduct : PrincipleProduct 主体商品
+    class EcPrincipleProduct as "EcPrincipleProduct 主体商品"<<extends RelationshipObjekt>>{
+        source : objekt 主体  -> {EcPrinciple}
+        related : object 商品-> {EcProduct}
+        ProductCategory : objekt 商品分类  -> {EcProductCategory} 
+        SortOrder : integer 排序序号
+        BeforeSave() : 判重
+    }
+}
+
+object "SpecificationShowType: List" as SpecificationShowType{
+    name = "SpecificationShowType"
+    label ="规格显示类型"
+}
+object "Writing: Value" as Writing{
+    name = "Writing"
+    label ="文字"
+}
+object "Image: Value" as Image{
+    name = "Image"
+    label ="图片"
+}
+SpecificationShowType *- Characters
+SpecificationShowType *- Image
+
+object "ProductPropertyType: List" as ProductPropertyType{
+    name = "ProductPropertyType"
+    label ="商品属性类型"
+}
+object "Single: Value" as Single{
+    name = "Single"
+    label ="单选"
+}
+object "Multi: Value" as Multi{
+    name = "Multi"
+    label ="多选"
+}
+object "Text: Value" as Text{
+    name = "Text"
+    label ="文本"
+}
+ProductPropertyType *- Single
+ProductPropertyType *- Multi
+ProductPropertyType *- Text
+
+
+object "ProductStatus: List" as ProductStatus{
+    name = "ProductStatus"
+    label ="商品状态"
+}
+object "OnSale: Value" as OnSale{
+    name = "OnSale"
+    label ="上架"
+}
+object "OffSale: Value" as OffSale{
+    name = "OffSale"
+    label ="下架"
+}
+object "Enabled: Value" as Enabled{
+    name = "Enabled"
+    label ="启售"
+}
+object "Disabled: Value" as Disabled{
+    name = "Disabled"
+    label ="禁售"
+}
+object "Illegal: Value" as Illegal{
+    name = "Illegal"
+    label ="非法"
+}
+object "Legal: Value" as Legal{
+    name = "Legal"
+    label ="合法"
+}
+ProductStatus *- OnSale
+ProductStatus *- OffSale
+ProductStatus *- Enabled
+ProductStatus *- Disabled
+ProductStatus *- Illegal
+ProductStatus *- Legal
+
+object "RepertorySetType: List" as RepertorySetType{
+    name = "RepertorySetType"
+    label ="库存计数类型"
+}
+object "OnPaid: Value" as OnPaid{
+    name = "OnSale"
+    label ="付款减库存"
+}
+object "OnBooked: Value" as OnBooked{
+    name = "OnBooked"
+    label ="拍下减库存"
+}
+RepertorySetType *- OnPaid
+RepertorySetType *- OnBooked
+
+object "FeePayType: List" as FeePayType{
+    name = "FeePayType"
+    label ="邮费承担方"
+}
+object "Seller: Value" as Seller{
+    name = "Seller"
+    label ="卖家"
+}
+object "Buyer: Value" as Buyer{
+    name = "Buyer"
+    label ="买家"
+}
+FeePayType *- Seller
+FeePayType *- Buyer
+
+
+object "PublishType: List" as PublishType{
+    name = "PublishType"
+    label ="商品发布类型"
+}
+object "Now: Value" as Now{
+    name = "Now"
+    label ="立即发布"
+}
+object "OnTime: Value" as OnTime{
+    name = "Seller"
+    label ="定时发布"
+}
+object "Keep: Value" as Keep{
+    name = "Keep"
+    label ="暂不发布"
+}
+PublishType *- Now
+PublishType *- OnTime
+PublishType *- Keep
+
+
+
+
+@enduml
+
+
+

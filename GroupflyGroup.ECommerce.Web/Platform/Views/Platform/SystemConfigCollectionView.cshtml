@@ -1,0 +1,17 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@model GroupflyGroup.Platform.Web.Models.SystemConfigCollectionViewModel
+
+<div class="easyui-accordion layout-panel-west" style="width: 100%;">
+    @foreach (var configType in Model.Configs)
+    {
+        <div title="@configType.Key" data-options="" style="overflow: auto; padding: 10px;">
+
+            <table class="ObjektView">
+                @foreach (var config in configType.Value)
+                {
+                    Html.RenderPartial("../Shared/_PropertyView", config);
+                }
+            </table>
+        </div>
+    }
+</div>

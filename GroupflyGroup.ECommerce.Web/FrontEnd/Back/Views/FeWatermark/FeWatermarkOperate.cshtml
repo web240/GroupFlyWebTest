@@ -1,0 +1,369 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeWatermarkModel
+@{
+    string TypeID = Request.QueryString["ID"] ?? "";
+    ViewBag.Title = "图片水印设置";
+}
+    <style>
+        .Choosediv {
+            color: #fff;
+            background: #2084cc;
+        }
+
+        #Jiugongge {
+            background: #e1e6eb;
+        }
+
+        #Jiugongge tr td {
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .editbox .content #Jiugongge td {
+            padding: 0;
+            line-height: 50px;
+        }
+    </style>
+
+@Html.Action("Index", "SelectImg", new
+{
+    IsMultiselect = false,
+    DirectoryId = @FeFileIDs.FeWatermark
+})
+
+<div class="main">
+
+    <Gf-FeImageSelector id="feImageSelector"
+                        rootdirectoryid=""
+                        dialogtitle="选择图片">
+    </Gf-FeImageSelector>
+
+    <form id="form1" onsubmit="return false;">
+        <div class="editbox">
+            <h1 id="LabTag"><b>添加水印设置</b></h1>
+            <div class="content j-content">
+
+                <div class="item">
+                    <label>水印名称：</label>
+                    <input id="WatermarkName" type="text" name="WatermarkName" class="inputText" />
+
+                    <div class="j-preview">
+                        <p class="j-features">预览效果</p>
+                        <img id="WatermarkImagePreview" style="max-height:300px;max-width:450px" src='@Url.Content("~/FrontEnd/Back/Content/images/WatermarkImagePreview.jpg")' />
+                        <input id="WatermarkImagePreviewValue" type="hidden" name="WatermarkImagePreviewValue" />
+                        <p><a onclick="setWatermarkImagePreview()" class="savebtn">预览</a></p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <label>水印类型：</label>
+                    <span class="checkbox"><input type="radio" id="radio0" value="@FeValueIDs.FeWatermark_FeText" name="radiolist" checked="checked" title="文字水印" />文字水印</span>
+                    <span class="checkbox"><input type="radio" id="radio1" value="@FeValueIDs.FeWatermark_FeImage" name="radiolist" title="图片水印" />图片水印</span>
+                    <input id="FeWatermarkValue" name="FeWatermarkValue" type="hidden" value="@FeValueIDs.FeWatermark_FeText" />
+                </div>
+
+                <div class="item J_text">
+                    <label>水印文字：</label>
+                    <input id="WatermarkFont" type="text" name="WatermarkFont" class="inputText" />
+                </div>
+
+                <div class="item J_text">
+                    <label>字体：</label>
+                    <input id="FontFamily" name="FontFamily" style="width:300px;">
+                </div>
+
+                <div class="item J_text">
+                    <label>字号：</label>
+                    <input id="FontSize" name="FontSize" style="width:300px;">
+                </div>
+
+                <div class="item J_text">
+                    <label>颜色：</label>
+                    <gf-colorpicker autoinit id="colorpicker" name="colorpicker"></gf-colorpicker>
+                    @*<input id="ColorPicker1_ColorPicker1" name="ColorPicker1_ColorPicker1" type="text" class="inputText" onselectstart="return false" />
+                         <img src="../FrontEnd/Back/Content/images/colorpicker.gif" id="ColorPicker1_ColorPreview" onclick="IsShowColorPanel('ColorPicker1_ColorPicker1','ColorPreview',0,0)"
+                             class="img" title="选择颜色" />
+                        <span id="ColorPickerColorPicker1_ColorPicker1" style="display: none; position: absolute;
+                                z-index: 500;" onmouseout="HideColorPanel('ColorPicker1_ColorPicker1');" onmouseover="ShowColorPanel('ColorPicker1_ColorPicker1','ColorPicker1_ColorPreview',0,0);">
+                            <div style="display: block; cursor: crosshair; z-index: 501" class="article">
+                                <table border="0" cellpadding="0" cellspacing="10" onmouseover="ShowColorPanel('ColorPicker1_ColorPicker1','ColorPicker1_ColorPreview',0,0);"
+                                       style="background: #dcdcdc;">
+                                    <tr>
+                                        <td>
+                                            <script language="javaScript">  WriteColorPanel('ColorPicker1_ColorPicker1', 'ColorPicker1_ColorPreview', 0, 0);</script>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="font-size: 12px; word-break: break-all; width: 100%; border: 0px" cellpadding="0"
+                                       cellspacing="10" onmouseover="ShowColorPanel('ColorPicker1_ColorPicker1','ColorPicker1_ColorPreview',0,0);">
+                                    <tbody>
+                                        <tr>
+                                            <td align="middle" rowspan="2">
+                                                选中色彩<table border="1" cellpadding="0" cellspacing="0" height="30" id="ShowColorColorPicker1_ColorPicker1"
+                                                           width="40" bgcolor="">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td rowspan="2">
+                                                基色: <span id="RGBColorPicker1_ColorPicker1"></span>
+                                                <br />
+                                                亮度: <span id="GRAYColorPicker1_ColorPicker1">120</span><br />
+                                                代码:
+                                                <input id="SelColorColorPicker1_ColorPicker1" size="7" value="" border="0">
+                                            </td>
+                                            <td>
+                                                <input type="button" onclick="javascript: ColorPickerOK('ColorPicker1_ColorPicker1', 'ColorPicker1_ColorPreview');"
+                                                       value="确定">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="button" onclick="javascript: document.getElementById('ColorPicker1_ColorPicker1').value = ''; document.getElementById('ColorPicker1_ColorPreview').style.background = '#FFFFFF'; HideColorPanel('ColorPicker1_ColorPicker1');"
+                                                       value="取消">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <iframe id="pickcoloriframeColorPicker1_ColorPicker1" style="position: absolute;
+                                    z-index: 102; top: -1px; width: 250px; scrolling: no; height: 237px;" frameborder="0"></iframe>
+                        </span>
+                        <script language="javascript">  InitColorPicker('ColorPicker1_ColorPreview', '');</script>*@
+                </div>
+
+                <div style="clear:both;"></div>
+                <div class="item J_Image">
+                    <label>水印图片：</label>
+                    <div class="j-watermark">
+                        <img id="WatermarkImage" height="170" width="170" />
+                        <input id="WatermarkImageValue" type="hidden" name="WatermarkImageValue" />
+                        <div onclick="openSelectImg()" style="width:200px;height:30px;background:#2084cc; color:#fff;text-align:center;cursor:pointer;z-index:2000">选择图片</div>
+                    </div>
+
+                </div>
+                <div style="clear:both;"></div>
+                <div class="item j-items">
+                    <label>透明度：</label>
+                    <div style="float:left">
+                        <input id="Transparency" name="Transparency" class="easyui-slider" value="45" style="width:300px" data-options="showTip:true,rule:[0,'|',25,'|',50,'|',75,'|',100]">
+                        <p class="j-explain">设置 GIF 类型水印图片与原始图片的融合度，范围为 1～100 的整数，数值越大水印图片透明度越低。PNG 类型水印本身具有真彩透明效果，无须此设置。</p>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                <div class="item">
+                    <label>水印位置：</label>
+                    <table id="Jiugongge" border="0" cellspacing="1" cellpadding="0">
+                        <tr>
+                            <td><div id="divLocation1" val="@FeValueIDs.FeLayoutLocation_1">左上</div></td>
+                            <td><div id="divLocation2" val="@FeValueIDs.FeLayoutLocation_2">中上</div></td>
+                            <td><div id="divLocation3" val="@FeValueIDs.FeLayoutLocation_3">右上</div></td>
+                        </tr>
+                        <tr>
+                            <td><div id="divLocation4" val="@FeValueIDs.FeLayoutLocation_4">左中</div></td>
+                            <td><div id="divLocation5" val="@FeValueIDs.FeLayoutLocation_5">中中</div></td>
+                            <td><div id="divLocation6" val="@FeValueIDs.FeLayoutLocation_6">右中</div></td>
+                        </tr>
+                        <tr>
+                            <td><div id="divLocation7" val="@FeValueIDs.FeLayoutLocation_7">左下</div></td>
+                            <td><div id="divLocation8" val="@FeValueIDs.FeLayoutLocation_8">中下</div></td>
+                            <td><div id="divLocation9" val="@FeValueIDs.FeLayoutLocation_9">右下</div></td>
+                        </tr>
+                    </table>
+                    <input id="LocationValue" name="LocationValue" type="hidden" value="@FeValueIDs.FeLayoutLocation_1" />
+                </div>
+
+                <div class="item">
+                    <label>是否显示：</label>
+                    <input id="Enabled" class="easyui-switchbutton" data-options="onText:'是',offText:'否'">
+                    <input id="EnabledValues" name="EnabledValues" type="hidden" value="0" />
+
+                </div>
+
+            </div>
+            <div class="LayerBtn"><a onclick="FeWatermarkSave()" class="savebtn">保存</a>
+            <a class="closedbtn" onclick="document.body.tabGoback();" href='javascript:void(0);'>取消</a></div>
+        </div>
+        <input id="EditID" type="hidden" name="EditID" value="@TypeID" />
+    </form>
+</div>
+
+<script>
+    $.parser.parse();
+    $(function () {
+
+        $("#Jiugongge div").click(function () {
+            var dividx = $("#Jiugongge div").index(this);
+            for (var i = 1; i <= 9; i++) {
+                $("#divLocation" + i).removeAttr("class");
+            }
+
+            $("#divLocation" + (dividx + 1)).attr("class", "Choosediv");
+            $("#LocationValue").val($("#divLocation" + (dividx + 1)).attr("val"));
+        });
+
+        for (var i = 1; i <= 9; i++) {
+            if (i === 1) {
+                $("#divLocation" + i).attr("class", "Choosediv");
+            }
+        }
+
+        $("#colorpicker")[0].setValue("000000");
+
+        $('#FontFamily').combobox({
+            url: '@Url.Action("GetFontFamilyList", "FeWatermark")',
+            valueField: 'FontFamilyID',
+            textField: 'FontFamilyName',
+            editable: false
+        });
+        $('#FontFamily').combobox('setValue', '6f0c0362ae7d4f03aca9e19c0e4fe9b3@Value');
+
+        $('#FontSize').combobox({
+            url: '@Url.Action("GetFontSizeList", "FeWatermark")',
+            valueField: 'FontSizeID',
+            textField: 'FontSizeName',
+            editable: false
+        });
+        $('#FontSize').combobox('setValue', '7bdca4b1983541c39fcac1b290d24e48@Value');
+
+        if ("@TypeID" == "") {
+            $("#LabTag b").html("添加水印设置");
+        }
+        else {
+            $("#LabTag b").html("编辑水印设置");
+            BindInfo();
+        }
+
+        $('#Enabled').switchbutton({
+            checked: true,
+            onChange: function (checked) {
+                if (checked) {
+                    $("#EnabledValues").val("1");
+                } else {
+                    $("#EnabledValues").val("0");
+                }
+            }
+        });
+
+        $(".J_Image").hide();
+        $("[name='radiolist']").on("change",
+            function (e) {
+                $("#FeWatermarkValue").val($(e.target).val());
+                if ($(e.target).val() == '@FeValueIDs.FeWatermark_FeImage') { $(".J_text").hide(); $(".J_Image").show(); } else { $(".J_text").show(); $(".J_Image").hide(); }
+            }
+        );
+    });
+
+
+    // 添加或则编辑
+    function FeWatermarkSave() {
+        platformAjax({
+            url: '@Url.Content("~/FeWatermark/OpFeWatermark")',
+            data: $("#form1").serializeArray(),
+            dataType: "json",
+            success: function (result) {
+                document.body.tabGoback();
+
+            }
+        });
+    }
+
+    function BindInfo() {
+        platformAjax({
+            url: "@Url.Action("GetFeWatermarkInfo", "FeWatermark")",
+            type: "post",
+            data: { id: '@TypeID' },
+            async: false,
+            success: function (data) {
+                if (data != null) {
+
+                    $("#WatermarkName").val(data.Name);
+                    $("#FeWatermarkValue").val(data.Type);
+                    if (data.Type == '@FeValueIDs.FeWatermark_FeImage') {
+                        $(".J_text").hide(); $(".J_Image").show();
+                        $("input[name=radiolist]:eq(1)").attr("checked", 'checked');
+                    } else {
+                        $(".J_text").show(); $(".J_Image").hide();
+                        $("input[name=radiolist]:eq(0)").attr("checked", 'checked');
+                    }
+                    $("#WatermarkFont").val(data.Text);
+                    if (data.Font != "" && data.Font != null) {
+                        $('#FontFamily').combobox('setValue', data.Font);
+                    }
+                    if (data.FontSize != "" && data.FontSize != null) {
+                        $('#FontSize').combobox('setValue', data.FontSize);
+                    }
+                    if (data.imageFile) {
+                        $("#WatermarkImage").attr("src", '@Url.Content("~/File")?id=' + data.imageFile)
+                    }
+                    $("#WatermarkImageValue").val(data.imageFile);
+                    if (data.FontColor != "" && data.FontColor != null) {
+                        $("#colorpicker")[0].setValue(data.FontColor.replace("#", ""));
+                    }
+                    $("#Transparency").slider('setValue', data.Transparency);
+
+                    $("#LocationValue").val(data.Location);
+                    for (var i = 1; i <= 9; i++) {
+                        if ($("#divLocation" + i).attr("val") == data.Location) {
+                            $("#divLocation" + i).attr("class", "Choosediv");
+                        } else {
+                            $("#divLocation" + i).removeAttr("class");
+                        }
+                    }
+                    if (data.Enabled) {
+                        $('#Enabled').switchbutton('check');
+                        $("#EnabledValues").val("1");
+                    } else {
+                        $('#Enabled').switchbutton('uncheck');
+                        $("#EnabledValues").val("0");
+                    }
+
+                }
+            }
+
+        });
+    }
+
+    function openSelectImg() {
+        $("#feImageSelector").feImageSelector("open");
+    }
+
+    $("#feImageSelector").feImageSelector("submit", function (id, url) {
+
+        $("#WatermarkImageValue").val(id).prev().attr("src", "@Url.Content("~/File")?id=" + id);
+        });
+
+    function setWatermarkImagePreview() {
+        platformAjax({
+            url: "@Url.Action("OpWatermarkImagePreview", "FeWatermark")",
+            type: "post",
+            dataType: "text",
+            data: {
+                ttype: $("#FeWatermarkValue").val(),
+                tfont: $("#WatermarkFont").val(),
+                tfontcolor: "#" + $("#colorpicker")[0].getValue(), //$("#ColorPicker1_ColorPicker1").val()
+                ttransparency: $("#Transparency").val(),
+                tlocation: $("#LocationValue").val(),
+                tfontsize: $('#FontSize').combobox('getValue'),
+                tfontfamily: $('#FontFamily').combobox('getValue'),
+                twatermarkid: $('#WatermarkImageValue').val()
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+            async: false,
+            success: function (data) {
+                $("#WatermarkImagePreview").attr("src", data.Data)
+                $("#WatermarkImagePreviewValue").val(data.Data);
+            }
+
+        });
+    }
+
+</script>

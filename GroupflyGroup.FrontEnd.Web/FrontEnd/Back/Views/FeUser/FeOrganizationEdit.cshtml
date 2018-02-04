@@ -1,0 +1,232 @@
+﻿
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeOrganizationEditViewModel
+
+<script type="text/javascript">
+    $.parser.parse();
+    $(function () {
+
+        $("#OrganizationBtnSave").click(function () {
+
+            var postdata = $("#OrganizationForm").serializeObject();
+
+            if (!postdata.UserName && !postdata.Id) {
+                $.messager.alert('提示', '请填写 ' + '@Html.DisplayNameFor(m => m.UserName)');
+                return;
+            }
+            if (!postdata.OrganizationName) {
+                $.messager.alert('提示', '请填写 ' + '@Html.DisplayNameFor(m => m.OrganizationName)');
+                return;
+            }
+            if (!postdata.ContactFirstName) {
+                $.messager.alert('提示', '请填写 ' + '@Html.DisplayNameFor(m => m.ContactFirstName)');
+                return;
+            }
+            if (!postdata.Password && !postdata.PasswordConfirm) {} else {
+                if (postdata.Password == postdata.PasswordConfirm) {} else {
+                    $.messager.alert('提示', '确认登录密码不一致，请重新填写！');
+                    return;
+                }
+            }
+
+            $("#OrganizationMain").showLoading();
+            platformAjax({
+                url: "@Url.Action("OrganizationEdit", "FeUser")",
+                data: postdata,
+                dataType: "json",
+                success: function (result) {
+                    if (result.Code != 1) {
+                        $.messager.alert('更新错误', result.ErrorMessage);
+                    }
+                    else {
+                        document.body.tabGoback();
+                    }
+                },
+                finallyCall: function () {
+                    $("#OrganizationMain").hideLoading();
+                }
+            });
+
+        });
+
+    });
+
+    var TargetElement;
+
+    function OrganizationOpenSelectImg(target) {
+        $("#OrganizationFeImageSelector").feImageSelector("open");
+        TargetElement=$(target);
+    };
+
+    $("#OrganizationFeImageSelector").feImageSelector("submit", function (id, url) {
+        $(TargetElement).parent().find("img").attr("src", "@Url.Content("~/File")?id=" + id);
+        $(TargetElement).parent().find(":hidden").val(id);
+    });
+
+
+</script>
+
+<Gf-FeImageSelector id="OrganizationFeImageSelector"
+                    rootdirectoryid="@Model.ImageDirectoryId"
+                    dialogtitle="选择图片">
+</Gf-FeImageSelector>
+
+<div id="OrganizationMain" class="main">
+    <div class="editbox">
+        <form id="OrganizationForm">
+            <h1><b>基本信息</b></h1>
+            <table class="content" cellpadding="0" cellspacing="0">
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <tr>
+                        <td class="label" valign="top">@Html.DisplayNameFor(m => m.Id)：</td>
+                        <td class="right">@Html.DisplayFor(m => m.Id)</td>
+                    </tr>
+                }
+                <tr>
+                    <td class="label" valign="top"><span class="red">*</span>@Html.DisplayNameFor(m => m.UserName)：</td>
+                    <td class="right">
+                        @Html.HiddenFor(m => m.Id)                        
+                        @if (!string.IsNullOrEmpty(Model.Id))
+                        {
+                            @Html.DisplayFor(m => m.UserName)
+                        }
+                        else
+                        {
+                            <input type="text" name="@nameof(Model.UserName)" value="@Model.UserName" class="easyui-textbox inputText" style="width: 400px;" />
+                        }
+                        
+                    </td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <tr>
+                        <td class="label" valign="top">@Html.DisplayNameFor(m => m.UserTypeLabel)：</td>
+                        <td class="right">
+                            @Html.DisplayFor(m => m.UserTypeLabel)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.Avatar)：</td>
+                    <td class="right">
+                        <div style="width:200px;height:200px;">
+                            @if (!string.IsNullOrEmpty(Model.Avatar))
+                            {
+                                <img src="@Url.Content("~/File")?id=@Model.Avatar" height="100%" width="100%" onerror="javascript: this.src = '@Url.Content("~/FrontEnd/Back/Content/Images/noImage.gif")'" />
+
+                            }
+                            else
+                            {
+                                <img src="" height="100%" width="100%" onerror="javascript: this.src = '@Url.Content("~/FrontEnd/Back/Content/Images/noImage.gif")'" />
+                            }
+                            @Html.HiddenFor(m => m.Avatar)
+                        </div>
+                        <div onclick="OrganizationOpenSelectImg(this)" style="width:200px;height:30px;background:#2084cc; color:#fff;text-align:center;vertical-align:central;cursor:pointer;">选择图片</div>
+                    </td>
+                </tr>
+            </table>
+            <h1><b>组织信息</b></h1>
+            <table class="content" cellpadding="0" cellspacing="0">
+
+                <tr>
+                    <td class="label" valign="top"><span class="red">*</span>@Html.DisplayNameFor(m => m.OrganizationName)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.OrganizationName)" value="@Model.OrganizationName" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.OrganizationLocation)：</td>
+                    <td class="right"> <Gf-MultCombobox autoinit name="@nameof(Model.OrganizationLocation)" defaultoption="请选择" value="@Model.OrganizationLocation" valuefield="id" textfield="label" rootvalue="@Model.LocationRoot" data="@Model.LocationData"></Gf-MultCombobox></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.OrganizationAddress)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.OrganizationAddress)" value="@Model.OrganizationAddress" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.OrganizationScale)：</td>
+                    <td class="right"><Gf-ListValueCombobox autoinit name="@nameof(Model.OrganizationScale)" defaultoption="请选择" value="@Model.OrganizationScale" source="@FeListIDs.PersonScale"></Gf-ListValueCombobox> </td>
+                </tr>
+
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.OrganizationIndustry)：</td>
+                    <td class="right"><Gf-ListValueCombobox autoinit name="@nameof(Model.OrganizationIndustry)" defaultoption="请选择" value="@Model.OrganizationIndustry" source="@FeListIDs.Industry"></Gf-ListValueCombobox> </td>
+                </tr>
+
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.OrganizationNature)：</td>
+                    <td class="right"><Gf-ListValueCombobox autoinit name="@nameof(Model.OrganizationNature)" defaultoption="请选择" value="@Model.OrganizationNature" source="@FeListIDs.OrganizationNature"></Gf-ListValueCombobox> </td>
+                </tr>
+            </table>
+            <h1><b>联系信息</b></h1>
+            <table class="content" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.ContactLastName)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.ContactLastName)" value="@Model.ContactLastName" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top"><span class="red">*</span>@Html.DisplayNameFor(m => m.ContactFirstName)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.ContactFirstName)" value="@Model.ContactFirstName" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.ContactEmail)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.ContactEmail)" value="@Model.ContactEmail" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.ContactCellphone)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.ContactCellphone)" value="@Model.ContactCellphone" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.ContactTelephone)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.ContactTelephone)" value="@Model.ContactTelephone" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+            </table>
+            <h1><b>其他信息</b></h1>
+            <table class="content" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.Email)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.Email)" value="@Model.Email" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@Html.DisplayNameFor(m => m.Cell)：</td>
+                    <td class="right"><input type="text" name="@nameof(Model.Cell)" value="@Model.Cell" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+
+                <tr>
+                    <td class="label" valign="top">@if (string.IsNullOrEmpty(Model.Id))
+                    {<span class="red">*</span> }@Html.DisplayNameFor(m => m.Password)：</td>
+                    <td class="right"><input type="password" name="@nameof(Model.Password)" value="@Model.Password" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                <tr>
+                    <td class="label" valign="top">@if (string.IsNullOrEmpty(Model.Id))
+                    {<span class="red">*</span> }@Html.DisplayNameFor(m => m.PasswordConfirm)：</td>
+                    <td class="right"><input type="password" name="@nameof(Model.PasswordConfirm)" value="@Model.PasswordConfirm" class="easyui-textbox inputText" style="width: 400px;" /></td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <tr>
+                        <td class="label" valign="top">@Html.DisplayNameFor(m => m.RegisterTime)：</td>
+                        <td class="right">@Html.DisplayFor(m => m.RegisterTime)</td>
+                    </tr>
+                    <tr>
+                        <td class="label" valign="top">@Html.DisplayNameFor(m => m.RegisterFrom)：</td>
+                        <td class="right">@Html.DisplayFor(m => m.RegisterFrom)</td>
+                    </tr>
+                    <tr>
+                        <td class="label" valign="top">@Html.DisplayNameFor(m => m.LastLoginTime)：</td>
+                        <td class="right">@Html.DisplayFor(m => m.LastLoginTime)</td>
+                    </tr>
+                }
+            </table>
+
+
+            <div class="LayerBtn">
+                <input type="button" class="savebtn" id="OrganizationBtnSave" value="保存" />
+                <input type="button" onclick="document.body.tabGoback();" class="savebtn" value="返回列表" />
+            </div>
+            <div style="display: none">
+                @Html.EditorFor(m => m.Id)
+            </div>
+        </form>
+    </div>
+</div>   

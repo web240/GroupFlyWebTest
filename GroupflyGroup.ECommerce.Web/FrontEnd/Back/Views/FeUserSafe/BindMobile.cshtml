@@ -1,0 +1,684 @@
+﻿@using GroupflyGroup.Platform.ObjectFramework.Persistence
+@{
+    ViewBag.Title = "绑定手机";
+}
+
+<div class="dpsc_mian">
+    <p class="ptitle">
+        <a href="@Url.Action("Index","FeAccount")">账户管理</a><span class="breadcrume_icon">>></span><a onclick="refreshRight('@Url.Action("Index","FeUserSafe")')" href="javascript:void(0);">账户安全设置</a><span class="breadcrume_icon">>></span>
+        <span class="breadcrume_text">绑定手机</span>
+    </p>
+
+    <div id="A_BindMobile1">
+        <input type="hidden" name="hidIsMobileActivation" id="hidIsMobileActivation" value="@ViewBag.isVerified" />
+        <div id="A_BindMobile1_ctl00_mobilecheck">
+            <div class="main-right" id="main-right" style="float:none;">
+                <div class="ps_width clearfix" style="margin-left:5px;">
+                    <h1 class="bw h1c"></h1>
+                    <div class="notify main_tip">
+                        <div class="notify_correct">
+                            <span class="f14 bw rw notify_correct_text">
+                                完成绑定手机，可以有效防止账户被盗后的损失。
+                            </span>
+                            <ul>
+                                <li>手机号码绑定后可以登录商城系统，交易密码修改等操作。</li>
+                                <li>商城会对您的信息严格保密。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pp_steps three_steps">
+                        <ol>
+                            <li class="first current" id="li_Select">
+                                <span>1.验证原绑定手机</span>
+                            </li>
+                            <li class="next" id="li_GetCode">
+                                <span>2.绑定新手机号码</span>
+                            </li>
+                            <li class="last" id="li_Succuess">
+                                <span>3.绑定成功</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="form_top" id="step1">
+
+                        <div class="form_row">
+                            <span class="form_left">
+                                请输入手机号码：
+                            </span>
+                            <div class="form_right" style="position: relative;">
+                                <span id="J_m_77cbc1f75a" style="display: none; position: absolute; left: 0px; top: -42px;" class="mf"></span>
+                                <input type="text" name="mobile" maxlength="11" id="J_cellphone" class="intext nullv tov" onblur="CheckMobile()">
+
+                            </div>
+                        </div>
+                        <div class="form_row form_height_auto_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <a href="javascript:void(0)" id="a1" class="btn btn-green J_ftrack">确认绑定</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_top" style="display:none" id="step2">
+                        <div class="form_row">
+                            <span class="form_left">
+                                新手机号码：
+                            </span>
+                            <span class="form_right f14" id="nextmobile">
+                                <input type="text" id="txt_NewPhone" class="fl" style=" border: 1px solid #CCCCCC; height: 20px; width: 160px;" />
+                                <span id="span_MobileValue" class="star"> </span>
+                                <i class="safe_center_saftey_icon"></i>
+                                <input type="hidden" id="newok" value="0" />
+                            </span>
+                        </div>
+                        <input type="hidden" value="13545281376" name="mobile" class="tov">
+                        <div class="form_row" style="height:auto;">
+                            <span class="form_left">
+                                验证码：
+                            </span>
+                            <div class="form_right">
+                                <div>
+                                    <table cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td><input type="text" id="txtMCode" style=" border: 1px solid #CCCCCC; height: 20px; width: 80px;" onblur="existcode()" /></td>
+                                            <td style="padding-left:7px;">
+                                                @*<img src="/imagecode.aspx?javascript:Math.random()" id="ImgX" border="0" onclick="reloadcode2()"
+                                                    alt="看不清?点一下" />*@
+                                                <Gf-VerifyCode id="VerifyCode" autoInit="true" fontsize="14" codelength="4" imgwidth="70" imgheight="30"></Gf-VerifyCode>
+                                            </td>
+                                            <td style="padding-left:8px;"><a onclick="Refresh()">看不清楚？</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <Gf-MessageCode id="MessageCode" codekey="MessageCode"  autoInit messagesenderid="de316e04d8484b4283ee7570c8326944@MessageSender"  messagetemplateid="ecd7ff4febc24203a268f227b6f1788f@MessageTemplate"></Gf-MessageCode>
+                                    @*<input type="button" id="J_ver_btn" class="btn btn-white vc_btn mr10 J_ftrack" value="点此免费获取" style="width:150px;" />*@
+                                    <input name="MCode" type="text" id="MCode" data-tip="验证码" maxlength="6" class="intext intext_short nullv tov vfb" />
+                                    <div>
+                                        <a class="grew ml10 l" id="J_cannot_receive" href="javascript:void(0);">
+                                            收不到短信验证码？
+                                        </a>
+                                        <span id="spanConfirm"></span>
+                                        <div style="display: none;" class="tooltip cp_tooltip">
+                                            短信验证码发送后30分钟内均可使用。验证码短信经过网关时，网络通讯异常可能会造成短信丢失或延时，请您耐心等待，或者换一个时间段进行相关操作。
+                                        </div>
+                                    </div>
+                                    <span class="vc vf" id="yzMsg" style="display:none">
+                                        请输入验证码
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form_row form_text_row">
+                            <span class="form_left">
+                            </span>
+                            <span class="form_right gw">
+
+                                <span id="spanShowMsg" state="0"></span>
+                            </span>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="J_phone_msg_row" class="form_row form_height_auto_row nice_info_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <div class="phone_info">
+                                    <div id="J_phone_info">
+                                        <span class="l">
+                                            短信验证码发送后30分钟内均可使用
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form_row form_height_auto_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <a data-tid="bindphone_uid_button068" data-tprefix="/virtual/ucenter/myfanli"
+                                   href="javascript:void(0)" id="a2" class="J_ftrack btn btn-green">
+                                    确认绑定
+                                </a><span id="spanShowMsg" state="0" style="color:Red; padding-left:10px;"></span>(相同手机号一天获取验证码最大数量(3-5条))
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step3" style="display:none">
+                        <center>
+                            <font style="font-size:16px; font-family:微软雅黑; display:block;margin-bottom:20px;margin-top:10px;  ">
+                                <span id="A_BindMobile1_ctl00_Lab_MemLoginID">@SessionContext.Current.User.Name</span>,
+                                恭喜你，手机号码
+                                <span id="span_Mobile"> </span>
+                                绑定成功
+                            </font>
+                            <br />
+                            <input type="button" name="A_BindMobile1$ctl00$btn_Next" value="确定" onclick="return BtnSubmit();" id="A_BindMobile1_ctl00_btn_Next" data-tid="bindphone_uid_button068" data-tprefix="/virtual/ucenter/myfanli" class="J_ftrack btn btn-green" />
+                            <input name="A_BindMobile1$ctl00$hid_Mobile" type="hidden" id="A_BindMobile1_ctl00_hid_Mobile" class="tov" />
+                        </center>
+                    </div>
+                    <div class="form_top" style="display:none" id="step4">
+                        <div class="form_row">
+                            <span class="form_left">
+                                已绑定手机号码：
+                            </span>
+                            <span class="form_right f14" id="Span1">
+                                <span id="A_BindMobile1_ctl00_LabelPhone">@SessionContext.Current.User.Cell</span>
+                            </span>
+                        </div>
+                        <input type="hidden" value="@SessionContext.Current.User.Cell" name="mobile" class="tov">
+                        <div class="form_row" style="height:auto;">
+                            <span class="form_left">
+                                验证码：
+                            </span>
+                            <div class="form_right">
+                                <div>
+                                    <table cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td><input type="text" id="txtMCode1" style="border: 1px solid #CCCCCC; height: 20px; width: 80px;" onblur="existcode1()" /></td>
+                                            <td style="padding-left:7px;">
+                                                @*<img src="/imagecode.aspx?javascript:Math.random()" id="Img1" border="0" onclick="reloadcode2()"
+                                                    alt="看不清?点一下" />*@
+                                                <Gf-VerifyCode id="VerifyCode1" autoInit="true" fontsize="14" codelength="4" imgwidth="70" imgheight="30"></Gf-VerifyCode>
+                                            </td>
+                                            <td style="padding-left:8px;"><a onclick="Refresh1()">看不清楚？</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <Gf-MessageCode id="MessageCode1" codekey="MessageCode1" autoInit messagesenderid="de316e04d8484b4283ee7570c8326944@MessageSender"  messagetemplateid="ecd7ff4febc24203a268f227b6f1788f@MessageTemplate"></Gf-MessageCode>
+                                    @*<input type="button" id="J_ver_btn1" class="btn btn-white vc_btn mr10 J_ftrack" value="点此免费获取" style="width:150px;" />*@
+                                    <input name="MCode1" type="text" id="MCode1" data-tip="验证码" maxlength="6" class="intext intext_short nullv tov vfb" />
+                                    <div>
+                                        <a class="grew ml10 l" id="J_cannot_receive1" href="javascript:void(0);">
+                                            收不到短信验证码？
+                                        </a>
+                                        <span id="spanConfirm1"></span>
+                                        <div style="display: none;" class="tooltip cp_tooltip">
+                                            短信验证码发送后30分钟内均可使用。验证码短信经过网关时，网络通讯异常可能会造成短信丢失或延时，请您耐心等待，或者换一个时间段进行相关操作。
+                                        </div>
+                                    </div>
+                                    <span class="vc vf" id="yzMsg1" style="display:none">
+                                        请输入验证码
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form_row form_text_row">
+                            <span class="form_left">
+                            </span>
+                            <span class="form_right gw">
+
+                                <span id="spanShowMsg1" state="0"></span>
+                            </span>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="J_phone_msg_row1" class="form_row form_height_auto_row nice_info_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <div class="phone_info">
+                                    <div id="J_phone_info1">
+                                        <span class="l">
+                                            短信验证码发送后30分钟内均可使用
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form_row form_height_auto_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <a data-tid="bindphone_uid_button068" data-tprefix="/virtual/ucenter/myfanli"
+                                   href="javascript:void(0)" id="a4" class="J_ftrack btn btn-green">
+                                    确认解绑
+                                </a><span id="span5" state="0" style="color:Red; padding-left:10px;"></span>(相同手机号一天获取验证码最大数量(3-5条))
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_top">
+                        <div class="form_row form_height_auto_row clearfix">
+                            <div class="bp_faq">
+                                <h4 class="bw f16">
+                                    服务说明：
+                                </h4>
+                                <ul>
+                                    <li class="bw bp_q">
+                                        该服务完全免费；
+                                    </li>
+                                    <li>
+                                        你绑定的手机号码，可进行登陆商城系统，修改交易密码等操作，我们会对你的信息进行严格的保密。
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" language="javascript">
+            $(function () {
+                var isreg = $("#hidIsMobileActivation").val();
+                if (isreg == "1") {
+                    $("#step1").hide();
+                    $("#step4").show();
+                } else {
+                    $("#li_Select").html("<span>1.填写手机号</span>");
+                    $("#li_GetCode").html("<span>2.填写验证码</span>");
+                }
+                //var GfMessageCode = $("#MessageCode").get("Gf-MessageCode");
+                $("#MessageCode")[0].registerEventHandler("BeforeSendMessage", function () { checkNewPhone(); });
+                $("#MessageCode1")[0].registerEventHandler("BeforeSendMessage", function () { $("#MessageCode1").attr("accounts", $("#A_BindMobile1_ctl00_LabelPhone").text()); });
+
+                $("#txt_NewPhone").blur(function () {
+                    checkNewPhone();
+                });
+                function checkNewPhone() {
+                    if ($("#txt_NewPhone").val() != "") {
+                        platformAjax({
+                            url: "@Url.Action("CheckMobile", "FeUserSafe")",
+                            data: { mobile: $("#txt_NewPhone").val() },
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.IsSuccess) {
+                                    $("#span_MobileValue").get(0).className = "onCorrect1";
+                                    $("#span_MobileValue").text("手机号码可以使用");
+                                    $("#newok").val("1");
+                                    //var GfMessageCode = element.get("Gf-MessageCode");
+                                    //$(GfMessageCode).attr("accounts", $("#txt_NewPhone").val());
+                                    $("#MessageCode").attr("accounts", $("#txt_NewPhone").val());
+                                }
+                                else {
+                                    $("#span_MobileValue").get(0).className = "onError1";
+                                    $("#span_MobileValue").text("手机号码已经被使用了")
+                                }
+                            },
+                            fail: function (result) {
+                                console.log(result.Message);
+                            },
+                            error: function (result) {
+                                console.log(result);
+                            }
+                        });
+
+                    }
+                    else {
+                        $("#span_MobileValue").get(0).className = "onError1";
+                        $("#span_MobileValue").text("手机号码不能为空！")
+                    }
+                }
+                $("#MCode").focus(function () {
+                    $("#spanShowMsg").get(0).className = "onTips1";
+                    $("#spanShowMsg").text("验证码是6位字符");
+                    $("#spanConfirm").get(0).className = "";
+                })
+                $("#MCode").blur(function () {
+                    if (this.value == "") {
+                        $("#spanShowMsg").get(0).className = "onError1";
+                        $("#spanShowMsg").text("请输入验证码");
+                    }
+                    else {
+                        //if ($("#Mcode").val() && $("#nextmobile").text()) {
+                        //    if (data == "1") {
+                                $("#spanShowMsg").get(0).className = "";
+                                $("#spanShowMsg").text("");
+                                $("#spanConfirm").get(0).className = "onCorrect1";
+                                $("#spanConfirm").text("");
+
+                        //    }
+                        //    else {
+                        //        $("#spanShowMsg").get(0).className = "onError1";
+                        //        $("#spanShowMsg").text("验证码错误或已过期，请重新输入！");
+                        //    }
+                        //};
+                    }
+                })
+
+
+            })
+
+            $("#a1").click(function () {
+                if (ExistMobile()) {
+                    platformAjax({
+                        url: "@Url.Action("CheckMobile", "FeUserSafe")",
+                        data: { mobile: $("#J_cellphone").val() },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                $("#step1").hide();
+                                $("#step2").show();
+                                $("#li_Select").removeClass(".first current");
+                                $("#li_GetCode").removeClass(".next");
+                                $("#li_GetCode").addClass("first current");
+                                $("#txt_NewPhone").val($("#J_cellphone").val()).attr("readonly", "readonly");
+                            }
+                            else {
+                                $("#span_MobileValue").get(0).className = "onError1";
+                                $("#span_MobileValue").text("该手机号已经被使用过了");
+                            }
+                        },
+                        fail: function (result) {
+                            console.log(result.Message);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+
+                }
+            });
+
+            $("#a4").click(function () {
+                if (this.value == "") {
+                    $("#spanShowMsg1").get(0).className = "onError1";
+                    $("#spanShowMsg1").text("请输入验证码");
+                }
+                else {
+                    var imgcode = $("#txtMCode1").val();
+                    var cellcode = $("#MCode1").val();
+                    if (imgcode != "" && cellcode != "") {
+                        platformAjax({
+                            url: "@Url.Action("BindMobile1", "FeUserSafe")",
+                            data: { imgCode: $("#txtMCode1").val(), cellCode: $("#MCode1").val() },
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.IsSuccess) {
+                                    $("#li_Select").removeClass(".first current");
+                                    $("#li_GetCode").addClass("first current");
+                                    $("#li_next").removeClass(".last");
+                                    $("#li_next").addClass(".next current");
+                                    $("#step4").hide(); $("#step2").show();
+                                }
+                                else {
+                                    $("#spanShowMsg1").get(0).className = "onError1";
+                                    $("#spanShowMsg1").text(result.Message);
+                                }
+                            },
+                            fail: function (result) {
+                                console.log(result.Message);
+                                $("#spanShowMsg1").get(0).className = "onError1";
+                                $("#spanShowMsg1").text(result.Message);
+                            },
+                            error: function (result) {
+                                console.log(result.Message);
+                                $("#spanShowMsg1").get(0).className = "onError1";
+                                $("#spanShowMsg1").text(result.Message);
+                            }
+                        });
+                    } else {
+                        $("#spanShowMsg1").get(0).className = "onError1";
+                        $("#spanShowMsg1").text("图片验证码和手机验证码必填！");
+                    }
+                }
+            });
+
+            $("#a2").click(function () {
+                if (this.value == "") {
+                    $("#spanShowMsg").get(0).className = "onError1";
+                    $("#spanShowMsg").text("请输入验证码");
+                }
+                else {
+                    platformAjax({
+                        url: "@Url.Action("BindMobile2", "FeUserSafe")",
+                        data: { imgCode: $("#txtMCode").val(), cellCode: $("#MCode").val(), cell: $("#txt_NewPhone").val() },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                $("#li_Select").removeClass(".first current");
+                                $("#li_GetCode").removeClass(".first current");
+                                $("#li_GetCode").addClass(".next");
+                                $("#li_Succuess").removeClass(".last");
+                                $("#li_Succuess").addClass(".first current");
+                                $("#span_Mobile").text($("#txt_NewPhone").val());
+                                $("#step2").hide(); $("#step3").show();
+                                $("#A_BindMobile1_ctl00_hid_Mobile").val($("#nextmobile").text());
+                            }
+                            else {
+                                $("#spanShowMsg").get(0).className = "onError1";
+                                $("#spanShowMsg").text("验证码错误或已过期，请重新输入！");
+                            }
+                        },
+                        fail: function (result) {
+                            console.log(result.Message);
+                            $("#spanShowMsg").get(0).className = "onError1";
+                            $("#spanShowMsg").text(result.Message);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                            $("#spanShowMsg").get(0).className = "onError1";
+                            $("#spanShowMsg").text(result.Message);
+                        }
+                    });
+                }
+            });
+
+            function ExistMobile() {
+                var v_flag = false;
+                var str = $("#J_cellphone").val();
+                if (str != "") {
+                    if (CheckMobileCommon(str)) {
+                        v_flag = true;
+                    }
+                    else {
+                        $("#span_MobileValue").get(0).className = "onError1";
+                        $("#span_MobileValue").text("请输入有效的手机号码");
+                    }
+                }
+                else {
+                    $("#span_MobileValue").get(0).className = "onError1";
+                    $("#span_MobileValue").text("请输入手机号码");
+                }
+                return v_flag;
+            };
+
+            function CheckMobile() {
+                if (ExistMobile()) {
+
+                    platformAjax({
+                        url: "@Url.Action("CheckMobile", "FeUserSafe")",
+                        data: { mobile: $("#J_cellphone").val() },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                $("#span_MobileValue").get(0).className = "onCorrect1";
+                                $("#span_MobileValue").text("")
+                            }
+                            else {
+                                $("#span_MobileValue").get(0).className = "onError1";
+                                $("#span_MobileValue").text("手机号码已经被使用了")
+                            }
+                        },
+                        fail: function (result) {
+                            console.log(result.Message);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+
+                }
+            };
+
+            function BtnSubmit() {
+                refreshRight('@Url.Action("Index", "FeUserSafe")');
+            };
+
+            function Refresh() {
+                document.querySelector("#VerifyCode").Refresh();
+            }
+            function Refresh1() {
+                document.querySelector("#VerifyCode1").Refresh();
+            }
+
+            function CheckCode(code) {
+                //var code = $("#VerifyCodeText").val();
+                var flag = false;
+
+                @*platformAjax({
+                    url: '@Url.Action("CheckVerifyCodeUI", "VerifyCode")',
+                    data: { VerifyCode: code },
+                    sync: true,
+                    success: function (result) {
+                        console.log(result);
+                        if (result.ObjectData.IsCorrect == true) {
+                            //console.log("验证成功");
+                            flag = true;
+                        }
+                        else {
+                            //alert("验证失败");
+                            //console.log("验证失败");
+                        }
+                    },
+                    fail: function (result) {
+                        alert(result.Message);
+                    },
+                    error: function (result) {
+                        alert(result.statusText);
+                    }
+                });*@
+                return flag;
+            }
+            //验证码
+            function existcode1() {
+                var boolresult = false;
+                var inputcontrol = $("#txtMCode1").val();
+                var context = document.getElementById("spanShowMsg1");
+                context.className = "onError1";
+                if (inputcontrol != "") {
+                    //if (CheckCode(inputcontrol)) {
+                        context.innerHTML = "";
+                        context.className = "onCorrect1";
+                        $("#spanShowMsg1").attr("state", "1");
+                        boolresult = true;
+                    //}
+                    //else {
+                    //    context.innerHTML = "验证码错误";
+                    //    $("#spanShowMsg1").attr("state", "0");
+                    //}
+                }
+                else {
+                    context.innerHTML = "验证码不能为空";
+                    $("#spanShowMsg1").attr("state", "0");
+                }
+                return boolresult;
+            }
+
+            function existcode() {
+                var boolresult = false;
+                var inputcontrol = $("#txtMCode").val();
+                var context = document.getElementById("spanShowMsg");
+                context.className = "onError1";
+                if (inputcontrol != "") {
+
+                    //if (CheckCode(inputcontrol)) {
+                        context.innerHTML = "";
+                        context.className = "onCorrect1";
+                        $("#spanShowMsg").attr("state", "1");
+                        boolresult = true;
+                    //}
+                    //else {
+                    //    context.innerHTML = "验证码错误";
+                    //    $("#spanShowMsg").attr("state", "0");
+                    //}
+                }
+                else {
+                    context.innerHTML = "验证码不能为空";
+                    $("#spanShowMsg").attr("state", "0");
+                }
+                return boolresult;
+            }
+
+        </script>
+        <script type="text/javascript">
+            $(function () {
+
+                if (window.location.search.indexOf('type=1') > 0) {
+                    $("#J_cellphone").val($("#A_BindMobile1_ctl00_hid_Mobile").val());
+                }
+
+                if ($("#A_BindMobile1_ctl00_hid_Mobile").val() != "") {
+                    $("#spanMobileValue").text($("#A_BindMobile1_ctl00_hid_Mobile").val());
+                    $("#A_BindMobile1_ctl00_hid_Mobile").val("");
+                }
+            })
+            var timerId;
+            var $thisid;
+            $(function () {
+
+
+                $("#J_cannot_receive").click(function () {
+                    $(".cp_tooltip").show(); setTimeout(function () { $(".cp_tooltip").hide(); }, 3000);
+
+                });
+                $("#J_cannot_receive1").click(function () {
+                    $(".cp_tooltip").show(); setTimeout(function () { $(".cp_tooltip").hide(); }, 3000);
+
+                });
+                $("#J_ver_btn").click(function () {
+                    if ($("#newok").val() != "1") {
+                        $("#spanShowMsg").text("新手机号码输入错误！!"); return false;
+                    }
+                    if ($("#spanShowMsg").attr("state") == "0") {
+                        $("#spanShowMsg").text("验证码错误!"); return false;
+                    }
+                    $("#J_ver_btn").attr("disabled", "disabled");
+                    $("#MCode").removeAttr("disabled");
+                    $("#spanConfirm").get(0).className = "";
+                    $("#spanShowMsg").get(0).className = "onCorrect1";
+                    $("#spanShowMsg").text("手机短信验证码已发送，请耐心等待...");
+                    $("#J_phone_msg_row").hide();
+                    $thisid = $(this);
+                    timerId = setInterval("goTo()", 1000);
+                    $.get("/Api/CheckInfo.ashx?type=2&mobile=" + $("#txt_NewPhone").val(), null, function (data) {
+                        if (data != "1") {
+                            $("#spanShowMsg").get(0).className = "onError1";
+                            $("#spanShowMsg").text("手机短信验证码发送异常，请重新验证")
+                        }
+                    });
+                });
+
+                $("#J_ver_btn1").click(function () {
+                    if ($("#spanShowMsg1").attr("state") == "0") {
+                        $("#spanShowMsg1").text("验证码错误!"); return false;
+                    }
+                    $("#J_ver_btn1").attr("disabled", "disabled");
+                    $("#MCode1").removeAttr("disabled");
+                    $("#spanConfirm1").get(0).className = "";
+                    $("#spanShowMsg1").get(0).className = "onCorrect1";
+                    $("#spanShowMsg1").text("手机短信验证码已发送，请耐心等待...");
+                    $("#J_phone_msg_row1").hide();
+                    $thisid = $(this);
+                    timerId = setInterval("goTo()", 1000);
+                    $.get("/Api/CheckInfo.ashx?type=2&mobile=" + $("#A_BindMobile1_ctl00_LabelPhone").text(), null, function (data) {
+                        if (data != "1") {
+                            $("#spanShowMsg1").get(0).className = "onError1";
+                            $("#spanShowMsg1").text("手机短信验证码发送异常，请重新验证")
+                        }
+                    });
+                });
+
+
+
+
+
+
+            });
+            var i = 60;
+            function goTo() {
+                i--;
+                $thisid.val("已发送验证码(" + i + "秒)");
+                if (i == 0) {
+                    $thisid.val("免费获取验证码");
+                    clearInterval(timerId);
+                    i = 60;
+                    $thisid.removeAttr("disabled");
+                }
+            }
+
+
+        </script>
+    </div>
+</div>

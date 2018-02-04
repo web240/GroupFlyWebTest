@@ -1,0 +1,39 @@
+﻿//---2017/6/21 14:55:36------------------------------------------------------------------------------------------------
+{"$":"C","id":"c708446aae2541babe89f93b8f862a7b@Property","isTrash":"False","source":"Klass@Klass","name":"permission","dataType":"c80693211fc4426a88ebca05b34a5f2d@Value","label":"权限","description":"类权限","isRequired":"True","readonly":"True","isIndexed":"True","isKeyed":"False","objektDataSource":"KlassPermission@Klass","isCascade":"False","klass":"Property@Klass","storedLength":"64","createOnly":"False","isRichText":"False","multiline":"False","enableExpress":"False","isI18N":"False","isColor":"False","hiddenInObjektCollectionView":"True","hiddenInObjektDetailView":"True","hiddenInRocView":"True","combinedLabel":"permission 权限","booleanDefaultValue":"False","bigintDefaultValue":"0","integerDefaultValue":"0","createdOn":"2017/6/21 14:55:36.194","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/6/21 14:55:36.194","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"c708446aae2541babe89f93b8f862a7b@Property","permission":"5054be1ff7634defbc4b0b98079cecfd@KlassPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain","sortOrder":"30000.000"}
+//---2017/6/22 9:42:46------------------------------------------------------------------------------------------------
+{"$":"U","id":"936a815a52544454869efa5720ee3024@Property","label":"组合唯一","description":"组合唯一","combinedLabel":"isKeyed 组合唯一","modifiedOn":"2017/6/22 09:42:46.473"}
+//---2017/6/22 10:22:58------------------------------------------------------------------------------------------------
+{"$":"U","id":"f7036b21e6e34919b504df2cfc2d88e2@Value","description":"对应.NET类型：Boolean；其值只能是0、1。这种数据类型用于存储只有两种可能值的数据，true或false。空值自动转为false。","modifiedOn":"2017/6/22 10:22:58.708"}
+{"$":"U","id":"346df36bea7945e5a1a395eb476e6607@Value","description":"对应.NET类型：Integer?；确切数值，其精度为 10 、小数位数 0（符号：-2[31] <= n <= 2[31] – 1）","modifiedOn":"2017/6/22 10:22:58.748"}
+{"$":"U","id":"b1c68b04908b4982bfd4280cd5b93e77@Value","description":"对应.NET类型：Int64?；确切数值，其精度为 19 （如果有符号）、小数位数为 0（有符号：-2[63] <= n <= 2[63] - 1）","modifiedOn":"2017/6/22 10:22:58.752"}
+{"$":"U","id":"cecae31853204b39a6c2569632346a1b@Value","description":"对应.NET类型：Single?；有符号的近似数值，其二进制精度为 24 （零或绝对值为 10[-38] 到 10[38]）","modifiedOn":"2017/6/22 10:22:58.763"}
+{"$":"U","id":"8c561fdc3d774ec387a597143dbd1ad5@Value","description":"对应.NET类型：Double?；有符号的近似数值，其二进制精度为 53 （零或绝对值为 10[-308] 到 10[308]）","modifiedOn":"2017/6/22 10:22:58.766"}
+{"$":"U","id":"a862c03d5cdf4355b5d3a438c81cfbfe@Value","description":"对应.NET类型：Decimal?；有符号的较精确数值，其精度至少为 p，小数位数为 s，其中 1 <= p <= 28  并且 s <= p。 最大精度因驱动程序而定。 与浮点型相比，decimal 类型具有更高的精度和更小的范围，这使它适合于财务和货币计算。","modifiedOn":"2017/6/22 10:22:58.769"}
+{"$":"U","id":"229104957d384e72aa32ba288658dd3a@Value","description":"对应.NET类型：DateTime?；型如 yyyymmddhhmmss.mmm 的日期时间数据 ","modifiedOn":"2017/6/22 10:22:58.772"}
+{"$":"U","id":"462e7094194d4f15828ca2e1de2f552b@Value","description":"对应.NET类型：DateTime?；型如 yyyymmdd 的日期数据","modifiedOn":"2017/6/22 10:22:58.775"}
+{"$":"U","id":"ad87c1ec981045bd931d4fcf937697bd@Value","description":"对应.NET类型：TimeSpan?；型如 hhmmss 的时间数据","modifiedOn":"2017/6/22 10:22:58.779"}
+{"$":"U","id":"21ea616a571240b491653e13973dd83f@Value","description":"对应.NET类型：String ；加“盐”的MD5密文，消息摘要。原始字符串取MD5后加“盐”（对象Id）再取MD5","modifiedOn":"2017/6/22 10:22:58.783"}
+{"$":"U","id":"6926c35fec59420c8fcac25e7e97ecd0@Value","description":"对应.NET类型：String；序列","modifiedOn":"2017/6/22 10:22:58.787"}
+{"$":"U","id":"bbf35797f1124a6a89e9111e2ffde111@Value","description":"对应.NET类型：String ；Unicode 变长字符数据。 最大长度因数据源而定","modifiedOn":"2017/6/22 10:22:58.790"}
+{"$":"U","id":"867da97346bc4eb5b802ed6b8b3b54cc@Value","description":"对应.NET类型：Stream ；变长二进制数据。 存储到OS文件系统或分布式文件系统（如MongoDB）。 对象的二进制数据类型属性获取和设值的Stream，无论该Stream是以何种方式何种时机产生的，其释放均由对象框架统一自动维护，不需要依赖框架的代码考虑释放的问题。","modifiedOn":"2017/6/22 10:22:58.793"}
+{"$":"U","id":"ab097f34fd9d4b7ca216084e6386b99e@Value","description":"对应.NET类型：Value ；存储Value对象引用（id）","modifiedOn":"2017/6/22 10:22:58.796"}
+{"$":"U","id":"c80693211fc4426a88ebca05b34a5f2d@Value","description":"对应.NET类型：Objekt及其子类； 存储对象引用（id）","modifiedOn":"2017/6/22 10:22:58.798"}
+{"$":"U","id":"0ce934524195428aa506260b0f97baf0@Value","description":"对应.NET类型：String；Unicode 字符的变长流","modifiedOn":"2017/6/22 10:22:58.800"}
+//---2017/6/22 10:24:02------------------------------------------------------------------------------------------------
+{"$":"U","id":"6926c35fec59420c8fcac25e7e97ecd0@Value","description":"对应.NET类型：String；变长字符序列","modifiedOn":"2017/6/22 10:24:02.695"}
+//---2017/6/22 10:24:39------------------------------------------------------------------------------------------------
+{"$":"U","id":"6926c35fec59420c8fcac25e7e97ecd0@Value","description":"对应.NET类型：String；变长Unicode字符序列","modifiedOn":"2017/6/22 10:24:39.365"}
+//---2017/6/22 10:29:51------------------------------------------------------------------------------------------------
+{"$":"U","id":"bbf35797f1124a6a89e9111e2ffde111@Value","description":"对应.NET类型：String ；Unicode 字符变长流。 最大长度因数据源而定","modifiedOn":"2017/6/22 10:29:51.537"}
+{"$":"U","id":"867da97346bc4eb5b802ed6b8b3b54cc@Value","description":"对应.NET类型：Stream ；变长二进制数据流。 存储到OS文件系统或分布式文件系统（如MongoDB）。 对象的二进制数据类型属性获取和设值的Stream，无论该Stream是以何种方式何种时机产生的，其释放均由对象框架统一自动维护，不需要依赖框架的代码考虑释放的问题。","modifiedOn":"2017/6/22 10:29:51.540"}
+{"$":"U","id":"6926c35fec59420c8fcac25e7e97ecd0@Value","description":"对应.NET类型：String；由“序列”约定的特定格式可按定义自动生成的Unicode字符变长流","modifiedOn":"2017/6/22 10:29:51.542"}
+//---2017/6/22 14:22:19------------------------------------------------------------------------------------------------
+{"$":"U","id":"c1812d75929043ae9ccd64e000f973b2@Property","label":"步进","description":"下一个序列值增加多少","combinedLabel":"step 步进","modifiedOn":"2017/6/22 14:22:19.027"}
+//---2017/7/1 9:29:52------------------------------------------------------------------------------------------------
+{"$":"U","id":"dcb915ac191b4870af4c22522681741f@Property","isRequired":"True","modifiedOn":"2017/7/1 09:29:52.202"}
+//---2017/7/4 10:57:08------------------------------------------------------------------------------------------------
+{"$":"U","id":"08d780aed88f4f2dbff7adc59b9cf1ed@Property","pattern":"\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+","modifiedOn":"2017/7/4 10:57:08.397"}
+//---2017/5/27 16:29:42------------------------------------------------------------------------------------------------
+{"$":"U","id":"0a079bc0aa87476099ddcc7b3c573aa9@Property","pattern":"^\\w{1,20}$","modifiedOn":"2017/5/27 16:29:42.765"}
+//---2017/5/27 17:04:09------------------------------------------------------------------------------------------------
+{"$":"U","id":"8108e637742e406f9e18c0d66c47e0e2@Property","pattern":"^1\\d{10}$","modifiedOn":"2017/5/27 17:04:09.844"}

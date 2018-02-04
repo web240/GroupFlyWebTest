@@ -1,0 +1,160 @@
+﻿@using GroupflyGroup.Platform.ObjectFramework.Persistence
+@model GroupflyGroup.Platform.Web.Models.HomeIndexViewModel
+
+<div id="A_Head">
+
+    <!--头部Top-->
+    <div id="top">
+        <!--登录-->
+        <div class="fl_left">
+            @*您好！<strong class="red"><span id="A_Head_ctl00_LabelMemberID">@SessionContext.Current.User.Name</span></strong>
+            [<span style="color: #005ea7;"> <a href="#">退出</a></span>]*@
+            <Gf-FeTemplate-Component-LoginState behaviorId="loginState"></Gf-FeTemplate-Component-LoginState>
+        </div>
+        <div class="top_list" style="display:none;">
+            <div class="top_mer fl">
+                <a target="_blank" href='/' class="top_a1">商城首页</a>
+            </div>
+            <div class="top_hert allsort fl">
+                <a href="#" class="top_a">我的商城</a>
+                <div class="sub_customer">
+                    <a href="#" class="lo1">购买的商品</a>
+                    <a href="#" class="lo2">卖出的商品</a>
+                </div>
+            </div>
+            <div class="top_mer fl">
+                <a target="_blank" href="#" class="top_a1">招商加盟</a>
+            </div>
+            <div class="top_help fl">
+                <a target="_blank" href="#" class="top_a1">帮助中心</a>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <div id="top2">
+        <!--会员中心Logo-->
+        <div style="float: left;">
+            <a target="_blank" href='/'>
+                <img id="A_Head_ctl00_ImageShopLogo" src="@Url.Content("~/FrontEnd/Back/Content/images/logo_hy.gif")" style="height:60px;width:456px;border-width:0px;" />
+                @*<Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId"></Gf-FeTemplate-Component-Logo>*@
+            </a>
+        </div>
+        <!--搜索Search-->
+        <div class="lmf_searchs">
+            <div class="lmf_search" style="display:none;">
+                <div class="lmf_search_text">
+                    <input name="search" type="text" maxlength="50" value="请输入商品名称!" onfocus="this.value=''" onkeydown="KeyEnter(event)" onfocus="this.value=''" onblur="if(!value){value=defaultValue;}"
+                           class="lmf_nr" accesskey="s" autocomplete="off" autofocus="true" x-webkit-speech="" x-webkit-grammar="builtin:search" />
+                </div>
+                <div class="lmf_search_btn">
+                    <a href="#">
+                        <input name="btn" type="button" id="search_btn" class="lmf_btnss" value="搜索" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <div id="nav_bg">
+        <div id="nav">
+            <!--菜单项nav-->
+            <ul style="float: left;">
+                @{
+                    foreach (var menu in Model.Menus)
+                    {
+                        <li>
+                            <a href="javascript:void(0);" onclick="loadAccordion('@menu.id.Replace("@", "-")','@menu.text');" id="@menu.id.Replace("@", "-")">
+                                @menu.text
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+            <!--消息提醒-->
+
+            <div class="xiaoxi">
+                <a href="javascript:void(0)">
+                    消息提醒：您有( <span style="font-size: 14px; color: #ff6600; font-family: Arial;">
+                        <span id="A_Head_ctl00_LabelMsg">10</span>
+                    </span>
+                    )封未读系统信息......
+                </a>
+            </div>
+            <div id="gwc" style="display:none;">
+                <a href="#" target="_blank">
+                    购物车 <span class="red">
+                        <span id="A_Head_ctl00_LabelGouWuChe">0</span>
+                    </span> 件
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <script type="text/javascript" language="javascript">
+        //回车触发
+        function KeyEnter(o) {
+            if (o.keyCode == 13) {
+                document.getElementById("search_btn").focus();
+                //location.href = "/nofindsearch.html?search=" + escape($(".lmf_nr").val().replaceAll("/", "%2F"));
+            }
+        }
+        $(function () {
+            //处理搜索方法
+            $(".lmf_btnss").click(function () {
+                if ($(".lmf_nr").val() == "请输入商品名称!") { alert("请输入商品名称!"); return false; }
+                //location.href = "/nofindsearch.html?search=" + escape($(".lmf_nr").val().replaceAll("/", "%2F"));
+            });
+        });
+        String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
+            if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+                return this.replace(new RegExp(reallyDo, (ignoreCase ? "gi" : "g")), replaceWith);
+            } else {
+                return this.replace(reallyDo, replaceWith);
+            }
+        }
+    </script>
+</div>
+<script>
+    
+    var menus = JSON.parse('@Html.Raw(Model.MenusJson)');
+    function loadAccordion(Id, text) {
+        $("#" + Id).addClass("zh").parent("li").siblings().children('a').removeClass("zh");
+        //加载左侧菜单
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetSubMenus", "FeAccount")',
+            data: { id: Id, parentId: '@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeMenuItemIDs.FeFrontMenu' },
+            success: function (msg) {
+                if (msg != null && msg.Data != null) {
+                    let jsonss = JSON.parse(msg.Data);
+                    let html = "";
+                    jsonss.forEach(function (v, i) {
+                        html += `<div id="ti0` + (i + 1) + `" onclick="te_show(` + (i + 1) + `,this)"><span class="fh` + (i + 1) + ` fh">` + v.label + `</span></div><div id="te0` + (i + 1) + `" style="display: block;" class="lmf_submenu">`;
+                        v.children.forEach(function (cv, ci) {
+                            html += `<a onclick="refreshRight('@Url.Action("Navigation","FeAccount")?id=` + cv.id + `')" href="javascript:void(0)" class ="lmf_act">` + cv.label + `</a>`;
+                        });
+                        html += `</div>`;
+                    });
+                    $("#left_menu").html(html);
+                }
+            }
+        });
+        //加载默认主界面
+        let url = '@Url.Action("Welcome","FeAccount")';
+        switch (Id) {
+            case "b6cd8b0df17342c09082e099766ad6e1-DirectoryMenuItem": url = '@Url.Action("Welcome", "FeAccount")'; break;
+            case "56dafc5f82b64ede980d30050acaedd2-DirectoryMenuItem": url = '@Url.Action("Index","FeSeller")'; break;
+            case "5a1b8cb5a18147c28aac27bcc10a496e-DirectoryMenuItem": url = '@Url.Action("Index","FeBuyer")'; break;
+        }
+        if (Id == "b6cd8b0df17342c09082e099766ad6e1-DirectoryMenuItem") {
+            $("#right").load(url);
+        } else {
+            $("#right").html("");
+        }
+    }
+
+
+</script>

@@ -1,0 +1,213 @@
+﻿@using GroupflyGroup.Platform.Web.Common;
+
+<style>
+    .FeImageRecycle .querybox li label {
+        text-align: left;
+         width: 72px;
+    }
+  
+    .FeImageRecycle .datagrid-view {
+        margin-top:0px;
+    }
+    
+</style>
+
+
+
+<div data-options="fit:true" class="easyui-layout main FeImageRecycle" style="overflow: hidden;">
+    <div data-options="region:'north',split:false" style="height:155px;max-height:200px;border-top-width:0px;">
+    <div id="Query" class="querybox">
+        <ul class="clearfix">
+            <li>
+                <label for="labeldicName">文件夹：</label>
+                <input id="textdicName" class="easyui-textbox" type="text" name="dicName" style="width: 185px;" />
+            </li>
+            <li>
+                <label for="labelPicName">图片名称：</label>
+                <input id="textPicName" class="easyui-textbox" type="text" name="PicName" style="width: 185px;" />
+            </li>
+            <li>
+                <label for="labelCreator">上传者：</label>
+                <input id="textCreator" class="easyui-textbox" type="text" name="Creator" style="width: 185px;" />
+            </li>
+            @*<li>
+                <label for="pl">是否引用：</label>
+                <select id="pl" class="easyui-combobox" name="pl" style="width: 150px;">
+                    <option value="-1">--全部--</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </li>*@
+        </ul>
+        <ul class="clearfix" style="margin-bottom: 10px;">
+            <li>
+                <label for="modifiedOndOn">删除时间：</label>
+                <input id="modifiedOndBeginDate" type="text" class="easyui-datebox" editable="false" style="width: 185px;">
+                <a style="padding:0 46px 0 7px;">至</a>
+                <input id="modifiedOndEndDate" type="text" editable="false" class="easyui-datebox" style="width: 185px;">
+            </li>
+            <li>
+                <input type="checkbox" id="AloneShowImage" name="AloneShowImage" value="1"/>只显示图片
+            </li>
+
+            <li style="padding-left:66px;">
+                <a id="butQuery" class="easyui-linkbutton ml20" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tablelist">
+        <div class="datagrid-toolbar" style="padding:10px 0;">
+            <ul class="clearfix">
+                <li>
+                    <a name="FeImageRecycleRecovery" class="easyui-linkbutton" onclick="Trash()">恢复</a>
+                    <a name="FeImageRecycleDel" class="easyui-linkbutton" onclick="RemoveCompletely()">彻底删除</a>
+                    <a name="FeImageRecycleDelEmpty" class="easyui-linkbutton" onclick="ClearCompletely()">清空回收站</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+  
+    <div class="tablelist"  data-options="region:'center',split:false">          
+        <Gf-FeDataList id="ImageRecycleGridList"></Gf-FeDataList>
+    </div>
+   
+</div>
+
+
+<script>
+    $.parser.parse();
+    //绑定表头
+    function FeImageRecycleBindGrid() {
+        var columns = [];
+
+        columns.push({ field: 'ck', checkbox: true, width: "100px", align: 'center' });
+        columns.push({
+            field: 'Name', title: '名称', halign: 'center', align: 'left',
+            formatter: function (value, row, index) {
+                var e = "<img  id=\'fileiamge\' src=\'" + document.body["apppath"] + row.Icon + "\' style=\"margin-left:20px;height:24px;width:24px\"  />" + row.Name;
+                return e;
+            }
+        });
+        columns.push({ field: 'ExtensionName', title: '类型', align: 'center' });
+        columns.push({ field: 'HeightXWidth', title: '尺寸', align: 'center' });
+        columns.push({ field: 'Size', title: '大小', align: 'center' });
+        columns.push({ field: 'Creator', title: '上传人', align: 'center' });
+        columns.push({ field: 'ModifiedOn', title: '删除时间', align: 'center' });
+
+        document.querySelector("#ImageRecycleGridList").SetDataGrid(columns);
+    };
+    //绑定分页数据
+    function FeImageRecycleBindData(pagenumber) {
+
+        var url = "@Url.Action("GetRecyclePageList", "FeImage")";
+
+        var param = FeImageRecycleGetParam();
+      
+        document.querySelector("#ImageRecycleGridList").SearchData(url,param,pagenumber);
+    };
+
+    function FeImageRecycleGetParam()
+    {
+        //文件夹名称
+        var dicname = $("#textdicName").val();
+        //图片名称
+        var picname = $("#textPicName").val();
+        //创建人
+        var creator = $("#textCreator").val();
+        //是否是只显示图片
+        var showimage = $("#AloneShowImage").is(":checked");
+        //添加时间
+        var startTime = $('#modifiedOndBeginDate').datetimebox('getValue');
+
+        var endTime = $('#modifiedOndEndDate').datetimebox('getValue');
+
+        var param = [];
+        if (dicname != "") {
+            param.push({ field: "dicname", type: "@Const.Oper_Contains", value: dicname });
+        }
+        if (picname != "") {
+            param.push({ field: "picname", type: "@Const.Oper_Contains", value: picname });
+        }
+        if (creator != "") {
+            param.push({ field: "creator", type: "@Const.Oper_Contains", value: creator });
+        }
+        if (showimage != "") {
+            param.push({ field: "showimage", type: "@Const.Oper_Contains", value: showimage });
+        }
+        if (startTime != "") {
+            param.push({ field: "begindate", type: "@Const.Oper_GreaterOrEquals", value: startTime });
+        }
+        if (endTime != "") {
+            param.push({ field: "modifiedOndOn", type: "@Const.Oper_LessOrEquals", value: endTime });
+        }
+        //param.push({ field: "isTrash", type: "@Const.Oper_Equals",  value:"true" });
+        return JSON.stringify(param);
+    }
+    
+
+
+    //恢复
+    function Trash()
+    {
+        var rows = document.querySelector("#ImageRecycleGridList").GetSelections();
+        if (rows.length <= 0) {
+            alert("请选择一条记录");
+            return;
+        }
+
+        platformAjax({
+            url: "@Url.Action("Trash", "FeImage")",
+            type: "post",
+            data: { listfefile: rows },
+            success: function (result) {
+                FeImageRecycleBindData();
+            }
+        });
+
+    }
+
+    function RemoveCompletely() {
+        var rows = document.querySelector("#ImageRecycleGridList").GetSelections();
+        if (rows.length <= 0) {
+            alert("请选择一条记录");
+            return;
+        }
+       
+        platformAjax({
+            url: "@Url.Action("RemoveCompletely", "FeImage")",
+            type: "post",
+            data: { listfefile: rows },
+            success: function (result) {
+                FeImageRecycleBindData();
+            }
+        });
+    }
+
+    //清空回收站
+    function ClearCompletely()
+    {
+        platformAjax({
+            url: "@Url.Action("ClearCompletely", "FeImage")",
+            type: "post",
+            success: function (result) {
+                FeImageRecycleBindData();
+            }
+        });
+    }
+
+    function Search() {
+
+        FeImageRecycleBindData(1);
+    }
+
+    $(function () {
+        //绑定表头
+        FeImageRecycleBindGrid();
+        //绑定数据
+        FeImageRecycleBindData();
+    });
+</script>
+
+

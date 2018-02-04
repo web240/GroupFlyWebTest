@@ -1,0 +1,294 @@
+@startuml
+Title 生成时间: %date%
+namespace GroupflyGroup.Ecommerce.ObjectFramework{
+
+
+    class Null{
+         
+    }
+
+    class Principle as "Principle 主体"<< extends Objekt>>{
+        name : string 名称
+        Label : string 显示标签
+        Description : string 描述
+        Template: objekt 模版 -> {FeTemplate} 
+        PrincipleType : list 主体类型 [PrincipleType]
+        PrincipleCategory：: objekt 分类 -> {PrincipleCategory} 
+        Url : string 网址
+        SalesRange : string 销售范围
+        MainGoods : string 主要经营宝贝
+        //Address : string 具体地址
+        //Location: objekt 地区  -> {Location}
+        ShopBrand: objekt 商品品牌  -> {EcBrand} 
+        Shopintegerroduce : ntext 店铺介绍 
+        Memo : string 店铺简介
+        Banner : object 标志 -> {File} 
+        //Email : string 邮箱
+        //Tel : string 手机号码
+        //Phone : string 电话
+        //PostalCode : string 邮政编码
+        ApplyTime : datetime 申请时间
+        OpenTime : datetime 开店时间
+        Longitude : string 百度地图横坐标
+        Latitude : string 百度地图纵坐标
+        ShopImagePath : object 所属图片路径 -> {File}
+        ManageBySite : boolean 是否托管
+        IsEnableMap : boolean 是否启用地图
+        
+    }
+    
+    class Person as "Person 个人"{
+    }
+    Principle <|- Person
+    class Organization as "Organization 组织"{
+    }
+    Principle <|- Organization
+    Organization "*"->"*" OrganizationMemberPrinciple : OrganizationMemberPrinciple 组织成员
+    (Organization,Principle) .. OrganizationMemberPrinciple
+   
+
+    class Workflow as "Workflow 工作流"<<extends Objekt>>{
+    }
+
+    class EcPrincipleCategory as "EcPrincipleCategory 主体分类"<<extends Objekt>>{
+        Name : string 名称
+        Label : string 显示标签
+        Parent : object 父 -> {PrincipleCategory}
+        path : string 路径
+        Description : string 描述
+        IsEnable : boolean 是否启用
+        SortOrder : integer 排序序号
+        BeforeSave() : 不能重复
+        
+    }
+
+    
+    Principle "*"->"*" null
+    (Principle,null) .. EcPrincipleApplyCateGory : EcPrincipleApplyCateGory 申请分类
+    class EcPrincipleApplyCateGory as "EcPrincipleApplyCateGory 店铺申请分类"<<extends Objekt>>{
+        source: ： objekt 主体  -> {Principle}  
+        related ： null
+        NewPrincipleCategory ： objekt 新分类  -> {PrincipleCategory}
+        OldPrincipleCategory ： objekt 旧分类  -> {PrincipleCategory}  
+        NewBrand ： objekt 新品牌  -> {Brand}
+        OldBrand ： objekt 旧品牌  -> {Brand}  
+        Remarks : string  备注
+        ApplyTime : datetime  申请时间
+        VerifyTime : datetime  审核时间
+        IsAudit : boolean  是否审核
+        BeforeSave() : 不能重复
+    }
+
+    Principle "1" -> "*" Principle 
+    (Principle,Principle) .. EcPrincipleLink : EcPrincipleLink 链接表
+    class EcPrincipleLink as "EcPrincipleLink 链接表"<<extends RelationshipObjekt>>{
+        source ： objekt 主体  -> {Principle}  
+        related   ： objekt 链接主体  -> {Principle}  
+        IsEnable : integer  是否启用
+        Note : text  备注
+    }
+
+     Principle "1" -> "*" FeComment 
+    (Principle,FeComment) .. EcPrincipleComment : EcPrincipleComment 主体留言表
+    class EcPrincipleComment as "EcPrincipleComment 主体留言表"<<extends RelationshipObjekt>>{
+        source : ： objekt 主体  -> {Principle}  
+        related: ： objekt 评论  -> {FeComment}  
+    }
+
+    class EcOnlineService as "EcOnlineService 客服表"<<extends Objekt>>{
+        Name ： string 在线客服名称
+        Label : string 显示标签
+        OnlineServiceType : list  在线客服类型 [OnlineServiceType]
+        ServiceAccount ： string 在线客服服账号
+        IsEnable ： boolean 是否启用
+        OrderID ： Int 排序号
+    }
+    
+    Product "1" -> "*" FeComment 
+    (Product,FeComment) .. EcProductFeComment : EcProductFeComment 店铺商品评论表
+    class EcProductFeComment as "EcProductFeComment 店铺商品评论表"<<extends RelationshipObjekt>>{
+        source  ： objekt 商品  -> {Product}  
+        related  ： objekt 评论  -> {FeComment}  
+    }
+    
+
+    Principle "*"->"*" Null
+    (Principle,Null) .. EcPrincipleDefinedColumn : EcPrincipleDefinedColumn 自定义导航
+    class EcPrincipleDefinedColumn as "EcPrincipleDefinedColumn 店铺申请分类"<<extends Objekt>>{
+        source : ： objekt 主体  -> {Principle}  
+        related  : Null
+        Name : string  栏目名称
+        Label : string 显示标签
+        LinkAddress : string  链接地址
+        IsEnable : boolean  是否启用
+        IfOpen : boolean  是否在新窗口打开
+        OrderID : integer  排序列号
+    }
+    
+    Principle "1" -> "*" Principle 
+    (Principle,Principle) .. EcPrincipleCollect : EcPrincipleCollect 主体收藏表
+    class EcPrincipleCollect as "EcPrincipleCollect 主体收藏表"<<extends RelationshipObjekt>>>{
+        source: ： objekt 主体  -> {Principle}  
+        related: ： objekt 主体  -> {Principle}  
+    }
+    
+    Principle "*" -> "*" User 
+    (Principle,User) .. EcPrincipleChildUser : EcPrincipleChildUser 主体子账户
+    class EcPrincipleChildUser as "EcPrincipleChildUser 主体子账户"<<extends RelationshipObjekt>>>>{
+        source : objekt 主体  -> {Principle}
+        related  ： objekt 子账号  -> {User} 
+     }
+
+
+    class EcPrincipleURLManage as "EcPrincipleURLManage 域名管理"<<extends Objekt>>{
+        Name : string  名称
+        Label : string 显示标签
+        DoMain : string  域名
+        Url : string  连接地址
+        IsAudit : integer  是否审核
+        SiteNumber : string  备案号
+        AuditTime : datetime  审核时间
+    }
+
+
+    Principle "1" -> "1" Workflow 
+    (Principle,Workflow) .. EcPrincipleWorkflow : EcPrincipleWorkflow 主体审核信息
+    class EcPrincipleWorkflow as "EcPrincipleWorkflow 主体审核信息"<<extends RelationshipObjekt>> {
+        source : objekt 主体  -> {Principle}
+        related : object 审核-> {Workflow}
+    }
+
+
+    Principle "*" -> "*" Null 
+    (Principle,Null) .. EcPostTemplate : EcPostTemplate 店铺邮费模版
+    class EcPostTemplate as "EcPostTemplate 邮费模版"<<extends RelationshipObjekt>> {
+        source : objekt 主体  -> {Principle}
+        related : null
+        Name : string 名称
+        Label : string 显示标签
+        PricingType ：list 计价方式 [PricingType] 
+    }
+    
+    EcPostTemplate "1" -> "*" EcPostTemplateDetail 
+    class EcPostTemplateDetail as "EcPostTemplateDetail 邮费模版详情"<<extends Objekt>>{
+        PostTemplate : objekt 邮费模版  -> {PostTemplate}
+        SendType ：objekt 物流  -> {SendType} 
+        IsDefault : boolean 是否默认
+        Fistunit ：decimal 首单位
+        FirstPrice ：decimal 首费用
+        Nextunit ：decimal 续单位
+        NextPrice ：decimal 费用
+        Location: objekt 地区  -> {Location}
+    }
+
+    Principle <|- EcShop
+    class EcShop as "EcShop 店铺"<<extends Objekt>>{
+        ShopReputation : integer 店铺口碑值
+        ShopRank: objekt 店铺等级  -> {ShopRank}
+    }
+
+    class EcShopReputation as "EcShopReputation 店铺信誉等级"<<extends Objekt>>{
+        Name ： string 名称
+        Label : string 显示标签
+        MinScore ： integer 最小等级积分
+        MaxScore ： integer 最大等级积分
+        Pic ： string 图片
+        Description ： text	描述
+    }
+
+    EcShop "1" -> "*" EcShopRank 
+    class EcShopRank as "EcShopRank 店铺等级"<<extends Objekt>>{
+        Name : string  名称
+        MaxProductCount : integer  添加的最大商品数量
+        MaxFileCount : integer  上传的最大文件空间M
+        ValidityDate : string  有效期
+        Price : decimal  价格
+        Pic : object 等级图片 -> {File}
+        IsOverrideDomain : boolean  是否可以绑定独立域名
+        MaxSpellBuyCount : integer  添加的最大团购商品数量
+        MaxPanicBuyCount : integer  添加的最大抢购商品数量
+        MaxArticleCout : integer  添加文章最大数量
+        MaxVedioCount : integer  添加视频最大数量
+        IsDefault : boolean 是否默认
+        IsSetSEO : boolean 是否能够单独设置SEO
+    }
+
+    (EcShop,EcShopRank) .. EcShopApplyShopRank : EcShopApplyShopRank 店铺申请店铺等级
+    class EcShopApplyShopRank as "EcShopApplyShopRank 店铺申请店铺等级"<<extends RelationshipObjekt>>{
+        source: ： objekt 店铺  -> {Shop}  
+        related objekt 申请等级  -> {ShopRank}
+        ApplyTime : datetime  申请时间
+        IsPayMent : boolean  是否付款
+        PaymentType : list  支付方式 [PaymentType]
+        Remarks : text  付款备注
+        VerifyTime : datetime  验证时间
+        IsAudit : boolean  是否审核
+    }
+    
+    EcShopRank "*" -> "*" FeTemplate 
+    (EcShopRank,FeTemplate) .. EcShopRankTemplate : EcShopRankTemplate 店铺等级模版
+    class  EcShopRankTemplate  as "EcShopRankTemplate 店铺等级模版"<<extends RelationshipObjekt>>{
+        source: ： objekt 店铺等级  -> {ShopRank}  
+        related ： objekt 店铺模版表  -> {ShopTemplate}
+    }
+
+}
+
+object "PaymentType: List" as PaymentType{
+    name = "PaymentType"
+    label ="支付方式"
+}
+
+object "OnlineServiceType: List" as OnlineServiceType{
+    name = "OnlineServiceType"
+    label ="在线客服类型"
+}
+
+object "ShopType: List" as ShopType{
+    name = "ShopType"
+    label ="店铺类型"
+}
+
+
+object "SendType: List" as SendType{
+    name = "PostTempPriceType"
+    label ="运送方式"
+}
+object "Express: Value" as Express{
+    name = "Express"
+    label ="快递"
+}
+object "Ems: Value" as Ems{
+    name = "Manage"
+    label ="Ems"
+}
+object "Post: Value" as Post{
+    name = "Post"
+    label ="平邮"
+}
+SendType *- Express
+SendType *- Ems
+SendType *- Post
+
+
+object "PricingType: List" as PricingType{
+    name = "PricingType"
+    label ="计价方式"
+}
+object "Piece: Value" as Piece{
+    name = "Piece"
+    label ="件数"
+}
+object "Weight: Value" as Weight{
+    name = "Weight"
+    label ="重量"
+}
+object "Volume: Value" as Volume{
+    name = "Volume"
+    label ="体积"
+}
+PricingType *- Piece
+PricingType *- Ems
+PricingType *- Volume
+
+@enduml

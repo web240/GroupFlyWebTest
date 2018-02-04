@@ -1,0 +1,197 @@
+﻿
+@using GroupflyGroup.Platform.Web.Common;
+
+@Url.Script("~/Platform/Content/Scripts/ckeditor/ckeditor.js")
+<style>
+   
+    .FeArticlePageListMain .querybox li label {
+        width: 72px;
+    }
+</style>
+
+<div data-options="fit:true" class="main easyui-layout FeArticlePageListMain" style="overflow: hidden;">
+
+    <div data-options="region:'north',split:false" style="height:135px;max-height:135px;border-top-width:0px;">
+        <div class="querybox">
+            <ul class="clearfix">
+                <li>
+                    <label for="Title">文章标题：</label>
+                    <input id="Title" class="easyui-textbox" type="text" name="Title" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Author">作者：</label>
+                    <input id="Author" class="easyui-textbox" type="text" name="Author" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Creator">发布人：</label>
+                    <input id="Creator" class="easyui-textbox" type="text" name="Creator" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Approver">审核人：</label>
+                    <input id="Approver" class="easyui-textbox" type="text" name="Approver" style="width: 185px;" />
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label for="CreatedOn">发布时间：</label>
+                    <input id="CreatedBeginDate" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                    <a style="padding:0 57px 0 6px;">至</a>
+                    <input id="CreatedEndDate" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                </li>
+                <li>
+                    <label for="ApprovedOn">审核时间：</label>
+                    <input id="ApprovedBeginDate" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                    <a style="padding:0 57px 0 6px;">至</a>
+                    <input id="ApprovedEndDate" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label for="Character">文章属性：</label>
+                    @Html.Action("Load", "FeCharacterSeachBox", new
+               {
+                   ControlIdName = "CharacterID",
+                   ControlTextName = "Character",
+                   Width = 185
+               })
+                </li>
+
+                <li style="width:257px">
+                    <label for="Category">文章分类：</label>
+                    @Html.Action("Load", "FeArticleCategorySeachBox", new
+               {
+                   parentIdModelFieldName = "CategoryID",
+                   parentNamePathModelFieldName = "Category",
+                   Title = "选择文章分类",
+                   Width = 185
+               })
+                </li>
+                <li>
+                    <label for="pl">是否有评论：</label>
+                    <select id="pl" class="easyui-combobox" name="pl" style="width: 185px;">
+                        <option value="">--全部--</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </li>
+
+                <li>
+                    <a id="butFeArtilceQuery" class="easyui-linkbutton ml20" data-options="iconCls:'icon-search'" style="margin-left:0px;">查询</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    @Html.Action("Index", "FeArticleCategorySelect")
+    <div class="tablelist" data-options="region:'center',split:false" style="overflow:hidden;">
+        <div id="tabs" class="easyui-tabs" style="height:100%;overflow:hidden;">
+        </div>
+    </div>
+
+
+    <div id="ddFeArticleTitle">
+        @Html.TextArea("SetTitle", new { id = "SetTitle", width = "100%", height = "100%" })
+    </div>
+
+</div>
+
+<script>
+    $.parser.parse();
+    $(function () {
+        CKEDITOR.replace('SetTitle', {
+            toolbar: 'MyToolbar',
+            resize_enabled: false
+        });
+
+        $('#ddFeArticleTitle').dialog({
+            title: '设置标题样式',
+            width: 500,
+            height: 350,
+            closed: true,
+            cache: false,
+            modal: true,
+            buttons: [
+                {
+                    text: "确认", handler: function () {
+                        var htmlTitle = CKEDITOR.instances.SetTitle.getData();
+                        var textTitle = $(htmlTitle.replace(/\n/g, '<br>')).text();
+                        var idx = $('#tabs').tabs('getSelected').panel('options').id;
+                        var id = $("#FeArticleGrid" + idx + "").datagrid("getSelections")[0].Id;
+                        if (!textTitle) {
+                            $.messager.alert('提示', "请输入标题！", "info");
+                            return;
+                        }
+                        $.ajax({
+                            url: "@Url.Action("SetTitle", "FeArticle")",
+                            type: "post",
+                            async: false,
+                            data: { Id: id, HtmlTitle: htmlTitle, TextTitle: textTitle },
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.IsSuccess) {
+                                    $('#ddFeArticleTitle').dialog("close");
+                                    var idx = $('#tabs').tabs('getSelected').panel('options').id;
+                                    BindGrid(idx);
+                                }
+                                else {
+                                    $.messager.alert('异常', result.Message, "error");
+                                }
+                            }
+                        });
+                    }
+                },
+                { text: "关闭", handler: function () { $('#ddFeArticleTitle').dialog("close") } }
+            ]
+        });
+
+        $("#tabs").tabs('add', {
+            id: 1,
+            title: '我发布的文章',
+            href: '@Url.Action("Grid", "FeArticle")?tab=1',
+            cache: false,
+            selected: @ViewBag.Tab=="1"
+        });
+        $("#tabs").tabs('add', {
+            id: 2,
+            title: '我的草稿',
+            href: '@Url.Action("Grid", "FeArticle")?tab=2',
+            cache: false,
+            selected:  @ViewBag.Tab=="2"
+        });
+        $("#tabs").tabs('add', {
+            id: 3,
+            title: '全部文章',
+            href: '@Url.Action("Grid", "FeArticle")?tab=3',
+            cache: false,
+            selected:  @ViewBag.Tab=="3"
+        });
+        $("#tabs").tabs('add', {
+            id: 4,
+            title: '待审核文章',
+            href: '@Url.Action("Grid", "FeArticle")?tab=4',
+            cache: false,
+            selected:  @ViewBag.Tab=="4"
+        });
+        $("#tabs").tabs('add', {
+            id: 5,
+            title: '审核通过文章',
+            href: '@Url.Action("Grid", "FeArticle")?tab=5',
+            cache: false,
+            selected:  @ViewBag.Tab=="5"
+        });
+        $("#tabs").tabs('add', {
+            id: 6,
+            title: '审核不通过文章',
+            href: '@Url.Action("Grid", "FeArticle")?tab=6',
+            cache: false,
+            selected:  @ViewBag.Tab=="6"
+        });
+
+        $("#butFeArtilceQuery").click(function () {
+            var idx = $('#tabs').tabs('getSelected').panel('options').id;
+            BindGrid(idx,1);
+        });
+    });
+
+
+</script>

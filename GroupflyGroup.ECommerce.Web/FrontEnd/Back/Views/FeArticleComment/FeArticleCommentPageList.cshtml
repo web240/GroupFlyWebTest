@@ -1,0 +1,683 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework;
+@using GroupflyGroup.Platform.Web.Common;
+
+<style>
+    html, body {
+        height: 100%; /*设置html和body的width和height为100%，可使全屏生效*/
+        width: 100%;
+        overflow: hidden;
+    }
+ 
+    .FeArticleCommentPageListMain .tabs-header {
+        border:none;
+        background:none;
+        margin-top: 0px;
+    }
+    .FeArticleCommentPageListMain .tabs {
+        margin-top:0px;
+    }
+    .FeArticleCommentPageListMain .datagrid-view {
+        margin-top:0px;
+    }
+    .FeArticleCommentPageListMain .tabs-panels {
+        padding-top:10px;
+    }
+    .FeArticleCommentPageListMain .querybox li label {
+        width: 72px;
+    }
+    
+
+</style>
+
+<div id="FeArticleCommentPageListMain" data-options="fit:true" class="main easyui-layout FeArticleCommentPageListMain">
+    <div data-options="region:'north',split:false" style="height:175px;max-height:200px;border-top-width:0px;">
+        @*查询条件*@
+        <div class="querybox" name="IsDivQuerySearch">
+            <ul class="clearfix">
+                <li>
+                    <label>文章标题：</label>
+                    <input type="text" class="easyui-textbox" name="Title" style="width: 185px;" QuerySearch="Title" />
+                </li>
+
+                <li>
+                    <label name="CommentContent">回复内容：</label>
+                    <input type="text" class="easyui-textbox" name="Creator" style="width: 185px;" QuerySearch="Content" />
+                </li>
+                <li>
+                    <label>是否显示：</label>
+                    <select class="easyui-combobox" data-options="editable:false" name="dept" style="width: 185px;" QuerySearch="IsDisplay">
+                        <option value="">--全部--</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label>审核时间：</label>
+                    <input type="text" class="J_Date" style="width: 185px;" QuerySearch="ApprovedBeginDate">
+                    <a style="padding:0 56px 0 7px;">至</a>
+                    <input type="text" class="J_Date" style="width: 185px;" QuerySearch="ApprovedEndDate">
+                </li>
+                <li>
+                    <label>审核人：</label>
+                    <input type="text" class="easyui-textbox" name="Creator" style="width: 185px;" QuerySearch="AuditPerson" />
+                </li>
+
+
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label name="CommentCreateOn">回复时间：</label>
+                    <input type="text" class="J_Date" style="width: 185px;" QuerySearch="CreatedOnBeginDate">
+                    <a style="padding:0 56px 0 7px;">至</a>
+                    <input type="text" class="J_Date" style="width: 185px;" QuerySearch="CreatedOnEndDate">
+                </li>
+                <li>
+                    <label name="CommentCreator">回复人：</label>
+                    <input type="text" class="easyui-textbox" name="Creator" style="width: 185px;" QuerySearch="Creator" />
+                </li>
+                <li>
+                    <a name="FeArticleCommentPageListQuery" class="easyui-linkbutton ml20 butQuery" data-options="iconCls:'icon-search'">查询</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="tablelist">
+            <div class="datagrid-toolbar" style="padding:10px 0;">
+                <ul class="clearfix">
+                    <li>
+                        @*<a name="FeArticleCommentPageListAdd" class="easyui-linkbutton">添加</a>*@
+                        <a name="FeArticleCommentPageListHide" class="easyui-linkbutton">隐藏</a>
+                        <a name="FeArticleCommentPageListShow" class="easyui-linkbutton">显示</a>
+                        <a name="FeArticleCommentPageListApproved" class="easyui-linkbutton">审核通过</a>
+                        <a name="FeArticleCommentPageListNotApproved" class="easyui-linkbutton">审核不通过</a>
+                        <a name="FeArticleCommentPageListDel" class="easyui-linkbutton">批量删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tablelist" data-options="region:'center',split:false">
+        <div name="FeArticleCommentPageListTab" style="height:100%;">
+        </div>
+    </div>
+</div>
+<script>
+    $.parser.parse();
+
+    //绑定表头
+    function FeArticleCommentGridListBindGridTab(FeArticleCommentGridListID) {
+        var columns = [];
+
+        columns.push({ field: 'ck', checkbox: true, align: 'center' });
+
+        columns.push({
+            field: 'id', title: "操作", align: 'center',width:"165px",
+            formatter: function (value, row, index) {
+                var e = '<a onclick="document.body.tabGoto(\'@Url.Action("FeArticleCommentDetail", "FeArticleComment")?FeCommentID=' + value + '\');" href="javascript:void(0);" class="listview">查看</a> ';
+                return e;
+            }
+        });
+        columns.push({
+            field: 'content', title: FeArticleCommentGridListReturnCommentLabel() + '内容', align: 'center', width: "300px"
+
+        });
+        columns.push({
+            field: 'creator', title: FeArticleCommentGridListReturnCommentLabel() + '人', align: 'center', width: "165px"
+
+        });
+        columns.push({ field: 'createdOn', title: FeArticleCommentGridListReturnCommentLabel() + '时间', align: 'center', width: "165px" });
+        columns.push({
+            field: 'parent', title: '评论', align: 'center', width: "300px"
+
+        });
+        columns.push({
+            field: 'title', title: '原文章', align: 'center', width: "300px"
+
+        });
+        columns.push({
+            field: 'approvalStatus', title: '审核状态', align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+                if (value) {
+                    var e = "";
+                    if (value.id == "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Approved") {
+                        e = '<a style="color:#00cc33;">' + value.combinedLabel + '</a> ';
+
+                    }
+                    if (value.id == "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_NotApproved") {
+                        e = '<a >' + value.combinedLabel + '</a> ';
+
+                    }
+                    if (value.id == "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Pending") {
+                        e = '<a style="color:red;">' + value.combinedLabel + '</a> ';
+                    }
+
+
+                    return e;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+        columns.push({
+            field: 'isDisplay', title: '是否显示', align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+                if (value == "True") {
+                    return "<input recordId=\"" + row.id + "\" class=\"easyui-switchbutton J_switchbutton\" checked data-options=\"onText:'是',offText:'否'\">";
+                }
+                else {
+                    return "<input recordId=\"" + row.id + "\" class=\"easyui-switchbutton J_switchbutton\"  data-options=\"onText:'是',offText:'否'\">";
+                }
+            }
+
+        });
+        columns.push({
+            field: 'approver', title: '审核人', align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+                if (value) {
+                    return value.combinedLabel;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+        columns.push({ field: 'approvedOn', title: '审核时间', align: 'center', width: "165px" });
+
+        document.querySelector("#" + FeArticleCommentGridListID).SetDataGrid(columns);
+
+        document.querySelector("#" + FeArticleCommentGridListID).registerEventHandler("SetDataGridLoadSuccess", function (row, data) {
+            FeArticleCommentGridListPageLoad(FeArticleCommentGridListID);
+        });
+    };
+
+    //表头数据加载后处理
+    function FeArticleCommentGridListPageLoad(FeArticleCommentGridListID) {
+       
+        $("#" + FeArticleCommentGridListID).find('.J_switchbutton').switchbutton({
+            onChange: function (checked) {
+                var recordId = $(this).attr("recordId");
+                var rows = [{ id: recordId }];
+                FeArticleCommentGridListShowOrHide(rows, checked);
+            }
+        });
+    };
+
+
+    //改变隐藏显示
+    function FeArticleCommentGridListShowOrHide(rows, isDisplay) {
+        if (rows.length <= 0) {
+            return;
+        }
+        //调用后台方法修改数据。
+        platformAjax({
+            url: "@Url.Action("SetDisplay", "FeArticleComment")",
+            type: "POST",
+            data: { FeCommentList: rows, isDisplay: isDisplay },
+            dataType: "json",
+            success: function (result) {
+                FeArticleCommentGridListgetGridListData(ReturnChoseFeArticleCommentGridListID(),"");
+            }
+        });
+    };
+
+    //表头标签处理
+    function FeArticleCommentGridListReturnCommentLabel() {
+        var divtabid = $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListTab']").tabs('getSelected').panel('options').divtabid;
+        if (divtabid == "FeArticleCommentPageListQueryReply") {
+            return "回复";
+        }
+        else {
+            return "评论";
+        }
+    };
+
+
+    //查询方法
+    function FeArticleCommentGridListgetGridListData(FeArticleCommentGridListID,pageNumber) {
+
+        var url = "@Url.Action("GetFeArticleCommenGridList", "FeArticleComment")";
+
+
+        param = FeArticleCommentPageListgetParam();
+
+
+        document.querySelector("#" + FeArticleCommentGridListID).SearchData(url, param, pageNumber);
+
+    };
+    //拼接参数
+    function FeArticleCommentPageListgetParam(param) {
+        var param = [];
+
+        //文章评论关联对象的评论ID
+        $.ajax({
+            url: "@Url.Action("GetFeCommentID", "FeArticleComment")",
+            type: "post",
+            data: {},
+            async: false,
+            success: function (result) {
+                var inparam = "";
+                var data = eval("(" + result.Data + ")");
+                $(data).each(function () {
+                    inparam += this + ",";
+                });
+
+                inparam = inparam.substring(0, inparam.length - 1);
+
+                param.push({ field: "id", type: "@Const.Oper_In", value: inparam });
+            }
+        });
+
+        //是否回收
+        param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+
+
+
+        var tab = $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListTab']").tabs('getSelected').panel('options').tabid;
+
+
+        switch (tab) {
+            case 1:
+                //回复我的
+
+                $.ajax({
+                    url: "@Url.Action("GetFeCommentIDByCreator", "FeArticleComment")",
+                    type: "post",
+                    data: { FeCommentCreator: "@GroupflyGroup.Platform.ObjectFramework.User.Current.Id" },
+                    async: false,
+                    success: function (result) {
+                        var inparam = "";
+                        var data = eval("(" + result.Data + ")");
+                        $(data).each(function () {
+                            inparam += this + ",";
+                        });
+
+                        inparam = inparam.substring(0, inparam.length - 1);
+
+                        param.push({ field: "id", type: "@Const.Oper_In", value: inparam });
+                    }
+                });
+
+                break;
+            case 2:
+                //我发出的回复
+                param.push({ field: "creator", type: "@Const.Oper_Contains", value: "@GroupflyGroup.Platform.ObjectFramework.User.Current.CombinedLabel" });
+                param.push({ field: "parent", type: "@Const.Oper_IsNotNull", value: "" });
+                break;
+            case 3:
+                //全部评论
+                param.push({ field: "parent", type: "@Const.Oper_IsNull", value: "" });
+                break;
+            case 4:
+                //全部回复
+                param.push({ field: "parent", type: "@Const.Oper_IsNotNull", value: "" });
+                break;
+            case 5:
+                //待审核评论
+                param.push({ field: "parent", type: "@Const.Oper_IsNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Pending" });
+                break;
+            case 6:
+                //审核通过评论
+                param.push({ field: "parent", type: "@Const.Oper_IsNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Approved" });
+
+                break;
+            case 7:
+                //审核不通过评论
+                param.push({ field: "parent", type: "@Const.Oper_IsNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_NotApproved" });
+
+                break;
+            case 8:
+                //待审核回复
+                param.push({ field: "parent", type: "@Const.Oper_IsNotNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Pending" });
+
+                break;
+            case 9:
+                //审核通过回复
+                param.push({ field: "parent", type: "@Const.Oper_IsNotNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Approved" });
+
+                break;
+            case 10:
+                //审核不通过回复
+                param.push({ field: "parent", type: "@Const.Oper_IsNotNull", value: "" });
+
+                param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_NotApproved" });
+
+                break;
+            default:
+                break;
+        }
+        //所有查询条件
+        var allsearchtextbox = $("#FeArticleCommentPageListMain").find("[name='IsDivQuerySearch'] :text");
+
+        for (var i = 0; i < allsearchtextbox.length; i++) {
+            var searchCondition = allsearchtextbox.eq(i).attr("QuerySearch");
+            switch (searchCondition) {
+                //文章标题
+                case "Title":
+                    var boxvalue = allsearchtextbox.eq(i).textbox("getValue");
+
+                    if (boxvalue != "") {
+                        $.ajax({
+                            url: "@Url.Action("GetFeCommentIDByFeArticleTitle", "FeArticleComment")",
+                            type: "post",
+                            data: { FeArticleTitle: boxvalue },
+                            async: false,
+                            success: function (result) {
+                                var inparam = "";
+                                var data = eval("(" + result.Data + ")");
+                                $(data).each(function () {
+                                    inparam += this + ",";
+                                });
+
+                                inparam = inparam.substring(0, inparam.length - 1);
+
+                                param.push({ field: "id", type: "@Const.Oper_In", value: inparam });
+                            }
+                        });
+                    }
+                    break;
+                    //回复内容
+                case "Content":
+                    var boxvalue = allsearchtextbox.eq(i).textbox("getValue");
+                    if (boxvalue != "") {
+                        param.push({ field: "content", type: "@Const.Oper_Contains", value: boxvalue });
+                    }
+                    break;
+                    //显示状态
+                case "IsDisplay":
+                    var boxvalue = allsearchtextbox.eq(i).combobox("getValue");
+                    if (boxvalue != "") {
+                        param.push({ field: "isDisplay", type: "@Const.Oper_Equals", value: boxvalue });
+                    }
+                    break;
+                    //审核时间开始
+                case "ApprovedBeginDate":
+
+                    var boxvalue = allsearchtextbox.eq(i).combobox("getValue");
+
+                    if (boxvalue != "") {
+                        param.push({ field: "approvedOn", type: "@Html.Raw(Const.Oper_GreaterOrEquals)", value: boxvalue });
+                    }
+                    break;
+                    //审核时间结束
+                case "ApprovedEndDate":
+
+                    var boxvalue = allsearchtextbox.eq(i).combobox("getValue");
+
+                    if (boxvalue != "") {
+                        param.push({ field: "approvedOn", type: "@Html.Raw(Const.Oper_LessOrEquals)", value: boxvalue });
+                    }
+                    break;
+                    //审核人
+                case "AuditPerson":
+                    var boxvalue = allsearchtextbox.eq(i).textbox("getValue");
+                    if (boxvalue != "") {
+                        param.push({ field: "approver", type: "@Const.Oper_Contains", value: boxvalue });
+                    }
+                    break;
+                    //回复时间开始
+                case "CreatedOnBeginDate":
+                    var boxvalue = allsearchtextbox.eq(i).combobox("getValue");
+
+                    if (boxvalue != "") {
+                        param.push({ field: "createdOn", type: "@Html.Raw(Const.Oper_GreaterOrEquals)", value: boxvalue });
+                    }
+                    break;
+                    //回复时间结束
+                case "CreatedOnBeginDate":
+
+                    var boxvalue = allsearchtextbox.eq(i).combobox("getValue");
+
+                    if (boxvalue != "") {
+                        param.push({ field: "createdOn", type: "@Html.Raw(@Const.Oper_LessOrEquals)", value: boxvalue });
+                    }
+                    break;
+                    //回复人
+                case "Creator":
+                    var boxvalue = allsearchtextbox.eq(i).textbox("getValue");
+                    if (boxvalue != "") {
+                        param.push({ field: "creator", type: "@Const.Oper_Contains", value: boxvalue });
+                    }
+                    break;
+                default:
+                    break;
+
+
+            }
+
+
+        }
+
+        return JSON.stringify(param);
+    };
+
+    //绑定Tab页
+    function FeArticleCommentPageListBindGridListTab() {
+        //页面顶级Div
+        var FeArticleCommentPageListMain = $("#FeArticleCommentPageListMain");
+        //Tab切换
+        var FeArticleCommentPageListTab = $(FeArticleCommentPageListMain).find("[name='FeArticleCommentPageListTab']");
+
+        $(FeArticleCommentPageListTab).tabs({
+            onSelect: function (title, index) {
+
+                //根据切换页的ID修改查询条件DIV的内容
+                var tabid = $(this).tabs('getSelected').panel('options').divtabid;
+                //查询搜索Div下的li
+                var QuerySearchLi = $(FeArticleCommentPageListMain).find("[name='IsDivQuerySearch'] ul li");
+                //修改查询内容
+                if (tabid == "FeArticleCommentPageListQueryReply") {
+                    $(QuerySearchLi).find("[name='CommentContent']").html("回复内容：");
+                    $(QuerySearchLi).find("[name='CommentCreateOn']").html("回复时间：");
+                    $(QuerySearchLi).find("[name='CommentCreator']").html("回复人：");
+                }
+                else {
+                    $(QuerySearchLi).find("[name='CommentContent']").html("评论内容：");
+                    $(QuerySearchLi).find("[name='CommentCreateOn']").html("评论时间：");
+                    $(QuerySearchLi).find("[name='CommentCreator']").html("评论人：");
+                }
+
+                //清空搜索Div下所有搜索条件
+                $(QuerySearchLi).find(":text[textboxname]").textbox("setValue", "");
+
+                $(QuerySearchLi).find("select[comboname='dept']").combobox("select", 0);
+
+                var FeArticleCommentGridListID = $(this).tabs('getSelected').panel('options').FeArticleCommentGridListID;
+                //每次加载初始化数据列表
+                if ($("#" + FeArticleCommentGridListID).length > 0) {                    
+                    FeArticleCommentGridListgetGridListData(FeArticleCommentGridListID,1);
+                }
+            }
+        });
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "回复我的", true, "FeArticleCommentPageListQueryReply", 1);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "我发出的回复", false, "FeArticleCommentPageListQueryReply", 2);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "全部评论", false, "FeArticleCommentPageListQueryComment", 3);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "全部回复", false, "FeArticleCommentPageListQueryReply", 4);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "待审核评论", false, "FeArticleCommentPageListQueryComment", 5);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "审核通过评论", false, "FeArticleCommentPageListQueryComment", 6);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "审核不通过评论", false, "FeArticleCommentPageListQueryComment", 7);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "待审核回复", false, "FeArticleCommentPageListQueryReply", 8);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "审核通过回复", false, "FeArticleCommentPageListQueryReply", 9);
+
+        AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, "审核不通过回复", false, "FeArticleCommentPageListQueryReply", 10);
+
+    }
+
+    //添加Tab标签
+    function AddFeArticleCommentPageListTab(FeArticleCommentPageListTab, title, selected, divtabid, tabid) {
+        var FeArticleCommentGridListID = "FeArticleCommentGridList" + Math.floor(Math.random() * 10000);
+        $(FeArticleCommentPageListTab).tabs('add', {
+            title: title,
+            href: '@Url.Action("FeArticleCommenGridList", "FeArticleComment")?tab=' + FeArticleCommentGridListID,
+            selected: selected,
+            divtabid: divtabid,
+            FeArticleCommentGridListID: FeArticleCommentGridListID,
+            tabid: tabid
+        });
+    }
+
+    //绑定按钮事件
+    function FeArticleCommentPageListBindButton() {
+        //查询按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListQuery']").click(function () {
+            FeArticleCommentGridListgetGridListData(ReturnChoseFeArticleCommentGridListID(),1);
+        });
+
+        //删除按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListDel']").click(function () {
+            FeArticleCommentPageListDelArticleComment();
+        });
+
+        //隐藏按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListHide']").click(function () {
+            FeArticleCommentPageListShowOrHide(false);
+        });
+        //显示按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListShow']").click(function () {
+            FeArticleCommentPageListShowOrHide(true);
+        });
+
+        //审核通过按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListApproved']").click(function () {
+            FeArticleCommentPageListApprovedYesOrNo(true);
+        });
+        //审核不通过按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListNotApproved']").click(function () {
+            FeArticleCommentPageListApprovedYesOrNo(false);
+        });
+
+        @*//添加按钮
+        $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListAdd']").click(function () {
+            platformAjax({
+                url: "@Url.Action("AddArticleComment", "FeArticleComment")",
+                type: "post",
+                data: { ParentID: "", ArticleID: "b54f68a17c5d429b84092c928fb87f63@FeArticle", FeCommentContent: "第三次世界大战要开始了?" },
+                success: function (result) {
+                    $(ReturnChoseFeArticleCommentGridList()).datagrid('getPager').pagination("select", 1);
+                }
+            });
+        });*@
+    }
+
+    //删除评论到回收站
+    function FeArticleCommentPageListDelArticleComment() {
+        var rows = document.querySelector("#" + ReturnChoseFeArticleCommentGridListID()).GetSelections();
+        if (rows.length <= 0) {
+            return;
+        }
+        platformAjax({
+            url: "@Url.Action("DelFeComment", "FeArticleComment")",
+            type: "post",
+            data: { FeCommentList: rows },
+            success: function (result) {
+                FeArticleCommentGridListgetGridListData(ReturnChoseFeArticleCommentGridListID(),"");
+            }
+        });
+    }
+    //改变隐藏显示
+    function FeArticleCommentPageListShowOrHide(isDisplay) {
+        var rows = document.querySelector("#" + ReturnChoseFeArticleCommentGridListID()).GetSelections();
+        if (rows.length <= 0) {
+            return;
+        }
+        //调用后台方法修改数据。
+        platformAjax({
+            url: "@Url.Action("SetDisplay", "FeArticleComment")",
+            type: "POST",
+            data: { FeCommentList: rows, isDisplay: isDisplay },
+            dataType: "json",
+            success: function (result) {
+                FeArticleCommentGridListgetGridListData(ReturnChoseFeArticleCommentGridListID(),"");
+            }
+
+        });
+    };
+    //改变审核状态
+    function FeArticleCommentPageListApprovedYesOrNo(isApproved) {
+        var rows = document.querySelector("#" + ReturnChoseFeArticleCommentGridListID()).GetSelections();
+        if (rows.length <= 0) {
+            return;
+        }
+        platformAjax({
+            url: "@Url.Action("SetApproved", "FeArticleComment")",
+            type: "POST",
+            data: { FeCommentList: rows, isApproved: isApproved },
+            dataType: "json",
+            success: function (result) {
+                FeArticleCommentGridListgetGridListData(ReturnChoseFeArticleCommentGridListID(),"");
+            }
+
+        });
+    };
+
+
+
+    //得到当前数据列表对象
+    function ReturnChoseFeArticleCommentGridListID() {
+        //取数据列表ID
+        var FeArticleCommentGridListID = $("#FeArticleCommentPageListMain").find("[name='FeArticleCommentPageListTab']").tabs('getSelected').panel('options').FeArticleCommentGridListID;
+        return FeArticleCommentGridListID;
+    }
+
+
+
+    //绑定时间控件
+    function FeArticleCommentPageListBindDateBox() {
+        //页面顶级Div
+        $("#FeArticleCommentPageListMain").find('.J_Date').datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                function formatNumber(value) {
+                    return (value < 10 ? '0' : '') + value;
+                }
+                return y + '/' + m + '/' + d;
+            },
+            editable: false,
+            parser: function (s) {
+                var t = Date.parse(s);
+                if (!isNaN(t)) {
+                    return new Date(t);
+                }
+                else {
+                    return new Date();
+                }
+            }
+        });
+
+    }
+
+
+    $(function () {
+        //绑定Tab页
+        FeArticleCommentPageListBindGridListTab();
+        //绑定按钮事件
+        FeArticleCommentPageListBindButton();
+        //绑定时间控件
+        FeArticleCommentPageListBindDateBox();
+
+    });
+</script>

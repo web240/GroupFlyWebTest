@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="vs:EnableBrowserLink" value="false" />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.6.1">
+      <buildProviders>
+        <add extension=".html" type="System.Web.Compilation.PageBuildProvider" />
+        <add extension=".htm" type="System.Web.Compilation.PageBuildProvider" />
+      </buildProviders>
+    </compilation>
+    <httpRuntime targetFramework="4.6.1" maxUrlLength="9999" maxRequestLength="2048000" executionTimeout="360" requestValidationMode="2.0" />
+  </system.web>
+  <system.webServer>
+    <!--允许上传文件长度,单位字节-->
+    <security>
+      <requestFiltering>
+        <requestLimits maxAllowedContentLength="2147483647" />
+      </requestFiltering>
+    </security>
+    <modules>
+      <add name="HttpModule" type="GroupflyGroup.Platform.Web.FileAccessModule"/>
+    </modules>
+    <staticContent>
+      <remove fileExtension=".woff2"/>
+      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2"/>
+    </staticContent>
+    <handlers>
+      <add name="Html-Integrate" path="*.html" verb="*" type="System.Web.UI.PageHandlerFactory" />
+      <add name="Htm-Integrate" path="*.htm" verb="*" type="System.Web.UI.PageHandlerFactory" />
+    </handlers>
+  </system.webServer>
+</configuration>

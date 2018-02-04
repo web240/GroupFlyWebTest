@@ -1,0 +1,82 @@
+﻿
+<style>
+
+</style>
+
+
+<div data-options="fit:true" class="easyui-layout main FeWatermarkList">
+    <div data-options="region:'north',split:false" style="height:47px;max-height:200px;border-top-width:0px;">
+        <div class="tablelist">
+            <div class="datagrid-toolbar" style="padding:10px 0;">
+                <ul class="clearfix">
+                    <li>
+                        <a name="FeImageRecycleRecovery" class="easyui-linkbutton" onclick="FeWatermarkListAddWatermark()">添加水印</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tablelist" data-options="region:'center',split:false">
+        <Gf-FeDataList id="FeWatermarkListGridList"></Gf-FeDataList>
+    </div>
+</div>
+
+<script>
+    $.parser.parse();
+
+    //绑定表头
+    function FeWatermarkListBindGridList() {
+
+        var columns = [];
+        columns.push({
+            field: 'ID', title: "操作", align: 'center',width:"335px",
+            formatter: function (value, row, index) {
+                var e = '<a onclick="document.body.tabGoto(\'@Url.Action("GotoWatermark", "FeWatermark")?ID=' + value + '\');" href="javascript:void(0);" >编辑</a> ';
+                e = e + '<a href="javascript:;" onclick="$.messager.confirm(\'提示\', \'确认删除?\', function(r){ if (r){ delTemplate(\'' + value + '\'); }})" >删除</a> ';
+                return e;
+            }
+        });
+        columns.push({ field: 'Name', title: '水印名称', align: 'center', width: "335px" });
+        columns.push({ field: 'Type', title: '水印类型', align: 'center', width: "335px" });
+        columns.push({ field: 'Creator', title: '创建人', align: 'center', width: "335px" });
+        columns.push({ field: 'CreatedOn', title: '创建时间', align: 'center', width: "335px" });
+
+        document.querySelector("#FeWatermarkListGridList").SetDataGrid(columns);
+    };
+
+
+
+
+
+    function FeWatermarkListAddWatermark() { document.body.tabGoto('@Url.Action("GotoWatermark", "FeWatermark")'); }
+
+    function FeWatermarkListBindData(pagenumber) {
+        var url = "@Url.Action("GetFeWatermarkPageList", "FeWatermark")";
+        document.querySelector("#FeWatermarkListGridList").SearchData(url, "", pagenumber);
+    }
+
+
+    $(function () {
+        //绑定表头
+        FeWatermarkListBindGridList();
+
+        FeWatermarkListBindData();
+
+    });
+
+    //删除
+    function delTemplate(obj) {
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("DelFeWatermark", "FeWatermark")',
+            data: { id: obj },
+            datatype: "json",
+            success: function (data) {
+                BindGridTab();
+            }
+        });
+    }
+
+
+
+</script>

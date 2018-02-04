@@ -1,0 +1,49 @@
+﻿<link href="~/FrontEnd/Back/Content/Css/jquery.autocompleter.css" rel="stylesheet" />
+<script src="~/FrontEnd/Back/Content/Scripts/jquery.autocompleter.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#SeoKeyInput').autocompleter({
+            // marker for autocomplete matches
+            highlightMatches: true,
+            source: "@Url.Content("~/Seo/SearchSeoKey")",
+            minLength: 0,
+            template: '{{ Name }}',
+            hint: true,
+            empty: false,
+            cache:false,
+            changeWhenSelect: true,
+            limit: 10,
+            beforeSetValue: function (value,oldValue) {
+                var index = oldValue.lastIndexOf(",");
+
+                //如果最后一位是“,”号，直接追加都后面。
+                if (index == oldValue.length - 1) {
+                    $('#SeoKeyInput').val(oldValue + value);
+                }
+                else if (index > 0) { //覆盖最后一个“,”后的输入项。
+                    var text = oldValue.substring(0, index + 1);
+                    $('#SeoKeyInput').val(text + value);
+                }
+                else if (index = -1) {
+                    $('#SeoKeyInput').val(value);
+                }
+
+                return false;
+            },
+            callback: function (value, index, selected) {
+
+                if (selected) {
+                    $('.icon').css('background-color', selected.hex);
+                }
+            },
+        });
+
+    });
+
+</script>
+
+<div class="field">
+    <input type="text" style="width:400px;" name='@ViewBag.SeoKeysModelFieldName' value='@ViewBag.SeoKeys' id="SeoKeyInput" />
+</div>

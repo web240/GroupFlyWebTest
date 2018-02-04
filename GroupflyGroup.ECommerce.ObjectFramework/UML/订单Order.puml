@@ -1,0 +1,346 @@
+@startuml
+namespace groupflygroup.ecommerce.objectframework{
+     class TransactionOrder as "TransactionOrder 交易单" << extends Objekt>>{
+           transactionNumber:string交易号
+           transactionMoney:decimal交易金额
+           transactionTime:datetime交易时间
+           transactionStatus:list 交易状态 [TransactionStatus]
+           creator:objekt 交易会员->{Creator}
+           paymentServiceRecord:objekt 支付服务记录->{PaymentServiceRecord} 
+           creaton:datetime下单时间
+           userTransactionRemarks:string用户交易备注
+           
+           TransactionOrderBeforeSave()检测交易金额是否为正数,交易号是否存在,不存在创建交易号
+          
+           CreateTransactionNumber()创建交易号
+           
+           GetTransactionOrderByNumber()通过交易号查询交易单
+
+
+     }     
+     class Order as "Order 订单" <<extends Objekt>>{
+           transactionOrder:objekt 交易单->{TransactionOrder}        
+           orderNumber:string订单号                                                     
+           clientToSellerMsg:string买家给卖家的留言
+           sellerToClientMsg:string卖家给买家的留言           
+           productTotalPrice:decimal商品总金额           
+           promotionPrice:decimal促销金额
+           orderPrice:decimal订单总金额
+           creaton:datetime下单时间           
+           orderCreateFrom:list 订单创建来源[OrderCreateFrom]
+           seller:objekt 订单所属卖家->{Principle}
+           buyers:objekt 订单所属买家->{Principle}           
+           buyIsDeleted:boolean买家是否删除
+           sellIsDeleted:boolean卖家家是否删除 
+           TransactionOrderBeforeSave()检测各金额是否为正数,订单号是否存在,不存在创建订单号
+           CreateOrderNumber()创建订单号
+           GetOrderByNumber()通过订单号查询订单 
+     }
+     
+
+     class NormalOrder as "NormalOrder 普通订单"{
+           dispatchPrice:decimal配送金额
+           normalOrderStatus:list 普通订单状态 [NormalOrderStatus]
+           consignee:objekt 收货人->{Consignee} 
+     }
+          
+     class ServiceOrder as "ServiceOrder 服务订单 "{
+           serviceOrderStatus:list 服务订单状态 [ServiceOrderStatus]
+     }
+
+     class OrderSKURefund as "OrderSKURefund 订单商品退款"<<extends Objekt>>{
+           orderProduct:objekt 订单商品->{OrderProduct}
+           refundNumber:string退款流水号
+           applyTime:datetime申请时间
+           refundMoney:decimal退款金额
+           refundContent:string退款申请内容
+           refundImg:string退款申请图片
+           processingCcontent:string处理结果信息
+           orderSKURefundNumber:integer退款数量
+           refundStatus:list 退款状态[RefundStatus]
+           OrderProductRefundBeforeSave()检测各金额是否为正数,退款流水号是否存在,不存在创建流水号
+           GetRefundByNumber()通过流水号查询退款
+     }
+
+     class OrderSKU as "OrderSKU 订单商品" << extends RelationshipObjekt>>{
+           source:Order
+           related:SKU
+           productBuyNumber:integer商品购买数量                 
+           orderSKULogistics:objekt 所属包裹->{OrderSKULogistics}
+     }
+     
+     
+     class OrderSKULogistics as "OrderSKULogistics 订单商品物流信息"<< extends RelationshipObjekt>>{
+           shipmentNumber:string物流公司发货单号
+           isSendGood:boolean是否发货
+           sendGoodTime:发货时间
+           isConfirmGood:boolean是否确认收货
+           receiptTime:datetime确认收货时间
+           logistics:objekt 物流公司->{Logistics}
+     }
+     
+     class Logistics as "Logistics 物流公司信息"<< extends Objekt>>{
+           LogisticsCompanyName:string物流公司名称
+           LogisticsCompanyCode:string物流公司编码                      
+     }
+
+     
+     class Consignee as "Consignee 收货人" << extends Objekt>>{
+           name:string收货人姓名
+           address:string收货人详细地址
+           location:objekt 收货人地理位置->{Location}
+           postalcode:integer收货人邮政编码
+           telephone:integer收货人电话号码
+           cellphone:integer收货人手机号码
+           creator:objekt 所属会员->{Creator}
+           isDefault:boolean是否默认
+
+     }
+
+    abstract class PaymentServiceRecord as "PaymentServiceRecord 支付服务记录"<< extends Objekt>>{
+
+     }
+
+          
+     class SalesPromotion as  "SalesPromotion促销活动" << extends Objekt>>{
+           name:string活动名称
+           memo:stinrg活动详细介绍
+           imgae:objekt 活动图标->{File}     
+           CommodityInformation:objekt 主商品信息->{CommodityInformation}   
+           meetCconditions:objekt 满足条件->{MeetCconditions}                
+           giftInformation:objekt 赠品->{GiftInformation}           
+     }
+
+     class CommodityInformation as "CommodityInformation 主商品信息"<< extends Objekt>>{
+           选择参加活动的商品，
+           可按SPU、分类、品牌等来选择参加促销的商品。
+           除此之外，
+           还要判断当前所选商品是否参与其他促销活动，
+           与此活动由冲突。
+           例如A商品参加 4 月的活动，
+           满 400 元减 20 元;再次设置该商品参加满 400 减 50 的活动，
+           就应与该商品已参加活动冲突，不可设置。
+     }
+
+
+
+
+     class MeetCconditions as "MeetCconditions 活动条件"<< extends Objekt>>{
+           促销时间、
+           限购数量、
+           促销范围(全网、APP /微信商城)、
+           会员级别(全员  or 新注册用户 or 某等级会员)、
+           活动备注、
+           活动规则
+
+           活动规则即最核心的设置，
+           例如：满 800 元减60， 3 件 150 元
+     }
+
+     class GiftInformation as "GiftInformation 赠品信息"<< extends Objekt>>{
+           选择参加活动的赠品，
+           赠品一般有数量限制。
+           有两种规则，
+           赠品全送，
+           或在多赠品中选择几件。
+           为减少系统复杂度，
+           减少用户理解难度，
+           建议采用赠品全送的规则。
+
+           另外对于满赠促销的形式，
+           若要设置分级赠品
+           (满 300 元送自拍杆，
+           满 500 送充电宝，
+           满 1000 送高端耳机)，
+           就需要对赠品分开进行设置
+
+     }
+     
+     class Coupon as "Coupon优惠卷"{
+           preferentialAmount:decima优惠金额
+     }
+     class SatisfyOnGive as "SatisfyOnGive满即送活动"{
+           preferentialAmount:decima优惠金额
+     }
+     
+     class SKU as "SKU 商品SKU库存"<< extends Objekt>>{
+           
+     }
+     
+     TransactionOrder"1" ->"*"Order
+     TransactionOrder"1"<-r-"1"PaymentServiceRecord
+
+     Order <|- NormalOrder
+     Order <|- ServiceOrder
+     Order"*"<-"1"Consignee
+     Order"*"->"*"SKU
+     (Order,SKU)..OrderSKU 
+           
+     OrderSKU"1"->"*" OrderSKURefund
+     OrderSKULogistics "1"->"*" OrderSKU
+     Logistics "1"->"*" OrderSKULogistics
+
+     SalesPromotion "*"->"1" MeetCconditions
+     SalesPromotion "*"->"1" GiftInformation
+     SalesPromotion "*"->"1" CommodityInformation
+
+     SalesPromotion <|-l- Coupon
+     SalesPromotion <|-l- SatisfyOnGive
+}
+
+
+object "TransactionStatus: List" as TransactionStatus{
+    name = "TransactionStatus"
+    label ="交易状态"
+}
+
+object "PendingTrade: Value" as Pending{
+    name = "PendingTrade"
+    label ="PendingTrade交易处理中"
+}
+
+object "SuccessfulTrade: Value" as SuccessfulTrade{
+    name = "SuccessfulTrade"
+    label ="SuccessfulTrade交易成功"
+}
+object "FailureTrade: Value" as FailureTrade{
+    name = "FailureTrade"
+    label ="FailureTrade交易失败"
+}
+
+TransactionStatus *- Pending
+TransactionStatus *- SuccessfulTrade
+TransactionStatus *- FailureTrade
+
+
+object "NormalOrderStatus: List" as NormalOrderStatus{
+    name = "NormalOrderStatus"
+    label ="NormalOrderStatus普通订单状态"
+}
+
+object "NormalWaitBuyerPay: Value" as NormalWaitBuyerPay{
+    name = "NormalWaitBuyerPay"
+    label ="NormalWaitBuyerPay等待买家付款"
+}
+object "NormalWaitSellerSend: Value" as NormalWaitSellerSend{
+    name = "NormalWaitSellerSend"
+    label ="NormalWaitSellerSend等待卖家发货"
+}
+
+object "NormalWaitBuyerConfirm: Value" as NormalWaitBuyerConfirm{
+    name = "NormalWaitBuyerConfirm"
+    label ="NormalWaitBuyerConfirm等待买家确认收货"
+}
+ 
+object "NormalOrderFinish: Value" as NormalOrderFinish{
+    name = "NormalOrderFinish"
+    label ="NormalOrderFinish订单完成"
+}
+
+object "NormalOrderClosed: Value" as NormalOrderClosed{
+    name = "NormalOrderClosed"
+    label ="NormalOrderClosed订单关闭"
+}
+
+
+NormalOrderStatus *- NormalWaitBuyerPay
+NormalOrderStatus *- NormalWaitSellerSend
+NormalOrderStatus *- NormalWaitBuyerConfirm
+NormalOrderStatus *- NormalOrderFinish
+NormalOrderStatus *- NormalOrderClosed
+
+
+object "ServiceOrderStatus: List" as ServiceOrderStatus{
+    name = "ServiceOrderStatus"
+    label ="ServiceOrderStatus服务订单状态"
+}
+
+
+object "ServiceWaitBuyerPay: Value" as ServiceWaitBuyerPay{
+    name = "ServiceWaitBuyerPay"
+    label ="ServiceWaitBuyerPay等待买家付款"
+}
+
+object "ServiceWaitBuyerUse: Value" as ServiceWaitBuyerUse{
+    name = "ServiceWaitBuyerUse"
+    label ="ServiceWaitBuyerUse等待买家使用"
+}
+ 
+object "ServiceOrderFinish: Value" as ServiceOrderFinish{
+    name = "ServiceOrderFinish"
+    label ="ServiceOrderFinish订单完成"
+}
+
+object "ServiceOrderClosed: Value" as ServiceOrderClosed{
+    name = "ServiceOrderClosed"
+    label ="ServiceOrderClosed订单关闭"
+}
+
+ServiceOrderStatus *- ServiceWaitBuyerPay
+ServiceOrderStatus *- ServiceWaitBuyerUse
+ServiceOrderStatus *- ServiceOrderFinish
+ServiceOrderStatus *- ServiceOrderClosed
+
+
+object "OrderCreateFrom: List" as OrderCreateFrom{
+    name = "orderCreateFrom"
+    label ="orderCreateFrom订单创建来源"
+}
+object "PcFrontOrder: Value" as PcFrontOrder{
+    name = "PcFrontOrder"
+    label ="PcFrontOrder电脑前端订单"
+}
+object "PcBackOrder后端订单: Value" as PcBackOrder{
+    name = "PcBackOrder"
+    label ="PcBackOrder电脑后端订单"
+}
+object "WeChatOrder: Value" as WeChatOrder{
+    name = "WeChatOrder"
+    label ="WeChatOrder微信订单"
+}
+
+object "AndroidOrder: Value" as AndroidOrder{
+    name = "AndroidOrder"
+    label ="AndroidOrder安卓订单"
+}
+object "IosOrder: Value" as IosOrder{
+    name = "IosOrder"
+    label ="IosOrder苹果订单"
+}
+
+object "ThirdPartyOrder: Value" as ThirdPartyOrder{
+    name = "ThirdPartyOrder"
+    label ="ThirdPartyOrder第三方订单"
+}
+OrderCreateFrom *- PcFrontOrder
+OrderCreateFrom *- PcBackOrder
+OrderCreateFrom *- WeChatOrder
+OrderCreateFrom *- AndroidOrder
+OrderCreateFrom *- IosOrder
+OrderCreateFrom *- ThirdPartyOrder
+
+
+object "RefundStatus: List" as RefundStatus{
+    name = "RefundStatus"
+    label ="RefundStatus退款状态"
+}
+
+
+object "RefundProcessing: Value" as RefundProcessing{
+    name = "RefundProcessing"
+    label ="RefundProcessing退款处理中"
+}
+object "SuccessfulRefund: Value" as SuccessfulRefund{
+    name = "SuccessfulRefund"
+    label ="SuccessfulRefund退款成功"
+}
+object "FailureRefund: Value" as FailureRefund{
+    name = "FailureRefund"
+    label ="FailureRefund退款失败"
+}
+RefundStatus *- RefundProcessing
+RefundStatus *- SuccessfulRefund
+RefundStatus *- FailureRefund
+
+
+@enduml

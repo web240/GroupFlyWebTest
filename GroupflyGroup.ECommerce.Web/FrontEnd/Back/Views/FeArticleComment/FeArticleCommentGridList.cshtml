@@ -1,0 +1,22 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models;
+@using GroupflyGroup.Platform.Web.Common;
+
+@model FeArticleCommentViewModel
+@{
+    Layout = null;
+    var TabID = Model.FeArticleCommentTab;
+
+}
+<Gf-FeDataList id="@TabID">
+</Gf-FeDataList>
+
+
+
+<script>
+    $(function () {
+        //绑定表头
+        FeArticleCommentGridListBindGridTab("@TabID");
+        //绑定数据
+        FeArticleCommentGridListgetGridListData("@TabID");      
+    });  
+</script>

@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = Model.SystemTitle;
+    Layout = "~/Platform/Views/Shared/_BackLayout.cshtml";
+}
+@using GroupflyGroup.Platform.Web.Common
+@model GroupflyGroup.Platform.Web.Models.LoginViewModel
+
+@section css
+{
+    @Url.Css("~/Platform/Content/Css/login.css")
+}
+@section scripts
+{
+    @Url.Script("~/Platform/Content/Scripts/MD5.js")
+    <script type="text/javascript">
+        function loginSubmit() {
+            $("#errorMessage").removeClass("prompt");
+            $("#errorMessage").html('<i class="fa fa-spinner fa-pulse fa-fw"></i>  <span>登录中...</span>');
+            $("#errorMessage").show();
+            var userName = $("#UserName").val();
+            var password = $("#Password").val();
+            var verifycode = $("#VerifyCodeText").val();
+            if (!userName || !password) {
+                showMessage("用户名和密码必填");
+                return;
+            }
+
+            platformAjax({
+                url: '@Url.Action("LoginSubmit", "Login")',
+                data: { userName: userName, password: hex_md5(password), verifycode: verifycode },
+                success: function (result) {
+                    window.location.href = '@Url.Action("Index","Home")';
+                },
+                fail: function (result) {
+                    showMessage(result.Message);
+                    if (result.FailCode == "LoginNeedVerifyCode")
+                    {
+                        $("#CodeBox").show();
+                        document.querySelector("#VerifyCode").Refresh();
+                    }
+                },
+                error: function (result) {
+                    showMessage(result.statusText);
+                }
+            });
+        }
+
+        function showMessage(message) {
+            $("#errorMessage").addClass("prompt");
+            $("#errorMessage").html(message);
+            $("#errorMessage").show();
+        }
+
+
+        function Refresh() {
+            document.querySelector("#VerifyCode").Refresh();
+        }
+
+        function ShowVerifyCode()
+        {
+            var userName = $("#UserName").val();
+            if (userName == "")
+            {
+                return;
+            }
+            platformAjax({
+                url: '@Url.Action("CheckLoginNeedVerifyCode", "Login")',
+                data: { userName: userName},
+                success: function (result) {
+                    $("#CodeBox").hide();
+                },
+                fail: function (result) {                    
+                    if (result.FailCode == "LoginNeedVerifyCode") {
+                        $("#CodeBox").show();
+                    }
+                },
+                error: function (result) {
+                    showMessage(result.statusText);
+                }
+            });
+        }
+    </script>
+}
+
+<div class="containers" onkeypress="if (event.keyCode == 13) { loginSubmit(); }">
+    <div class="login">
+        <div class="j-logo-img">
+            @Model.SystemTitle
+        </div>
+        <div class="login-con">
+            <div class="banner">
+                <img src="@Url.Content("~/file?id=" + Model.BannerId)" width="600" height="340" alt="" />
+            </div>
+            <div class="container">
+                <div class="j-login-title">请登录</div>
+                <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 12px;">
+                    <tbody>
+                        <tr>
+                            <td class="title"></td>
+                            <td>
+                                <span id="errorMessage" style="display: none;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                用户名
+                            </td>
+                            <td>
+                                <input type="text" id="UserName" name="UserName" maxlength="32" tabindex="1" value="" onchange="ShowVerifyCode()" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title j-distance">
+                                密码
+                            </td>
+                            <td>
+                                <input id="Password" name="Password" type="password" maxlength="32" tabindex="2" value="" />
+                            </td>
+                        </tr>
+
+
+                        <tr style="display:none;" id="CodeBox">
+                            <td class="title">
+                                验证码
+                            </td>
+                            <td>
+                                <input type="text" id="VerifyCodeText" maxlength="32" value="" class="input-mini" tabindex="3"/>
+                                <div class="VerifyCodeBox">
+                                    <Gf-VerifyCode autoInit id="VerifyCode" imgwidth="70" imgheight="30"></Gf-VerifyCode>
+                                </div>                               
+                                <a class="VerifyCodeRefresh" onclick="Refresh()">换一张</a>
+                            </td>
+                        </tr>                    
+                        <tr>
+                            <td class="title">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <input type="button" class="logBtn login02" value="登 录" onclick="loginSubmit();" id="LoginSys" tabindex="4">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="j-copyright">@Model.CopyRight</div>
+    </div>
+</div>

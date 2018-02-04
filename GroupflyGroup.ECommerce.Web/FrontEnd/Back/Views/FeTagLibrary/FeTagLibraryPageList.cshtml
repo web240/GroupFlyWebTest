@@ -1,0 +1,197 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework;
+@using GroupflyGroup.Platform.Web.Common;
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings;
+
+
+<style>
+    .FeTagLibraryMain .querybox li label {
+        width: 72px;
+    }
+</style>
+
+
+
+<div id="FeTagLibraryMain" data-options="fit:true" class="main easyui-layout FeTagLibraryMain">
+    <div data-options="region:'north',split:false" style="height:110px;max-height:200px;border-top-width:0px;">
+        <div class="querybox">
+            <ul class="clearfix">
+                <li><label>标签名称：</label><input id="tagName" class="easyui-textbox" style="width: 150px;"></li>
+                <li><label>添加人：</label><input id="addPerson" class="easyui-textbox" style="width: 150px;"></li>
+                <li><label>添加时间：</label><input id="startTime" type="text" style="width: 180px;"> 至 <input id="endTime" type="text" style="width: 180px;"></li>
+                <li>
+                    <label>添加来源：</label><select id="addSource" class="easyui-combobox" data-options="editable:false" name="dept" style="width: 150px;">
+                        <option value="">--全部--</option>
+                        <option value="@FeValueIDs.FeTagSource_Manual">手工添加</option>
+                        <option value="@FeValueIDs.FeTagSource_Auto">自动添加</option>
+                    </select>
+                </li>
+                <li><a id="SearchFeTag" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="SearchFeTag();">查询</a></li>
+            </ul>
+        </div>
+
+        <div class="tablelist">
+            <div class="datagrid-toolbar">
+                <ul class="clearfix">
+                    <li>
+                        <a name="FeTagLibrarytPageListAdd" class="easyui-linkbutton">添加标签</a>
+                        <a name="FeTagLibraryPageListDel" class="easyui-linkbutton">删除</a>
+                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div data-options="region:'center',split:false">        
+        <Gf-FeDataList id="TagLibgridFeDataList">
+        </Gf-FeDataList>
+    </div>
+</div>
+
+
+<script>
+    //easyui样式转换成组件
+    $.parser.parse();
+    //绑定表头
+    function BindGridTab() {
+        var columns = [];
+        columns.push({ field: 'ck', checkbox: true, width: "100px", align: 'center' });
+        columns.push({
+            field: 'id', title: "操作", align: 'center', width: "330px",
+            formatter: function (value, row, index) {
+                var e = '<a href="javascript:void(0);" onclick="document.body.tabGoto(\'@Url.Action("FeTagLibraryOperate","FeTagLibrary")?TagID=' + value + '\')" class="listedit">编辑</a> ';
+                return e;
+            }
+        });
+        columns.push({ field: 'tag', title: '标签名称', align: 'center', width: "330px" });
+        columns.push({
+            field: 'creator', title: '添加人', align: 'center', width: "330px"
+
+        });
+        columns.push({ field: 'createdOn', title: '添加时间', align: 'center', width: "330px" });
+        columns.push({
+            field: 'from', title: '添加来源', align: 'center', width: "330px",
+            formatter: function (value, row, index) {
+                if (value) {
+                    return value.combinedLabel;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+
+        document.querySelector("#TagLibgridFeDataList").SetDataGrid(columns);
+    };
+
+    function BindBtnClick() {
+        $("#FeTagLibraryMain").find("[name='FeTagLibrarytPageListAdd']").click(function () {
+            document.body.tabGoto('@Url.Action("FeTagLibraryOperate","FeTagLibrary")');
+        });
+
+        $("#FeTagLibraryMain").find("[name='FeTagLibraryPageListDel']").click(function () {
+            delTag();
+        });
+    }
+
+
+
+    //绑定数据
+    function BindData(pagenumber) {
+
+        var url="@Url.Action("GetTagLibraryPageList", "FeTagLibrary")";
+
+        //标签名称
+        var tagName = $("#tagName").val();
+        //添加人
+        var addPerson = $("#addPerson").val();
+
+        //添加时间
+        var startTime = $('#startTime').datetimebox('getValue');
+        var endTime = $('#endTime').datetimebox('getValue');
+
+        //添加来源
+        var addSource = $("#addSource").combobox('getValue');;
+
+        var param = [];
+        if (tagName != "") {
+            param.push({ field: "tag", type: "@Const.Oper_Contains", value: tagName,caseSensitive:false});
+        }
+        if (addPerson != "") {
+            param.push({ field: "creator", type: "@Const.Oper_Contains", value: addPerson, caseSensitive:false });
+        }
+        if (startTime != "" && endTime != "") {
+            param.push({ field: "createdOn", type: "@Const.Oper_Between", value: startTime + "," + endTime });
+        }
+        if (addSource != "") {
+            param.push({ field: "from", type: "@Const.Oper_Equals", value: addSource });
+        }
+        param = JSON.stringify(param);
+
+        document.querySelector("#TagLibgridFeDataList").SearchData(url, param, pagenumber);
+    };
+
+
+    function delTag() {
+        var rows = document.querySelector("#TagLibgridFeDataList").GetSelections();
+        if (rows.length <= 0) {
+            $.messager.show({
+                msg: '请选择一条数据',
+                timeout: 5000,
+                showType: 'slide'
+            });
+            return;
+        }
+
+        platformAjax({
+            url: "@Url.Action("DelTag", "FeTagLibrary")",
+            type: "post",
+            data: { TagList: rows },
+            success: function (result) {
+                BindData("");
+            }
+
+        });
+    }
+
+    function SearchFeTag() {
+        BindData(1);
+    }
+    function BindDateBox() {
+        $('#startTime,#endTime').datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                function formatNumber(value) {
+                    return (value < 10 ? '0' : '') + value;
+                }
+
+                return y + '/' + m + '/' + d;
+            },
+            editable: false,
+            parser: function (s) {
+                var t = Date.parse(s);
+                if (!isNaN(t)) {
+                    return new Date(t);
+                }
+                else {
+                    return new Date();
+                }
+            }
+        });
+
+    }
+
+    $(function () {
+        //绑定时间控件
+        BindDateBox();
+        //绑定表头
+        BindGridTab();
+        //绑定按钮事件
+        BindBtnClick();
+        //绑定分页数据
+        BindData();
+
+    });
+</script>

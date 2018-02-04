@@ -1,0 +1,110 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeArticleCategorySeachBoxViewModel
+
+<script type="text/javascript">
+
+    var isShowLoading;
+
+    $(function() {
+
+        $("#@Model.TreeviewSelectId").textbox({
+            editable:false,
+            prompt: '@Model.Title',
+            width: @Model.Width,
+            icons: [{
+                iconCls:'icon-remove',
+                handler: function(e){
+                    $(e.data.target).textbox('clear');                    
+                    $("#@Model.TreeviewSelectValueId").val("");
+                }
+            },{
+                iconCls:'searchbox-button',
+                handler: function(e){
+                    $('#@Model.TreeDialogId').dialog('open');
+                }
+            }]
+        });
+        $('#@Model.TreeDialogId').dialog({
+            title: '@Model.Title',
+            width: 400,
+            height: 500,
+            closed: true,
+            cache: false,
+            modal: true
+        });
+
+        @{
+            string feArticleCategoryGetUrl = "~/FeArticleCategory/Get";
+
+            if (!string.IsNullOrWhiteSpace(Model.Id))
+            {
+                feArticleCategoryGetUrl += "?noShowId=" + Model.Id;
+            }
+
+            }
+
+        if ("@Model.LoadingIndicatorId" == "") {
+            isShowLoading = false;
+        } else {
+            isShowLoading = true;
+        }
+
+        $('#@Model.TreeTableId').treegrid({
+            url: '@Url.Content(feArticleCategoryGetUrl)',
+            idField: 'Id',
+            rownumbers: true,
+            lines: true,
+            treeField: 'Name',
+            onSelect: function(row) {
+                $('#@Model.TreeDialogId').dialog('close');
+
+                if (isShowLoading) {
+                    $("#@Model.LoadingIndicatorId").showLoading();
+                }
+
+                $.ajax({
+                    url: '@Url.Content("~/FeArticleCategorySeachBox/FindCategoryParentPath")',
+                    type: "POST",
+                    data: { id: row.Id },
+                    dataType: "text",
+                    success: function(result) {
+                        $("#@Model.TreeviewSelectId").searchbox("setValue", result);
+                        $("#@Model.TreeviewSelectValueId").val(row.Id.replace("*", "@@"));
+
+                        if (isShowLoading) {
+                            $("#@Model.LoadingIndicatorId").hideLoading();
+                        }
+
+                    },
+                    error: function(textStatus, errorThrown) {
+
+                        if (isShowLoading) {
+                            $("#@Model.LoadingIndicatorId").hideLoading();
+                        }
+
+                        alert("请求失败");
+                    }
+                });
+            },
+            columns: [
+                [
+                    { title: '分类名称', field: 'Name', width: '355px', halign: 'center', align: 'left' }
+                ]
+            ]
+        });
+
+    });
+
+
+</script>
+
+<input id='@Model.TreeviewSelectId' class="easyui-textbox" name='@Model.ParentNamePathModelFieldName' value='@Model.ParentNamePath' />
+
+<div id='@Model.TreeDialogId'>
+    <table id='@Model.TreeTableId'></table>
+</div>
+
+<div style="display:none;">
+    <input type="text" id='@Model.TreeviewSelectValueId' name='@Model.ParentIdModelFieldName' value='@Model.ParentId' />
+</div>

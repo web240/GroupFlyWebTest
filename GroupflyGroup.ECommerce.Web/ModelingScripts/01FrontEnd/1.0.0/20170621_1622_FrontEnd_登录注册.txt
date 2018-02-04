@@ -1,0 +1,57 @@
+﻿//---2017/5/12 16:40:52------------------------------------------------------------------------------------------------
+{"$":"C","id":"fc7b52265af7413a8aeb1926e8c29518@Value","source":"f0521f6f46f94bafa72ed0d29e5a67f2@List","value":"FrontEndLogin","label":"首页登录模版","description":"首页登录模版","sortOrder":"300.000000","isTrash":"False","klass":"Value@Klass","combinedLabel":"首页登录模版","createdOn":"2017/5/12 16:40:52.500","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/12 16:40:52.500","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"fc7b52265af7413a8aeb1926e8c29518@Value","permission":"8d4357dd795d492fb067df765100c84b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+
+//---2017/5/12 16:46:24------------------------------------------------------------------------------------------------
+{"$":"C","id":"26b351508d1547b59a05ea5a838b5a29@File","name":"Login","fileType":"d072ec72d0f245e3b80e577c9f0dbfcf@FileType","size":"0","flieModifiedOn":"2017/5/12 16:46:24.706","description":"登录模版路径","isdirectory":"True","parent":"d2d863616c5249258f97a3dc7fa85bc3@File","pathName":"/frontend/front/fetemplate/login","isLink":"False","isTrash":"False","klass":"File@Klass","combinedLabel":"Login","createdOn":"2017/5/12 16:46:24.687","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/12 16:46:24.687","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"26b351508d1547b59a05ea5a838b5a29@File","permission":"2be63f4daeed44b09252e335462c744b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+//---2017/5/12 16:49:08------------------------------------------------------------------------------------------------
+{"$":"C","id":"6522f0a613284e009cdbaca7d5039404@FeTemplate","name":"FrontEndLoginTemplate","description":"系统默认登录模版","directory":"26b351508d1547b59a05ea5a838b5a29@File","type":"fc7b52265af7413a8aeb1926e8c29518@Value","isDefault":"True","isEnable":"True","isSystemTemplate":"True","isTrash":"False","klass":"FeTemplate@Klass","combinedLabel":"FrontEndLoginTemplate","createdOn":"2017/5/12 16:49:08.397","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/12 16:49:08.397","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"6522f0a613284e009cdbaca7d5039404@FeTemplate","permission":"a554f996b29e426b99a83b7451d5bb0b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+//---2017/5/16 16:53:08------------------------------------------------------------------------------------------------
+{"$":"C","id":"a163c446d74f4cf4aac1a023a533233e@FeTemplateComponent","tagName":"Gf-FeTemplate-Component-FrontEndLogin","directoryPath":"/FrontEnd/Front/FeComponent/Global/FrontEndLogin","category":"f37b60f35e1b448c888dafb70a45f199@Value","baseComponent":"4d86b98113304b8ba2095adf97228943@FeTemplateComponent","isTrash":"False","klass":"FeTemplateComponent@Klass","combinedLabel":"全局组件 Gf-FeTemplate-Component-FrontEndLogin","createdOn":"2017/5/16 16:53:07.914","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/5/16 16:53:07.914","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"a163c446d74f4cf4aac1a023a533233e@FeTemplateComponent","permission":"6b275ddc21be4025a03150c6b317f195@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+//---2017/5/24 15:42:44------------------------------------------------------------------------------------------------
+{"$":"C","id":"5f408bc78e7a40e3be21ffa337c11af9@Value","source":"f0521f6f46f94bafa72ed0d29e5a67f2@List","value":"FrontEndRegister","label":"首页注册模版","description":"首页注册模版","sortOrder":"400.000","isTrash":"False","klass":"Value@Klass","combinedLabel":"首页注册模版","createdOn":"2017/5/24 15:42:44.047","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/24 15:42:44.047","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"5f408bc78e7a40e3be21ffa337c11af9@Value","permission":"8d4357dd795d492fb067df765100c84b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+//---2017/5/24 17:44:24------------------------------------------------------------------------------------------------
+{"$":"C","id":"bcadd365dc624f87b834ffa965838e6b@FeTemplateComponent","tagName":"Gf-FeTemplate-Component-FrontEndRegister","directoryPath":"/FrontEnd/Front/FeComponent/Global/FrontEndRegister","category":"f37b60f35e1b448c888dafb70a45f199@Value","baseComponent":"4d86b98113304b8ba2095adf97228943@FeTemplateComponent","isTrash":"False","klass":"FeTemplateComponent@Klass","combinedLabel":"全局组件 Gf-FeTemplate-Component-FrontEndRegister","createdOn":"2017/5/24 17:44:24.377","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/24 17:44:24.377","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"bcadd365dc624f87b834ffa965838e6b@FeTemplateComponent","permission":"6b275ddc21be4025a03150c6b317f195@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+//---2017/5/25 10:13:48------------------------------------------------------------------------------------------------
+{"$":"C","id":"f510f42a2f154ed5be10023f799a76be@File","name":"Register","fileType":"d072ec72d0f245e3b80e577c9f0dbfcf@FileType","size":"0","flieModifiedOn":"2017/5/25 10:13:48.780","description":"注册模版路径","isdirectory":"True","parent":"d2d863616c5249258f97a3dc7fa85bc3@File","pathName":"/frontend/front/fetemplate/register","isLink":"False","isTrash":"False","klass":"File@Klass","combinedLabel":"Register","createdOn":"2017/5/25 10:13:48.764","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/25 10:13:48.764","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"f510f42a2f154ed5be10023f799a76be@File","permission":"2be63f4daeed44b09252e335462c744b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+//---2017/5/25 10:15:43------------------------------------------------------------------------------------------------
+{"$":"C","id":"c5c6002d8b87473884a485368861d9f6@FeTemplate","name":"FrontEndRegisterTemplate","description":"系统默认注册模版","directory":"f510f42a2f154ed5be10023f799a76be@File","type":"5f408bc78e7a40e3be21ffa337c11af9@Value","isDefault":"True","isEnable":"True","isSystemTemplate":"True","isTrash":"False","klass":"FeTemplate@Klass","combinedLabel":"FrontEndRegisterTemplate","createdOn":"2017/5/25 10:15:43.032","creator":"250fd793f84e446cba113038b5bb7624@User","modifiedOn":"2017/5/25 10:15:43.032","modificator":"250fd793f84e446cba113038b5bb7624@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"c5c6002d8b87473884a485368861d9f6@FeTemplate","permission":"a554f996b29e426b99a83b7451d5bb0b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+
+//---2017/5/27 16:29:42------------------------------------------------------------------------------------------------
+{"$":"U","id":"0a079bc0aa87476099ddcc7b3c573aa9@Property","pattern":"^\\w{6,20}$","modifiedOn":"2017/5/27 16:29:42.765"}
+
+
+
+//---2017/5/27 17:04:09------------------------------------------------------------------------------------------------
+{"$":"U","id":"8108e637742e406f9e18c0d66c47e0e2@Property","pattern":"^1\\d{10}$","modifiedOn":"2017/5/27 17:04:09.844"}
+
+
+//---2017/6/20 16:31:34------------------------------------------------------------------------------------------------
+{"$":"C","id":"c0d67614267946f8b57696a5ba0b05d7@Value","source":"219f202ad331425982fb4050e3967258@List","value":"FrontEnd_Front","label":"前端层前台注册","description":"前端层前台注册","sortOrder":"0","isTrash":"False","klass":"Value@Klass","combinedLabel":"前端层前台注册","createdOn":"2017/6/20 16:31:34.652","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/6/20 16:31:34.652","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"c0d67614267946f8b57696a5ba0b05d7@Value","permission":"8d4357dd795d492fb067df765100c84b@ObjektPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain"}
+
+
+
+//---2017/6/20 16:37:58------------------------------------------------------------------------------------------------
+{"$":"U","id":"557bca028fc1408086343c05f34f8665@Property","pattern":"^[\\u4e00-\\u9fa5\\da-zA-Z-_]{4,20}$","modifiedOn":"2017/6/20 16:37:58.627"}
+
+

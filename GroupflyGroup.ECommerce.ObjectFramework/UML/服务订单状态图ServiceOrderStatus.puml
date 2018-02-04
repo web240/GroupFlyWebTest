@@ -1,0 +1,31 @@
+
+@startuml
+ServiceWaitBuyerPay等待买家付款:买家已经下单,订单已经生成,此时买家还未付款,可以取消订单,取消订单后订单关闭
+ServiceWaitBuyerUse等待买家使用:买家已经付款,等待买家使用，此时可以退款订单
+ServiceOrderFinish订单完成:买家已经使用,等待买家进行评价操作
+ServiceOrderClosed订单关闭:买家已对该订单评价,系统在一定时间段后关闭订单,在此时间段内可以对订单进行追评
+
+
+[*] -d--> ServiceWaitBuyerPay等待买家付款:买家下单
+ServiceWaitBuyerPay等待买家付款 -d---> ServiceWaitBuyerUse等待买家使用:买家付款
+ServiceWaitBuyerUse等待买家使用 -d---> ServiceOrderFinish订单完成:买家使用
+ServiceOrderFinish订单完成 -d---> ServiceOrderClosed订单关闭:买家评价订单
+
+
+ServiceWaitBuyerPay等待买家付款 -> ServiceOrderClosed订单关闭:买家取消订单
+
+
+ServiceWaitBuyerUse等待买家使用 -> ServiceOrderClosed订单关闭:全部退款
+ServiceWaitBuyerUse等待买家使用 -> ServiceWaitBuyerUse等待买家使用:退款失败
+ServiceWaitBuyerUse等待买家使用 -> ServiceWaitBuyerUse等待买家使用:部分退款
+
+
+
+
+ServiceOrderClosed订单关闭 -d--> [*]:系统关闭订单
+@enduml
+
+
+
+        
+   

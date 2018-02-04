@@ -1,0 +1,99 @@
+﻿//---2017/5/2 11:06:09------------------------------------------------------------------------------------------------
+{"$":"D","id":"7bdd268280124dfb95673f638ca13f9d@Property"}
+{"$":"D","id":"4aa76183bfb745db83a2d51054da4d3b@Property"}
+{"$":"D","id":"a9761d49b78f4356a78bc11d06977b2b@Property"}
+{"$":"D","id":"8831a88a54a143f88a61781c03e617f6@Property"}
+{"$":"D","id":"31a62eef4ae04a3a9e747ab61e45006d@Property"}
+{"$":"D","id":"3ddd914b7507492690ddff693697ec34@Property"}
+{"$":"D","id":"fb7211974c1546e49bd7e489b0077ae3@Property"}
+{"$":"D","id":"1cb1b3528b3b410aa0053fb72c85626a@Property"}
+{"$":"D","id":"d5ddf3da50d74aef932cce73651ec1cf@Property"}
+{"$":"D","id":"543fce5732d546faaebc6ae666cd36b6@Property"}
+{"$":"D","id":"a91d1ccc780847d88a14777bc6d2910a@Property"}
+{"$":"D","id":"b6b087ee3549480db0b82d9b109e6f03@Property"}
+{"$":"D","id":"7dc1858c333c4cfd8ab8271528508c68@Property"}
+{"$":"D","id":"dce9b0dd08d34ac5aa7557b1f1b08641@Property"}
+{"$":"D","id":"1a8424cce3914ef19316cc56468d17aa@Property"}
+{"$":"D","id":"54f1950622f5480da9a053bc73057eaf@Property"}
+{"$":"D","id":"9a422f762de54986ac4185551c6bff2d@Property"}
+{"$":"D","id":"82c8882b1b754773924a419f3166257c@Property"}
+{"$":"D","id":"cba1f160edfa45a0b321f54179c7f6e5@Property"}
+{"$":"D","id":"89864484de824bb2a09924c78f1391af@Property"}
+{"$":"D","id":"b67e2cf842784b38b8273e97e1bf0739@Property"}
+{"$":"D","id":"b1398192f54d4c38a7d5a7c25a18db02@Property"}
+{"$":"D","id":"d61088fef8dd43b38fefe6598f987c5b@Property"}
+//---2017/5/2 11:19:11------------------------------------------------------------------------------------------------
+{"$":"D","id":"0f38b9d40f3e4a9e8f8530994c97d363@Property"}
+{"$":"D","id":"aa564eb2200345b897844b47ed453134@Property"}
+{"$":"D","id":"8da3e4affcab48b48458c033c046353b@Property"}
+{"$":"D","id":"007c297bc5b7487c858e653b6f970ec4@Property"}
+{"$":"D","id":"ee99d6501e0b45f887ea525a84fe38d3@Property"}
+{"$":"D","id":"c6e3ce546e9d489aa1d2faaa598d8468@Property"}
+{"$":"D","id":"7a2a71c6333c449aa1b697feb4e97c41@Property"}
+{"$":"D","id":"29c12f03550d4518a8c1247efdb47003@Property"}
+{"$":"D","id":"5ed37dd52f1e41b3b9cd073b0bf10f2e@Property"}
+{"$":"D","id":"bb178590dec84b218cc814202d9379f4@Property"}
+{"$":"D","id":"c365fcd0b4ae429f83978e3761f52094@Property"}
+{"$":"D","id":"ad4a6f44216a4d8db25495f931e63678@Property"}
+{"$":"D","id":"7a459b144ac64ec28a5f809bd44e2a8f@Property"}
+{"$":"D","id":"f2c3ce900ff9428f9b3d76aa2089e1b5@Property"}
+{"$":"D","id":"faa600e2a91941799f0de375d3ff3b7f@Property"}
+{"$":"D","id":"89a8cf26643c45b8b958823030fda050@Property"}
+{"$":"D","id":"0ac92b9a79604a06919c2fe19d602382@Property"}
+{"$":"D","id":"11e667ac2f0b4e6e942619ce322575bf@Property"}
+{"$":"D","id":"e19f30ec1caa4754bb39854cb3d52774@Property"}
+{"$":"D","id":"605943b821ab479ab0332a6de8cc4fd6@Property"}
+{"$":"D","id":"2b193fbeebc9403a9fdb3b8d32e353b8@Property"}
+{"$":"D","id":"3fb1b10455894304a51e3324316cdc94@Property"}
+//---2017/5/2 11:28:04------------------------------------------------------------------------------------------------
+{"$":"D","id":"ef50b6778adf404888fb6e9621a4316b@Property"}
+{"$":"D","id":"dc9b5ce5c3524f0cb0cdb7371df02769@Property"}
+{"$":"D","id":"a2659a5e71104f87933eb2d9def61400@Property"}
+{"$":"D","id":"c2dd31ea3f0a49cb9cc7574a73dedacc@Property"}
+{"$":"D","id":"8414779c02f941f2a911f969e6e98429@Property"}
+{"$":"D","id":"7c5091167c7a488ea6db01e0713569eb@Property"}
+{"$":"D","id":"5079cf222ee447cbbd622b19c1b996f7@Property"}
+{"$":"D","id":"7ecb54dd1a2e4ed18850fdd59e283600@Property"}
+{"$":"D","id":"4fb3148984784a78aa4e6eac4a4f1303@Property"}
+{"$":"D","id":"64a4acca93be46c3b2ed4c0c253c15df@Property"}
+{"$":"D","id":"8fec61f4150644e382962e13223a9d35@Property"}
+{"$":"D","id":"9ea5c4a4405642769b6113d22c94b07c@Property"}
+{"$":"D","id":"57dfea5980f1457ba366a4f81ca41dce@Property"}
+{"$":"D","id":"0655f4ae65e74229a6b1ec9d2f6c8594@Property"}
+{"$":"D","id":"ed849d5f15af48528d1ed8331b9fbbcb@Property"}
+{"$":"D","id":"715336b29cdc4f52a0b3e21fb7eb4a0d@Property"}
+{"$":"D","id":"d440b69902ab47a2bd9555c42fef0dfc@Property"}
+{"$":"D","id":"79f772e48dd74d98b969a3a639c8ee81@Property"}
+{"$":"D","id":"6d892ad197004cf98978606bbab6b10c@Property"}
+{"$":"D","id":"850325234638493eb9d149af4c49497e@Property"}
+{"$":"D","id":"b79c01b7d42346148a8aa9f5ddfe25bc@Property"}
+//---2017/5/2 11:41:08------------------------------------------------------------------------------------------------
+{"$":"D","id":"8c464972b55348808a7ca0759921de42@Property"}
+//---2017/5/2 11:48:32------------------------------------------------------------------------------------------------
+{"$":"D","id":"6251719b23d642658251682d30776568@Property"}
+//---2017/5/2 13:29:20------------------------------------------------------------------------------------------------
+{"$":"U","id":"e298f95c3ce543df99afbee57a10ddd5@Property","label":"对象类","combinedLabel":"referKlass 对象类","modifiedOn":"2017/5/2 13:29:20.597"}
+//---2017/5/2 13:30:00------------------------------------------------------------------------------------------------
+{"$":"U","id":"42071c8b8960409182bb9105c551aba1@Property","label":"对象类","combinedLabel":"referKlass 对象类","modifiedOn":"2017/5/2 13:30:00.830"}
+//---2017/5/2 13:30:45------------------------------------------------------------------------------------------------
+{"$":"D","id":"2ecc117e30714873af81ee390c00bada@Property"}
+//---2017/5/2 13:33:23------------------------------------------------------------------------------------------------
+{"$":"U","id":"7f2300920271490eaf5d9bcde5169913@Property","label":"出生日期","combinedLabel":"birthday 出生日期","modifiedOn":"2017/5/2 13:33:23.331"}
+//---2017/5/2 13:36:44------------------------------------------------------------------------------------------------
+{"$":"D","id":"185cf3935dd54f538b403ac73f5fdf62@Property"}
+//---2017/5/2 13:38:57------------------------------------------------------------------------------------------------
+{"$":"U","id":"2d0884f3713b485796d3a3d21d8ab346@Property","orderBy":null,"modifiedOn":"2017/5/2 13:38:57.245"}
+//---2017/5/2 13:42:20------------------------------------------------------------------------------------------------
+{"$":"D","id":"00e68a3efc83404aaea82dc730398fa7@Property"}
+//---2017/5/2 13:57:35------------------------------------------------------------------------------------------------
+{"$":"D","id":"d410d5ab3a864b288a0875c3e8a3b55b@Property"}
+{"$":"U","id":"250fd793f84e446cba113038b5bb7624@User","isModelingScripts":"True","isDiagnosis":"True","modifiedOn":"2017/5/4 13:37:40.866","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/5/9 9:58:28------------------------------------------------------------------------------------------------
+{"$":"D","id":"a6326ff8e08e41b78e42e0b46795325f@Property"}
+//---2017/5/9 9:59:59------------------------------------------------------------------------------------------------
+{"$":"C","id":"48028607f6664c81b170aac3ffdbd94b@Property","isTrash":"False","source":"Location@Klass","name":"parent","dataType":"c80693211fc4426a88ebca05b34a5f2d@Value","label":"父","description":"父位置","isRequired":"False","readonly":"False","isIndexed":"True","isKeyed":"False","isCascade":"False","klass":"Property@Klass","createOnly":"False","isRichText":"False","multiline":"False","isI18N":"False","isColor":"False","hiddenInObjektCollectionView":"False","hiddenInObjektDetailView":"False","hiddenInRocView":"False","combinedLabel":"parent 父","booleanDefaultValue":"False","bigintDefaultValue":"0","integerDefaultValue":"0","createdOn":"2017/5/9 09:59:59.095","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/5/9 09:59:59.095","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"48028607f6664c81b170aac3ffdbd94b@Property","permission":"31f57973ad1243119bcf5db93ad0debd@KlassPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain","sortOrder":"300.000"}
+{"$":"U","id":"9222df5b26c14083a56660b954bdd886@Property","prec":null,"scale":null,"modifiedOn":"2017/5/9 09:59:59.331"}
+//---2017/5/9 10:04:11------------------------------------------------------------------------------------------------
+{"$":"C","id":"178247a4225049058f9a86ef9546786f@Property","isTrash":"False","source":"ObjektAccess@Klass","name":"sortOrder","dataType":"a862c03d5cdf4355b5d3a438c81cfbfe@Value","label":"序号","description":"排序序号","isRequired":"False","readonly":"False","isIndexed":"False","isKeyed":"False","isCascade":"False","klass":"Property@Klass","createOnly":"False","isRichText":"False","multiline":"False","isI18N":"False","isColor":"False","prec":"18","scale":"3","hiddenInObjektCollectionView":"True","hiddenInObjektDetailView":"True","hiddenInRocView":"True","combinedLabel":"sortOrder 序号","booleanDefaultValue":"False","bigintDefaultValue":"0","integerDefaultValue":"0","createdOn":"2017/5/9 10:04:11.348","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/5/9 10:04:11.348","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"178247a4225049058f9a86ef9546786f@Property","permission":"31f57973ad1243119bcf5db93ad0debd@KlassPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain","sortOrder":"33000.000"}
+//---2017/5/9 11:32:27------------------------------------------------------------------------------------------------
+{"$":"U","id":"48028607f6664c81b170aac3ffdbd94b@Property","objektDataSource":"Location@Klass","modifiedOn":"2017/5/9 11:32:27.284"}

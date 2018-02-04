@@ -1,0 +1,367 @@
+﻿
+@using GroupflyGroup.Platform.ObjectFramework.Persistence
+@{
+    ViewBag.Title = "绑定邮箱";
+}
+<div class="dpsc_mian">
+    <p class="ptitle">
+        <a href="@Url.Action("Index","FeAccount")">账户管理</a><span class="breadcrume_icon">>></span><a onclick="refreshRight('@Url.Action("Index","FeUserSafe")')" href="javascript:void(0);">账户安全设置</a><span class="breadcrume_icon">>></span>
+        <span class="breadcrume_text">解绑邮箱</span>
+    </p>
+
+
+    <div id="A_BindEmail">
+        <script type="text/javascript">
+                var timerId;
+                var $thisid;
+                $(function () {
+
+                    $("#a1").click(function () {
+                        if (ExistEmail()) {
+                            platformAjax({
+                                url: "@Url.Action("CheckEmail", "FeUserSafe")",
+                                data: { email: $("#J_UserEmail").val() },
+                                dataType: "json",
+                                success: function (result) {
+                                    console.log(result);
+                                    if (result.IsSuccess) {
+                                        $("#step1").hide();
+                                        $("#step2").show();
+                                        $("#li_Select").removeClass(".first current");
+                                        $("#li_GetCode").removeClass(".next");
+                                        $("#li_GetCode").addClass("first current");
+                                        $("#nextEmail").html($("#J_UserEmail").val());
+                                    }
+                                    else {
+                                        $("#span_emailValue").get(0).className = "onError1";
+                                        $("#span_emailValue").text("邮箱已经被使用过了");
+                                    }
+                                },
+                                fail: function (result) {
+                                    console.log(result.Message);
+                                },
+                                error: function (result) {
+                                    console.log(result);
+                                }
+                            });
+
+                        }
+
+                    });
+
+
+
+                    $("#a2").click(function () {
+
+                        if ($("#A_BindEmail_ctl00_M_code").val() == "") {
+                            $("#spanYZMIsSend").get(0).className = "onError1";
+                            $("#spanYZMIsSend").text("请输入验证码");
+                            return false;
+                        }
+                        else {
+                            if($("#A_BindEmail_ctl00_M_code").val()&& $("#nextEmail").text()) {
+                                if (true) {
+                                    $("#li_Select").removeClass(".first current");
+                                    $("#li_GetCode").removeClass(".first current");
+                                    $("#li_GetCode").addClass(".next");
+                                    $("#li_Succuess").removeClass(".last");
+                                    $("#li_Succuess").addClass(".first current");
+                                    $("#span_email").text($("#nextEmail").text());
+                                    $("#step2").hide();
+                                    $("#step3").show();
+                                    $("#A_BindEmail_ctl00_hid_Email").val($("#nextEmail").text());
+                                } else {
+                                    $("#spanYZMIsSend").get(0).className = "onError1";
+                                    $("#spanYZMIsSend").text("验证码错误或已过期，请重新输入！");
+                                    return false;
+                                }
+                            };
+                        }
+                    });
+
+
+                    $("#a4").click(function () {
+                        if (this.value == "") {
+                            $("#spanShowMsg1").get(0).className = "onError1";
+                            $("#spanShowMsg1").text("请输入验证码");
+                        }
+                        else {
+                            if ($("#A_BindMobile1_ctl00_M_code1").val() && $("#A_BindMobile1_ctl00_LabelPhone").text()) {
+                                if (true) {
+                                    $("#li_Select").removeClass(".first current");
+                                    $("#li_GetCode").addClass("first current");
+                                    $("#li_GetCode").addClass(".next");
+                                    $("#li_Succuess").removeClass(".last");
+                                    $("#li_Succuess").addClass(".first current");
+                                    $("#step4").hide(); $("#step2").show();
+                                }
+                                else {
+                                    $("#spanShowMsg").get(0).className = "onError1";
+                                    $("#spanShowMsg").text("验证码错误或已过期，请重新输入！");
+                                }
+                            };
+                        }
+                    });
+
+                    $("#J_cannot_receive").click(function () {
+                        $(".cp_tooltip").show(); setTimeout(function () { $(".cp_tooltip").hide(); }, 3000);
+
+                    });
+
+                    $("#J_ver_btn").click(function () {
+                        $("#J_ver_btn").attr("disabled", "disabled");
+                        $("#A_BindEmail_ctl00_M_code").removeAttr("disabled");
+                        $("#spanConfirm").get(0).className = "";
+                        $("#spanYZMIsSend").get(0).className = "onCorrect1";
+                        $("#spanYZMIsSend").text("邮箱验证码已发送，请耐心等待...");
+                        $("#J_phone_msg_row").hide();
+                        timerId = setInterval("goTo()", 1000);
+                        $thisid = $(this);
+                        $.get("/Api/CheckInfo.ashx?type=4&Email=" + $("#nextEmail").text(), null, function (data) {
+                            if (data != "1") {
+                                $("#spanYZMIsSend").get(0).className = "onError1";
+                                $("#spanYZMIsSend").text("邮件发送出现异常，请重新验证");
+                            }
+                        })
+                    });
+                    $("#A_BindEmail_ctl00_M_code").blur(function () {
+                        if (this.value == "") {
+                            $("#spanYZMIsSend").get(0).className = "onError1";
+                            $("#spanYZMIsSend").text("请输入验证码");
+                        }
+                        else {
+                            $.get("/Api/CheckInfo.ashx?type=5&key=" + $("#A_BindEmail_ctl00_M_code").val() + "&Email=" + $("#nextEmail").text(), null, function (data) {
+                                if (data == "1") {
+                                    $("#spanYZMIsSend").get(0).className = "";
+                                    $("#spanYZMIsSend").text("");
+                                    $("#spanConfirm").get(0).className = "onCorrect1";
+                                    $("#spanConfirm").text("");
+                                }
+                                else {
+                                    $("#spanYZMIsSend").get(0).className = "onError1";
+                                    $("#spanYZMIsSend").text("验证码错误或已过期，请重新输入！");
+                                }
+                            });
+                        }
+                    });
+
+                    $("#A_BindEmail_ctl00_M_code").focus(function () {
+                        $("#spanYZMIsSend").get(0).className = "onTips1";
+                        $("#spanYZMIsSend").text("验证码是8位字符");
+                        $("#spanConfirm").get(0).className = "";
+                    });
+                });
+
+
+                $(function () {
+                    var isreg = $("#hidIsEmailActivation").val();
+                    if (isreg == "1") {
+                        $("#step1").hide();
+                        $("#step4").show();
+                    } else {
+                        $("#li_Select").html("<span>1.验证原邮箱</span>");
+                        $("#li_GetCode").html("<span>2.绑定新邮箱</span>");
+                    }
+                })
+
+                //判断Email格式
+                function ExistEmail() {
+                    var str = $("#J_UserEmail").val();
+                    var v_flag = false;
+                    if (str != "") {
+                        if (CheckEmailCommon(str)) {
+                            v_flag = true;
+                        }
+                        else {
+                            $("#span_emailValue").get(0).className = "onError1";
+                            $("#span_emailValue").text("邮箱格式不正确");
+                        }
+                    }
+                    else {
+                        $("#span_emailValue").get(0).className = "onError1";
+                        $("#span_emailValue").text("请输入邮箱");
+                    }
+                    return v_flag
+                }
+
+
+                function checkEmailValue() {
+                    if (ExistEmail()) {
+                        platformAjax({
+                            url: "@Url.Action("CheckEmail", "FeUserSafe")",
+                            data: { email: $("#J_UserEmail").val() },
+                            dataType: "json",
+                            success: function (result) {
+                                console.log(result);
+                                if (result.IsSuccess) {
+                                    $("#span_emailValue").get(0).className = "onCorrect1";
+                                    $("#span_emailValue").text("");
+                                }
+                                else {
+                                    $("#span_emailValue").get(0).className = "onError1";
+                                    $("#span_emailValue").text("邮箱已经被使用过了");
+                                }
+                            },
+                            fail: function (result) {
+                                console.log(result.Message);
+                            },
+                            error: function (result) {
+                                console.log(result);
+                            }
+                        });
+
+                    }
+                }
+
+                var i = 60;
+                function goTo() {
+                    i--;
+                    $thisid.val("已发送验证码(" + i + "秒)");
+                    if (i == 0) {
+                        $thisid.val("免费获取验证码");
+                        clearInterval(timerId);
+                        $("#J_ver_btn").removeAttr("disabled");
+                        i = 60;
+                    }
+                }
+
+                function BtnSubmit() {
+                    refreshRight('@Url.Action("Index", "FeUserSafe")');
+                }
+
+
+        </script>
+        <input type="hidden" name="hidIsEmailActivation" id="hidIsEmailActivation" value="@ViewBag.isVerified" />
+        <div id="A_BindEmail_ctl00_mobilecheck">
+            <div class="main-right" id="main-right" style="float:none;">
+                <div class="ps_width clearfix" style="margin-left:5px;">
+                    <h1 class="bw h1c"></h1>
+                    <div class="notify main_tip">
+                        <div class="notify_correct">
+                            <span class="f14 bw rw notify_correct_text">
+                                完成绑定邮箱，可以有效防止账户被盗后的损失。
+                            </span>
+                            <ul>
+                                <li>邮箱账号绑定后可以登录商城登陆，交易密码修改等操作。</li>
+                                <li>商城会对您的信息严格保密。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pp_steps three_steps">
+                        <ol>
+                            <li class="first current" id="li_Select">
+                                <span>1.解绑邮箱</span>
+                            </li>
+                            <li class="next" id="li_GetCode">
+                                <span>2.解绑验证</span>
+                            </li>
+                            <li class="last" id="li_Succuess">
+                                <span>3.成功</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    
+                    
+                    <div class="form_top" style="display:none" id="step4">
+                        <div class="form_row">
+                            <span class="form_left">
+                                绑定的邮箱：
+                            </span>
+                            <span class="form_right f14" id="nextEmail">
+                                <span id="LabelEmail">@SessionContext.Current.User.Email</span>
+                            </span>
+                        </div>
+                        <input type="hidden" value="@SessionContext.Current.User.Email" name="mobile" class="tov">
+                        <div class="form_row">
+                            <span class="form_left">
+                                验证码：
+                            </span>
+                            <div class="form_right">
+                                <Gf-MessageCode id="MessageCode1" codekey="MessageCode1" autoInit messagesenderid="ebabb829eb374a0aa0306b9436bb4369@MessageSender" messagetemplateid="ecd7ff4febc24203a268f227b6f1788f@MessageTemplate"></Gf-MessageCode>
+                                @*<input type="button" id="J_ver_btn" class="btn btn-white vc_btn mr10 J_ftrack" value="点此免费获取" style="width:150px;" />*@
+
+                                <input name="A_BindEmail$ctl00$M_code" type="text" id="A_BindEmail_ctl00_M_code" data-tip="验证码" maxlength="8" class="intext intext_short nullv tov vfb" autocomplete="off" />
+                                <div>
+                                    <a class="grew ml10 l" id="J_cannot_receive" href="javascript:void(0);">
+                                        收不到邮箱验证码？
+                                    </a>
+                                    <span id="spanConfirm"></span>
+                                    <div style="display: none;" class="tooltip cp_tooltip">
+                                        邮箱验证码发送后30分钟内均可使用。邮件收不到验证码，可能是你邮箱进行了反垃圾设置，防止陌生邮件的原因，重新设置即可正常接收邮件。
+                                    </div>
+                                </div>
+                                <span class="vc vf" id="yzMsg" style="display:none">
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form_row form_text_row">
+                            <span class="form_left">
+                            </span>
+                            <span class="form_right gw">
+
+                                <span id="spanYZMIsSend"></span>
+                            </span>
+                        </div>
+                        <div id="J_phone_msg_row" class="form_row form_height_auto_row nice_info_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <div class="phone_info">
+                                    <div id="J_phone_info">
+                                        <span class="l">
+                                            邮箱验证码发送后30分钟内均可使用
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form_row form_height_auto_row clearfix">
+                            <span class="form_left">
+                            </span>
+                            <div class="form_right">
+                                <a data-tid="bindphone_uid_button068" data-tprefix="/virtual/ucenter/myfanli"
+                                   href="javascript:void(0)" id="a4" class="J_ftrack btn btn-green">
+                                    确认解绑
+                                </a>
+                                <span id="spanShow"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step3" style="display:none;">
+                        <div style="padding:20px; text-align:center;">
+                            <font style="font-size:16px; font-family:微软雅黑; display:block; margin-bottom:20px;">
+                                <span id="A_BindEmail_ctl00_Lab_MemLoginID">@SessionContext.Current.User.Name</span>,
+                                恭喜你,你的邮箱
+                                <span id="span_email"> </span>
+                                绑定成功
+                            </font>
+                            <br />
+                            <input type="submit" name="A_BindEmail$ctl00$btn_Next" value="确定" onclick="return BtnSubmit();" id="A_BindEmail_ctl00_btn_Next" data-tid="bindphone_uid_button068" data-tprefix="/virtual/ucenter/myfanli" class="J_ftrack btn btn-green" />
+                            <input name="A_BindEmail$ctl00$hid_Email" type="hidden" id="A_BindEmail_ctl00_hid_Email" class="tov" />
+                        </div>
+                    </div>
+                    <div class="form_top">
+                        <div class="form_row form_height_auto_row clearfix">
+                            <div class="bp_faq">
+                                <h4 class="bw f16">
+                                    服务说明：
+                                </h4>
+                                <ul>
+                                    <li class="bw bp_q">
+                                        该服务完全免费；
+                                    </li>
+                                    <li>
+                                        你绑定的邮箱，可进行登陆商城系统，修改交易密码等操作，我们会对你的信息进行严格的保密。
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

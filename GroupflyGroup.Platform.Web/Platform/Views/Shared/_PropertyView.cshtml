@@ -1,0 +1,15 @@
+﻿@using EB.Common
+@using GroupflyGroup.Platform.ObjectFramework;
+@using GroupflyGroup.License;
+@using GroupflyGroup.Platform.ObjectFramework.Persistence
+@using GroupflyGroup.Platform.Web.Common
+@model GroupflyGroup.Platform.Web.Models.PropertyViewModel
+
+<tr>
+    <th class="PropertyLabel" title="@Model.Description">@Model.Label :</th>
+    <td class="PropertyValue">
+        @(this.CustomControl(Model))
+    </td>
+</tr>
+
+

@@ -1,0 +1,78 @@
+﻿@{
+    string TagID = Request.QueryString["TagID"] ?? "";
+    
+    if (string.IsNullOrEmpty(TagID))
+    {
+        ViewBag.Title = "添加标签";
+    }
+    else
+    {
+        ViewBag.Title = "编辑标签";
+    }
+}
+
+
+<div class="main">
+    <div class="editbox">
+        <h1 id="LabTag"><b>添加标签</b></h1>
+        <div class="content">
+            <div class="item"><label>标签名称：</label><input id="TagName" type="text" class="input-text" /></div>
+        </div>
+        <div class="LayerBtn"><a onclick="TagSave()" class="savebtn">保存</a>
+        <a class="closedbtn" href="javascript:void(0);" onclick="document.body.tabGoback();">取消</a></div>
+    </div>
+</div>
+
+    <script>
+        $(function () {
+            if ("@TagID" == "") {
+                $("#LabTag b").html("添加标签");
+            } else {
+                $("#LabTag b").html("编辑标签");
+
+                platformAjax({
+                    url: "@Url.Action("SearchFeTagByID", "FeTagLibrary")",
+                    type: "post",
+                    data: { TagID: "@TagID" },
+                    success: function (result) {
+                        var data = JSON.parse(result.Data);
+                        $("#TagName").val(data.Tag);
+                    }
+                });
+            }
+
+        });
+
+        function TagSave() {
+
+            var TagName = $("#TagName").val();
+
+            if ("@TagID" == "") {
+                platformAjax({
+                    url: "@Url.Action("AddFeTag", "FeTagLibrary")",
+                    type: "post",
+                    data: { TabName: TagName },
+                    async: false,
+                    success: function (data) {
+                            document.body.tabGoback();
+                    }
+
+                });
+            } else {
+                platformAjax({
+                    url: "@Url.Action("EditFeTag", "FeTagLibrary")",
+                    type: "post",
+                    data: { TabName: TagName, TagID: "@TagID" },
+                    async: false,
+                    success: function (data) {
+                            document.body.tabGoback();
+                    }
+
+                });
+            }
+
+
+
+        }
+
+    </script>

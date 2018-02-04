@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "账户管理-账户安全设置";
+}
+
+<div class="dpsc_mian">
+    <p class="ptitle">
+        <a href="@Url.Action("Index","FeAccount")">账户管理</a><span class="breadcrume_icon">>></span><span class="breadcrume_text">账户安全设置</span>
+    </p>
+
+    <span id="A_PwdSer">
+        <div class="zhszmian">
+            <div class="zhszmian_nr">
+                <div class="zhs_le">
+                    <dl>
+                        <dt>
+                            您的账号安全等级：<span class="redbold">
+                                <span id="A_PwdSer_ctl00_Lab_SafeRank">中</span>
+                            </span>
+                        </dt>
+                        <dd>
+                            <img id="A_PwdSer_ctl00_Image_SafeRankImg" src="@Url.Content("~/FrontEnd/Back/Content/images/jidongt02.jpg")" style="height:13px;width:360px;border-width:0px;" />
+                        </dd>
+                        <dd>
+                            <span id="A_PwdSer_ctl00_Lab_SafeRankTitle">账号已经设置了交易密码和手机绑定，请保管好手机，交易密码可重置</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="zhs_ri">
+                    <ul>
+                        <li>提高账号安全等级，您可以：</li>
+                        <li>
+
+                        </li>
+                        <li><a id="LinkButton_Set" class="alink_blue" href="refreshRight('@Url.Action("BindMobile", "FeUserSafe")')">绑定手机</a>  </li>
+
+                        <li><a id="LinkButton_SetQuestion" class="alink_blue" href="refreshRight('@Url.Action("BindEmail", "FeUserSafe")')">绑定邮箱</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div style="clear: both;"></div>
+            <div class="dengl">
+                <div class="denflot done3">
+                    登录密码
+                </div>
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>登录商城时需要使用的密码。</li>
+                        <li><span class="orange">最基本的账号保护手段，请不要轻易告知他人。</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+                    <a onclick="refreshRight('@Url.Action("UpdatePassword", "FeUserSafe")')" href="javascript:void(0)" class="xiug">修改</a>
+                </div>
+            </div>
+
+
+            <div class="dengl">
+
+                <div class="denflot done3">
+                    绑定手机
+                </div>
+
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>绑定手机可以方便您修改和设置自己的支付密码，以便你的支付密码透漏后出现安全问题！</li>
+                        <li><span class="orange">绑定手机后，建议您不要频繁更换手机，以免您忘记修改绑定手机号而收不到信息！</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+
+                    <a onclick="refreshRight('@Url.Action("BindMobile", "FeUserSafe")')" class="xiug" href="javascript:void(0)">
+                        修改
+                    </a>
+
+                </div>
+            </div>
+
+
+            <div class="dengl">
+
+                <div class="denflot done3">
+                    绑定邮箱
+                </div>
+
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>绑定邮箱可以方便您修改和设置自己的支付密码，以便你的支付密码透漏后出现安全问题！</li>
+                        <li><span class="orange">绑定邮箱后，建议您不要频繁更换邮箱账号，以免您忘记修改绑定邮箱账号而收不到邮件！</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+
+                    <a onclick="refreshRight('@Url.Action("BindEmail", "FeUserSafe")')" class="xiug" href="javascript:void(0)">
+                        修改
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="dengl" style="display:none;">
+
+                <div class="denflot done3">
+                    支付密码
+                </div>
+
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>支付密码能为您提供额外的安全保障。启用支付密码，为你的支付保驾护航。</li>
+                        <li><span class="orange">与登录密码不同，支付密码仅在进行店铺管理，金额支付等操作时才需要输入。</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+
+                    <a href="#" class="xiug" target="win" onclick="subItem(this)">
+                        修改
+                    </a>
+
+                </div>
+            </div>
+            <div class="dengl" style="display:none;">
+
+                <div class="denflot done">
+                    密保问题
+                </div>
+
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>密保问题是您找回登录密码的方式之一。</li>
+                        <li><span class="orange">建议您设置容易记住，且最不容易被他人获取的问题及答案，更有效保障您的密码安全。</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+
+                    <a href="#" class="xiug" target="win" onclick="subItem(this)">
+                        设置
+                    </a>
+
+                </div>
+            </div>
+            <div class="dengl" style="display:none;">
+
+                <div class="denflot done3" id="div4">实名认证</div>
+
+                <div class="denflot dtwo">
+                    <ul>
+                        <li>用于提升账号的安全性和信任级别。</li>
+                        <li><span class="orange">认证成功后的账号不能修改认证信息。</span></li>
+                    </ul>
+                </div>
+                <div class="denflot dthree">
+
+                    <span style="font-weight: 900; color: Green;">已认证</span>
+
+                </div>
+            </div>
+        </div>
+    </span>
+</div>

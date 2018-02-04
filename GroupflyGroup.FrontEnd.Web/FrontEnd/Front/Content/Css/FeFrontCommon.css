@@ -1,0 +1,8 @@
+﻿.BodyContent {
+   margin: 0;
+   padding: 0;
+   outline: none;
+   display: block;   
+   height:100%;
+   overflow-y:auto;   
+}

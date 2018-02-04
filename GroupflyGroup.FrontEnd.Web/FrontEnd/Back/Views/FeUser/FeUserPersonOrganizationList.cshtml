@@ -1,0 +1,317 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework;
+@using GroupflyGroup.Platform.Web.Common;
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings;
+
+
+<div id="FeUserMain" data-options="fit:true" class="main easyui-layout">
+    <div data-options="region:'north',split:false" style="height:136px;max-height:200px;border-top-width:0px;">
+        <div class="querybox">
+            <ul class="clearfix">
+                <li><label>用户名：</label><input id="userName" class="easyui-textbox" style="width: 150px;"></li>
+                <li><label>姓名/组织名称：</label><input id="personOrOrganizationName" class="easyui-textbox" style="width: 150px;"></li>
+                <li><label>注册时间：</label><input id="startRegistTime" type="text" style="width: 180px;"> 至 <input id="endRegistTime" type="text" style="width: 180px;"></li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label>用户类型：</label><Gf-ListValueCombobox width="150px" id="listfeusertype" autoinit defaultoption="--全部--"  source="@FeListIDs.FeUserType"></Gf-ListValueCombobox> 
+                </li>
+                <li>
+                    <label>是否允许登录：</label><select id="logonEnabled" class="easyui-combobox" data-options="editable:false" style="width: 150px;">
+                        <option value="">--全部--</option>
+                        <option value="false">禁止</option>
+                        <option value="true">允许</option>
+                    </select>
+                </li>
+                <li><a id="SearchFeUser" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="SearchFeUser();">查询</a></li>
+            </ul>
+        </div>
+        <div class="tablelist">
+            <div class="datagrid-toolbar">
+                <ul class="clearfix">
+                    <li>
+                        <a name="btnPersonAdd" id="btnPersonAdd" class="easyui-linkbutton">添加个人用户</a>
+                        <a name="btnOrganizationAdd" id="btnOrganizationAdd" class="easyui-linkbutton">添加组织用户</a>
+                        <a name="btnUserDel" id="btnUserDel" class="easyui-linkbutton">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div data-options="region:'center',split:false" class="tablelist">        
+        <Gf-FeDataList id="FeUserFeDataList">
+        </Gf-FeDataList>
+    </div>
+</div>
+
+
+<script>
+    //easyui样式转换成组件
+    $.parser.parse();
+    //绑定表头
+    function BindGridTab() {
+
+        var frozenColumns = [];
+        frozenColumns.push({ field: 'ck', checkbox: true, width: "165px", align: 'center' });
+        frozenColumns.push({
+            field: 'id', title: "操作", align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+
+                var content = "<a href=\"#\" onclick=\"UserDetails('" + row.Id + "');\" class=\"listedit\">编辑</a>";
+                if (row.LogonEnabled == 0) {
+                    content += "<a href=\"#\" onclick=\"UserEnable(this);\" recordId=\"" + row.Id + "\" class=\"listview ml20\">启用</a>";
+                } else {
+                    content += "<a href=\"#\" onclick=\"UserDisable(this);\" recordId=\"" + row.Id + "\"  class=\"listdelete ml20\">禁用</a>";
+                }
+                return content;
+            }
+        });
+
+        var columns = [];
+        columns.push({
+            field: 'UserName', title: '用户名', align: 'center', width: "165px"
+        });
+        columns.push({
+            field: 'UserTypeLable', title: '用户类型', align: 'center', width: "165px"
+        });
+
+        columns.push({
+            field: 'personOrOrganizationName', title: '姓名/组织名称', align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+                if (row.UserTypeId == '@FeValueIDs.FeUserType_Person') {
+                    var lastname = "";
+                    if (row.LastName) {
+                        lastname = row.LastName;
+                    }
+                    var firstname = "";
+                    if (row.FirstName) {
+                        firstname = row.FirstName;
+                    }
+                    return lastname + " " + firstname;
+                }
+                else if (row.UserTypeId == '@FeValueIDs.FeUserType_Organization') {
+                    var organizationname = "";
+                    if (row.OrganizationName) {
+                        organizationname = row.OrganizationName;
+                    }
+                    return organizationname;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+        columns.push({ field: 'UserEmail', title: '绑定邮箱', align: 'center', width: "165px" });
+        columns.push({ field: 'UserCell', title: '绑定手机', align: 'center', width: "165px" });
+        columns.push({ field: 'RegisterTime', title: '注册时间', align: 'center', width: "165px" });
+        columns.push({
+            field: 'RegisterFrom', title: '注册渠道', align: 'center', width: "165px",
+            formatter: function (value, row, index) {
+                if (value) {
+                    return value;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+        columns.push({ field: 'LastLoginTime', title: '最后登录时间', align: 'center', width: "165px" });
+        columns.push({
+            field: 'LogonEnabled', title: '是否允许登录', align: 'center', width: "180px", formatter: function (value, row, index) {
+                return value == 0 ? "禁止" : "允许";
+            }
+        });
+
+
+        document.querySelector("#FeUserFeDataList").SetDataGrid(columns, frozenColumns);
+    };
+
+    function BindBtnClick() {
+        $("#FeUserMain").find("[name='btnPersonAdd']").click(function () {
+            document.body.tabGoto('@Url.Action("PersonAdd", "FeUser")');
+        });
+
+        $("#FeUserMain").find("[name='btnOrganizationAdd']").click(function () {
+            document.body.tabGoto('@Url.Action("OrganizationAdd", "FeUser")');
+        });
+
+        $("#FeUserMain").find("[name='btnUserDel']").click(function () {
+            delUser();
+        });
+    }
+
+
+
+    //绑定数据
+    function BindData(pagenumber) {
+
+        var url = "@Url.Action("GetFeUserPersonOrganizationList", "FeUser")";
+
+        //用户名
+        var userName = $("#userName").val();
+        //姓名/组织名称
+        var personOrOrganizationName = $("#personOrOrganizationName").val();
+
+        //注册时间
+        var startRegistTime = $('#startRegistTime').datetimebox('getValue');
+        var endRegistTime = $('#endRegistTime').datetimebox('getValue');
+
+        //用户类型
+        var userType = $("#listfeusertype")[0].getValue();
+
+        //是否允许登录
+        var logonEnabled = $("#logonEnabled").combobox('getValue');
+
+        var param = [];
+        if (userName != "") {
+            param.push({ field: "userName", type: "@Const.Oper_Contains", value: userName, caseSensitive: false });
+        }
+        if (personOrOrganizationName != "") {
+            param.push({ field: "personOrOrganizationName", type: "@Const.Oper_Contains", value: personOrOrganizationName, caseSensitive: false });
+        }
+        if (startRegistTime != "" && endRegistTime != "") {
+            param.push({ field: "createdOn", type: "@Const.Oper_Between", value: startRegistTime + "," + endRegistTime });
+        }
+        if (startRegistTime != "") {
+            param.push({ field: "startRegistTime", type: "@Const.Oper_Contains", value: startRegistTime, caseSensitive: false });
+        }
+        if (endRegistTime != "") {
+            param.push({ field: "endRegistTime", type: "@Const.Oper_Contains", value: endRegistTime, caseSensitive: false });
+        }
+        if (userType != "") {
+            param.push({ field: "userType", type: "@Const.Oper_Equals", value: userType });
+        }
+        if (logonEnabled != "") {
+            param.push({ field: "logonEnabled", type: "@Const.Oper_Equals", value: logonEnabled });
+        }
+        param = JSON.stringify(param);
+
+        document.querySelector("#FeUserFeDataList").SearchData(url, param, pagenumber);
+    };
+
+
+    function delUser() {
+        var rows = document.querySelector("#FeUserFeDataList").GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        var str = '';
+        if (rows.length > 1)
+        {
+            str = '组';
+        }
+        $.messager.confirm('Confirm', '是否确定删除该' + str + '用户？', function (r) {
+            if (r) {
+                platformAjax({
+                    url: "@Url.Action("DelUser", "FeUser")",
+                    type: "post",
+                    data: { UserList: rows },
+                    success: function (result) {
+                        if (result.Code != 1) {
+                            $.messager.alert('更新错误', result.ErrorMessage);
+                        }
+                    },
+                    finallyCall: function () {
+                        BindData("");
+                    }
+
+                });
+            }
+        });
+    }
+
+    function SearchFeUser() {
+        BindData(1);
+    }
+    function BindDateBox() {
+        $('#startRegistTime,#endRegistTime').datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                function formatNumber(value) {
+                    return (value < 10 ? '0' : '') + value;
+                }
+
+                return y + '/' + m + '/' + d;
+            },
+            editable: false,
+            parser: function (s) {
+                var t = Date.parse(s);
+                if (!isNaN(t)) {
+                    return new Date(t);
+                }
+                else {
+                    return new Date();
+                }
+            }
+        });
+
+    }
+
+    $(function () {
+        //绑定时间控件
+        BindDateBox();
+        //绑定表头
+        BindGridTab();
+        //绑定按钮事件
+        BindBtnClick();
+        //绑定分页数据
+        BindData();
+    });
+
+
+    function UserDetails(userid) {
+        document.body.tabGoto('@Url.Content("~/FeUser/UserDetails?id=")' + userid);
+    }
+
+    function UserDisable(obj) {
+
+        $.messager.confirm('Confirm', '是否确定禁用该用户？', function (r) {
+            if (r) {
+                var id = $(obj).attr("recordId");
+                platformAjax({
+                    url: '@Url.Content("~/FeUser/UserDisable")',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.Code != 1) {
+                            $.messager.alert('更新错误', result.ErrorMessage);
+                        }
+                    },
+                    finallyCall: function () {
+
+                        BindData("");
+                    }
+                });
+            }
+        });
+
+    }
+
+    function UserEnable(obj) {
+
+
+        $.messager.confirm('Confirm', '是否确定启用该用户？', function (r) {
+            if (r) {
+                var id = $(obj).attr("recordId");
+                platformAjax({
+                    url: '@Url.Content("~/FeUser/UserEnable")',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.Code != 1) {
+                            $.messager.alert('更新错误', result.ErrorMessage);
+                        }
+                    },
+                    finallyCall: function () {
+
+                        BindData("");
+                    }
+                });
+            }
+        });
+
+
+
+    }
+</script>

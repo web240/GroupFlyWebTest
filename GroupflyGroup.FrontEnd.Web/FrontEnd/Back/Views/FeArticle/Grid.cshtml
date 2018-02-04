@@ -1,0 +1,480 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@{
+    Layout = null;
+    var idx = ViewData["Tab"].ToString();
+    var Gridid = "FeArticleGrid" + idx;
+    var Divid = "Divid" + idx;
+    var Menuid = "Menu" + idx;
+}
+<div data-options="fit:true" class="easyui-layout">
+    <div data-options="region:'north',split:false" style="height:47px;max-height:47px;border-top-width:0px;" >
+        <div id="@Menuid" class="datagrid-toolbar">
+            @if (idx == "0")
+            {
+                <a href="javascript:void('还原')" class="easyui-linkbutton" onclick="SetTrash(@idx,false);">还原</a>
+            }
+            else
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="document.body.tabGoto('@Url.Action("CreateFeArticle","FeArticle")?tab=@idx');">添加文章</a>
+                @*@Html.ActionLink("添加文章", "CreateFeArticle", new { id = "", tab = @idx }, new
+                    {
+                        @class = "easyui-linkbutton"
+                    })*@
+            if (idx != "2")
+            {
+                <a href="javascript:void('设置属性')" class="easyui-linkbutton" onclick="SetCharacter(@idx);">设置属性</a>
+                <a href="javascript:void('设置标题样式')" class="easyui-linkbutton" onclick="SetTitle(@idx);">设置标题样式</a>
+                <a href="javascript:void('设置分类')" class="easyui-linkbutton" onclick="SetFeArticleCategory(@idx);">设置分类</a>
+                if (idx != "5")
+                {
+                    <a href="javascript:void('审核通过')" class="easyui-linkbutton" onclick="SetApprovalStatus(@idx,'@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Approved');">审核通过</a>
+                }
+                if (idx != "6")
+                {
+                    <a href="javascript:void('审核不通过')" class="easyui-linkbutton" onclick="SetApprovalStatus(@idx,'@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_NotApproved');">审核不通过</a>
+                }
+                <a href="javascript:void('放入回收站')" class="easyui-linkbutton" onclick="SetTrash(@idx,true)">放入回收站</a>
+                }
+            }
+            <a href="javascript:void('彻底删除')" class="easyui-linkbutton" onclick="delArticle(@idx)">彻底删除</a>
+        </div>
+    </div>
+    <div data-options="region:'center',split:false">
+        <div id="@Divid" style="height:100%;">
+            <Gf-FeDataList id="@Gridid"></Gf-FeDataList>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function BindGridTab(idx) {
+        var columns = getColumns(idx);
+        document.querySelector("#FeArticleGrid" + idx).SetDataGrid(columns);
+        document.querySelector("#FeArticleGrid" + idx).registerEventHandler("SetDataGridLoadSuccess", function (row, data) {
+            PageLoad(idx);
+        });
+    }
+    function getColumns(idx) {
+        var Columns = [];
+
+        Columns.push({ field: "Id", hidden: true, align: 'center' });
+        Columns.push({ field: "checkbox", checkbox: true, align: 'center' });
+        if (idx != 0) {
+            Columns.push({
+                field: 'edit', title: '操作', align: 'center',width:'105px',
+                formatter: function (value, row, index) {
+                    var e = '<a href="javascript:void(0);" onclick="document.body.tabGoto(\'@Url.Action("CreateFeArticle", "FeArticle")?id=' + row.Id + '&tab=@idx\');" class="listedit">编辑</a> ';
+                    var d = '<a href="@Url.Action("FrontArticleDetails", "FeArticle")?articleId=' + row.Id + '" target="_blank" class="listview ml20">预览</a> ';
+                    return e + d;
+                }
+            });
+            Columns.push({
+                title: '排序', field: 'SortOrder', align: 'center', width: '105px',
+                //格式化分类排序列，用numberbox显示数据，并可以编辑
+                formatter: function (value, rowData) {
+                    //生成numberbox控件，并把数据的id写到自定义recordId属性中
+                    return "<input recordId=\"" + rowData.Id + "\" type=\"text\" class=\"easyui-numberbox sortNumberbox\" value=\"" + value + "\" style=\"width:50px;\" data-options=\"min:0,precision:2\">";
+                }
+            });
+        }
+        Columns.push({ field: 'Title', title: '文章标题', align: 'center', width: '500px' });
+        Columns.push({ field: 'Character', title: '文章属性', align: 'center', width: '105px' });
+        Columns.push({
+            field: 'Category', title: '文章分类', align: 'center', width: '105px',
+        });
+        Columns.push({
+            field: 'ApprovalStatus', title: '审核状态', align: 'center', width: '105px',
+        });
+        Columns.push({
+            field: 'IsDisplay', title: '是否显示', align: 'center', width: '105px',
+            //格式化是否启用列，用滑动开关显示数据。
+            formatter: function (value, row, index) {
+                //生成滑动开关，并把数据的id写到自定义recordId属性中
+                if (value) {
+                    if (idx != 0) {
+                        return "<input recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" checked data-options=\"onText:'是',offText:'否'\">";
+                    }
+                    else {
+                        return "<input recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" checked data-options=\"onText:'是',offText:'否',disabled:true\">";
+                    }
+                }
+                else {
+
+                    if (idx != 0) {
+                        return "<input recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" data-options=\"onText:'是',offText:'否'\">";
+                    }
+                    else {
+                        return "<input recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" data-options=\"onText:'是',offText:'否',disabled:true\">";
+                    }
+                }
+
+            }
+        });
+        Columns.push({ field: 'CommentNum', title: '评论数', align: 'center', width: '105px' });
+        Columns.push({ field: 'HitsNum', title: '点击数', align: 'center', width: '105px' });
+        Columns.push({ field: 'Author', title: '作者', align: 'center', width: '105px' });
+        Columns.push({
+            field: 'Creator', title: '发布人', align: 'center', width: '105px',
+        });
+        Columns.push({
+            field: 'CreatedOn', title: '发布时间', align: 'center', width: '105px',
+        });
+        Columns.push({
+            field: 'Modificator', title: '修改人', align: 'center', width: '105px',
+        });
+        Columns.push({ field: 'ModifiedOn', title: '修改时间', align: 'center', width: '105px' });
+        Columns.push({
+            field: 'Approver', title: '审核人', align: 'center', width: '105px',
+        });
+        Columns.push({ field: 'ApprovedOn', title: '审核时间', align: 'center', width: '105px' });
+
+        return Columns;
+    }
+    function delArticle(idx) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+
+        $.messager.confirm("提示", "是否确定删除所选文章？", function (data) {
+            if (data) {
+                $.ajax({
+                    url: "@Url.Action("DelFeArticle", "FeArticle")",
+                    type: "post",
+                    data: { ArticleList: rows },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result != true) {
+                            $.messager.alert('异常', result, "error");
+                        }
+                        else {
+                            BindGrid(idx);
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+    function SetCharacter(idx) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        OpenCharacterSelect(function (obj) {
+            $.ajax({
+                url: "@Url.Action("SetCharacter", "FeArticle")",
+                type: "post",
+                data: { ArticleList: rows, Characters: obj.CharacterId },
+                dataType: "json",
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        BindGrid(idx);
+                    }
+                    else {
+                        $.messager.alert('异常', result.Message, "error");
+                    }
+                }
+            });
+        }, JSON.stringify(rows));
+    }
+    function SetApprovalStatus(idx, ApprovalStatus) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        $.ajax({
+            url: "@Url.Action("SetApprovalStatus", "FeArticle")",
+            type: "post",
+            data: { ArticleList: rows, Status: ApprovalStatus },
+            dataType: "json",
+            success: function (result) {
+                if (result != true) {
+                    $.messager.alert('异常', result, "error");
+                }
+                else {
+                    BindGrid(idx);
+                }
+            }
+        });
+    }
+
+    function SetTitle(idx) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0 || rows.length > 1) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        CKEDITOR.instances.SetTitle.setData(rows[0].Title);
+        $('#ddFeArticleTitle').dialog("open");
+    }
+
+    function SetTrash(idx, isTrash) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        $.ajax({
+            url: "@Url.Action("SetTrash", "FeArticle")",
+            type: "post",
+            data: { ArticleList: rows, IsTrash: isTrash },
+            dataType: "json",
+            success: function (result) {
+                if (result != true) {
+                    $.messager.alert('异常', result, "error");
+                }
+                else {
+
+                    BindGrid(idx);
+                }
+            }
+        });
+    }
+
+    function SetFeArticleCategory(idx) {
+        var rows = document.querySelector("#FeArticleGrid" + idx).GetSelections();
+        if (rows.length <= 0) {
+            $.messager.alert('提示', "请选择一条记录", "info");
+            return;
+        }
+        OpenCategoryTree(function (obj) {
+            $.ajax({
+                url: "@Url.Action("SetFeArticleCategory", "FeArticle")",
+                type: "post",
+                data: { ArticleList: rows, CategoryId: obj.Id },
+                dataType: "json",
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        BindGrid(idx);
+                    }
+                    else {
+                        $.messager.alert('异常', result.Message, "error");
+                    }
+                }
+            });
+        });
+    }
+    //表格控件数据加载完成，并呈现后初始化
+    function PageLoad(idx) {
+        $('.J_switchbutton').switchbutton({
+            onChange: function (checked) {
+                //获取记录的id
+                var recordId = $(this).attr("recordId");
+
+                //调用后台方法修改数据。
+                $.ajax({
+                    url: '@Url.Content("~/FeArticle/SetDisplay")',
+                    type: "POST",
+                    data: { id: recordId, isChecked: checked },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result != true) {
+                            $.messager.alert('异常', result, "error");
+                        }
+                        else {
+                            BindGrid(idx);
+                        }
+                    },
+                    error: function (textStatus, errorThrown) {
+                        $.messager.alert('异常', "请求错误：" + textStatus.responseText, "error");
+                    }
+                });
+            }
+        })
+
+        //修改分类排序后触发
+        $(".sortNumberbox").numberbox({
+            "onChange": function (newValue, oldValue) {
+                //获取记录的id
+                var recordId = $(this).attr("recordId");
+                if (newValue == oldValue || !newValue) {
+                    return;
+                }
+                //调用后台方法修改数据。
+                $.ajax({
+                    url: '@Url.Content("~/FeArticle/SetSortOrder")',
+                    type: "POST",
+                    data: { id: recordId, sortOrder: newValue },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result != true) {
+                            $.messager.alert('异常', result, "error");
+                        }
+                        else {
+                            BindGrid(idx);
+                        }
+                    },
+                    error: function (textStatus, errorThrown) {
+                        $.messager.alert('异常', "请求错误：" + textStatus, "error");
+                    }
+                });
+            }
+        });
+
+    }
+
+
+    function BindGrid(idx, pagenumber) {
+        var url = "@Url.Action("GetFeArticlePageList", "FeArticle")";
+        var param = getParam(idx);
+
+        document.querySelector("#FeArticleGrid" + idx).SearchData(url, param, pagenumber);
+    }
+
+    function getParam(idx) {
+        var param = [];
+        if (idx == 0) {
+            param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "true" });
+            var title = $("#Title1").val();
+            if (title) {
+                param.push({ field: "titleValue", type: "@Const.Oper_Contains", value: title, caseSensitive: false });
+            }
+            var Author = $("#Author1").val();
+            if (Author) {
+                param.push({ field: "author", type: "@Const.Oper_Equals", value: Author, caseSensitive: false });
+            }
+            var Creator = $("#Creator1").val();
+            if (Creator) {
+                param.push({ field: "creator", type: "@Const.Oper_Equals", value: Creator, caseSensitive: false });
+            }
+            var Approver = $("#Approver1").val();
+            if (Approver) {
+                param.push({ field: "approver", type: "@Const.Oper_Equals", value: Approver, caseSensitive: false });
+            }
+            var Character = $("input[name='CharacterID1']").val();
+            if (Character) {
+                Character = Character.replace('*', '@@');
+                param.push({ field: "character", type: "@Const.Oper_Equals", value: Character });
+            }
+            var CategoryID = $("input[name='CategoryID1']").val();
+            if (CategoryID) {
+                CategoryID = CategoryID.replace('*', '@@');
+                param.push({ field: "category", type: "@Const.Oper_Equals", value: CategoryID });
+            }
+            var CreatedBeginDate = $("#CreatedBeginDate1").datebox('getValue');
+            var CreatedEndDate = $("#CreatedEndDate1").datebox('getValue');
+
+            if (CreatedBeginDate && CreatedEndDate) {
+                param.push({ field: "createdOn", type: "@Const.Oper_Between", value: CreatedBeginDate + "," + CreatedEndDate });
+            }
+            var ApprovedBeginDate = $("#ApprovedBeginDate1").datebox('getValue');
+            var ApprovedEndDate = $("#ApprovedEndDate1").datebox('getValue');
+
+            if (ApprovedBeginDate && ApprovedEndDate) {
+                param.push({ field: "approvedOn", type: "@Const.Oper_Between", value: ApprovedBeginDate + "," + ApprovedBeginDate });
+            }
+            var pl = $("#pl1").combobox('getValue');
+            if (pl) {
+                if (pl == "1") {
+                    param.push({ field: "commentNum", type: "@Const.Oper_Greater", value: "0" });
+                } else {
+                    param.push({ field: "commentNum", type: "@Const.Oper_Equals", value: "0" });
+                }
+            }
+            return JSON.stringify(param);
+        } else {
+            switch (idx) {
+                case 0:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "true" });
+                    break;
+                case 1:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "isDraft", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "creator", type: "@Const.Oper_Equals", value: "@GroupflyGroup.Platform.ObjectFramework.User.Current.Id" });
+                    break;
+                case 2:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "isDraft", type: "@Const.Oper_Equals", value: "true" });
+                    param.push({ field: "creator", type: "@Const.Oper_Equals", value: "@GroupflyGroup.Platform.ObjectFramework.User.Current.Id" });
+                    break;
+                case 3:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    break;
+                case 4:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Pending" });
+                    break;
+                case 5:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_Approved" });
+                    break;
+                case 6:
+                    param.push({ field: "isTrash", type: "@Const.Oper_Equals", value: "false" });
+                    param.push({ field: "approvalStatus", type: "@Const.Oper_Equals", value: "@GroupflyGroup.FrontEnd.ObjectFramework.Strings.FeValueIDs.FeApprovalStatus_NotApproved" });
+                    break;
+                default:
+                    break;
+            }
+
+            var title = $("#Title").val();
+            if (title) {
+                param.push({ field: "titleValue", type: "@Const.Oper_Contains", value: title, caseSensitive: false });
+            }
+
+            var Creator = $("#Creator").val();  //创建人
+            if (idx != "" && idx != "1") {    //我的和草稿除外
+                if (Creator) {
+                    param.push({ field: "creator", type: "@Const.Oper_Contains", value: Creator, caseSensitive: false });
+                }
+            }
+            var Author = $("#Author").val();
+            if (Author) {
+                param.push({ field: "author", type: "@Const.Oper_Contains", value: Author, caseSensitive: false });
+            }
+            var Approver = $("#Approver").val();
+            if (Approver) {
+                param.push({ field: "approver", type: "@Const.Oper_Contains", value: Approver, caseSensitive: false });
+            }
+            var CategoryID = $("input[name='CategoryID']").val();
+            if (CategoryID) {
+                CategoryID = CategoryID.replace('*', '@@');
+                param.push({ field: "category", type: "@Const.Oper_Equals", value: CategoryID });
+            }
+            var Character = $("input[name='CharacterID']").val();
+            if (Character) {
+                Character = Character.replace('*', '@@');
+                param.push({ field: "character", type: "@Const.Oper_Equals", value: Character });
+            }
+
+            var CreatedBeginDate = $("#CreatedBeginDate").datebox('getValue');
+            if (CreatedBeginDate) {
+                param.push({ field: "createdBeginDate", type: "@Const.Oper_Between", value: CreatedBeginDate });
+            }
+            var CreatedEndDate = $("#CreatedEndDate").datebox('getValue');
+            if (CreatedEndDate) {
+                param.push({ field: "createdEndDate", type: "@Const.Oper_Between", value: CreatedEndDate });
+            }
+
+            var ApprovedBeginDate = $("#ApprovedBeginDate").datebox('getValue');
+            if (ApprovedBeginDate) {
+                param.push({ field: "approvedBeginDate", type: "@Const.Oper_Between", value: ApprovedBeginDate });
+            }
+            var ApprovedEndDate = $("#ApprovedEndDate").datebox('getValue');
+            if (ApprovedEndDate) {
+                param.push({ field: "approvedEndDate", type: "@Const.Oper_Between", value: ApprovedEndDate });
+            }
+            var pl = $("#pl").combobox('getValue');
+            if (pl) {
+                if (pl == "1") {
+                    param.push({ field: "commentNum", type: "@Const.Oper_Greater", value: "1" });
+                }
+                else {
+                    param.push({ field: "commentNum", type: "@Const.Oper_Equals", value: "0" });
+                }
+            }
+            return JSON.stringify(param);
+        }
+    }
+
+    $(function () {
+        //绑定数据
+        BindGridTab(@idx);
+        //绑定分页数据
+        BindGrid(@idx);
+    });
+
+</script>

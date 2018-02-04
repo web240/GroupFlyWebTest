@@ -1,0 +1,82 @@
+﻿
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.Platform.Web.Common
+
+    @Url.Script("~/FrontEnd/Back/Content/Scripts/ajaxfileupload.js")
+
+
+<div id="main" class="main">
+    <div class="editbox">
+        <h1><b>导入模板</b></h1>
+
+        <div  class="content">
+            <div class="item">
+                <label>模板分类：</label>
+                <span class="checkbox"><input type="radio" id="radio0" value="@FeValueIDs.FeTemplateType_ArticleSystem" name="radiolist" checked="checked" title="首页模板" />首页模板</span>
+                <span class="checkbox"><input type="radio" id="radio1" value="@FeValueIDs.FeTemplateType_Channel" name="radiolist" title="频道模板" />频道模板</span>
+            </div>
+            <div class="item">
+                <label>模板名称：</label>
+                <input id="TemplateName" class="easyui-textbox" style="width:400px;" size="50" >
+            </div>
+            <div class="item">
+                <label>模板说明：</label>
+                <input id="TemplateDesciption" class="easyui-textbox" style="width:400px;" size="200" />
+            </div>
+            <div  class="item">
+                <label>模板文件：</label>
+                <input class="easyui-filebox" name="fileupload" id="fileupload" data-options="prompt:'Choose a file...'" style="width:400px;" />
+                <img id="loading " src="~/FrontEnd/Back/Content/images/loading.gif" style="display:none;">
+            </div>
+            <div class="item">               
+                <span id="upsuccess" class="gray"></span>
+                <span id="uperror" class="red"></span>
+                <span id="msg" class="gray"></span>
+            </div>
+        </div>
+        <div class="LayerBtn">
+            <a onclick="importTemplate();" href="javascript:void(0);" class="savebtn">上传</a>
+            <a onclick="document.body.tabGoback();" href="javascript:void(0);" class="closedbtn">返回</a>
+        </div>
+
+
+     </div>
+</div>       
+<script type="text/javascript">
+
+    $('#fileupload').filebox({ buttonText: '选择zip文件', accept: 'application/x-zip-compressed' });
+    function importTemplate() {
+        var ZipFileExtend = ".zip";
+        var fileValue = $("#fileupload").filebox("getValue");
+        if (fileValue.length > 0) {
+            var dicName = fileValue.substring(fileValue.lastIndexOf('\\') + 1);
+            dicName = dicName.substring(0, dicName.lastIndexOf('.'));
+            //判断后缀
+            var fileExtend = fileValue.substring(fileValue.lastIndexOf('.')).toLowerCase();
+            //可以对fileExtend（文件后缀<.xxx>） 进行判断 处理
+            if (ZipFileExtend.indexOf(fileExtend) > -1) {
+                $("#main").showLoading();//动态加载小图标
+                //显示预览
+                $.ajaxFileUpload({
+                    url: '@Url.Content("~/FeArticleTemplate/ImportTemplate")',
+                    secureuri: false,
+                    fileElementId: $('#fileupload').filebox("textbox").next().attr("id"),
+                    dataType: 'json',
+                    data: { name: $("#TemplateName").val(), description: $("#TemplateDesciption").val(), type: $("input[name='radiolist']:checked").val() },
+                    success: function(data, status) {
+                        $("#main").hideLoading();  //取消显示动态小图标
+                        //console.log(data);
+                        if (data.IsSuccess) {
+                            document.body.tabGoback('@Url.Action("index", "FeArticleTemplate")');
+                        } else {
+                            $.messager.alert('异常', data.Message, "error");
+                        }
+                    }
+                });
+            } else { alert("文件格式错误"); }
+        }
+        else {
+            alert("文件不能为空");
+        }
+    }
+</script>

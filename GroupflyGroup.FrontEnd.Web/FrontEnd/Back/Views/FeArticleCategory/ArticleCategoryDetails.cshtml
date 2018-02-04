@@ -1,0 +1,168 @@
+﻿
+
+@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeArticleCategoryViewModel
+
+
+
+
+    <script type="text/javascript">
+
+        $(function() {
+
+            var isError = @Model.IsError.ToString().ToLower();
+            var message = "@Model.ErrorMessage";
+
+            if (isError) {
+                message = "保存失败：\r\n" + message;
+                alert(message);
+            }
+
+        });
+        function categorySave() {
+            var obj = $("#CategoryForm").serializeObject();
+            if (!obj.Name) {
+                $.messager.alert('提示', '请填写分类名称');
+                return;
+            }
+            if (!obj.ParentId) {
+                $.messager.alert('提示', '请填写上级分类');
+                return;
+            } 
+            var url = '@Model.OperationType' == '1' ?
+                '@Url.Action("Add", "FeArticleCategory")' :
+                '@Url.Action("Edit", "FeArticleCategory")';
+
+            platformAjax({
+                url: url,
+                data: obj,
+                success: function(result) {
+                    document.body.tabGoback();
+                }
+            });
+        }
+
+    </script>
+
+
+<div class="main">
+    <div class="editbox">
+        <h1><b>分类信息</b></h1>
+
+
+        @{ MvcForm mvcForm = null; }
+
+        @if (Model.OperationType == 1)
+        {
+            mvcForm = Html.BeginForm("Add", "FeArticleCategory", FormMethod.Post, new { id="CategoryForm" });
+        }
+        else
+        {
+            mvcForm = Html.BeginForm("Edit", "FeArticleCategory", FormMethod.Post, new { id = "CategoryForm" });
+        }
+
+        @using (mvcForm)
+        {
+            <table class="content" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="label"><span class="red">*</span> @Html.LabelFor(m => m.Name)：</td>
+                    <td class="right">
+                        @Html.EditorFor(m => m.Name, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-textbox inputText",
+                           style = "width:400px;"
+                       }
+                   })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        <span class="red">*</span> @Html.LabelFor(m => m.ParentId)：
+                    </td>
+                    <td class="right">
+                        @Html.Action("Load", "FeArticleCategorySeachBox", new
+                   {
+                       parentId = Model.ParentId,
+                       parentNamePath = Model.ParentNamePath,
+                       parentIdModelFieldName = "ParentId",
+                       parentNamePathModelFieldName = "ParentNamePath",
+                       id = Model.Id,
+                       title = "请选择上级分类",
+                       width = 400
+                   })
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.SortOrder)：</td>
+                    <td class="right">
+
+                        @Html.EditorFor(m => m.SortOrder, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-numberbox sortNumberbox inputText",
+                           data_options = "min:0,precision:2",
+                           style = "width:400px;"
+                       }
+                        })
+
+                        @*SortOrder*@
+                    </td>
+                </tr>
+            </table>
+
+            <h1><b>分类seo</b></h1>
+            <table class="content" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.SeoTitle)：</td>
+                    <td class="right">
+                        @Html.EditorFor(m => m.SeoTitle, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-textbox inputText",
+                           style = "width:400px;"
+                       }
+                   })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.SeoKeys)：</td>
+                    <td class="right">
+                        @Html.Action("SeoKeysInput", "Seo",new
+                   {
+                       seoKeys = Model.SeoKeys,
+                       seoKeysModelFieldName = "SeoKeys"
+                   })
+                        <span class="gray">@Html.DisplayFor(m => m.SeoKeyRemark)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.SeoDescription)：</td>
+                    <td class="right">
+                        @Html.TextAreaFor(m => m.SeoDescription, new
+                   {
+                       @class = "easyui-validatebox textArea",
+                       style = "width:400px;height:160px"
+                   })
+                    </td>
+                </tr>
+
+            </table>
+            <div class="LayerBtn"><input type="button" onclick="categorySave();" class="savebtn" value="保存"/>
+                <input type="button" onclick="document.body.tabGoback();" class="closedbtn" value="取消" />
+        @*@Html.ActionLink("取消", "Index")*@
+        </div>
+            <div style="display:none">
+                @Html.EditorFor(m => m.OperationType)
+                @Html.EditorFor(m => m.Id)
+            </div>
+
+        }
+      </div>
+</div>

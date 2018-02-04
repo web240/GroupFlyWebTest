@@ -1,0 +1,20 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@{
+    Layout = "~/Platform/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    @Url.Css("~/FrontEnd/Front/Content/Css/FeFrontCommon.css")
+    @RenderSection("css", false)
+}
+@section scripts{
+    @Url.Script("~/FrontEnd/Front/Content/Scripts/jquery.superslide.2.1.1.js")
+    @RenderSection("scripts", false)
+}
+
+@section components{
+    @RenderSection("components", false)
+}
+@RenderBody()
+<Gf-FeTemplate-Component-Messager></Gf-FeTemplate-Component-Messager>
+
+

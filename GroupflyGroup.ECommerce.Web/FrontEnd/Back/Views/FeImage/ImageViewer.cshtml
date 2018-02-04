@@ -1,0 +1,25 @@
+﻿
+    <link href="~/FrontEnd/Back/Content/Css/feImageSelector.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(window).load(function() {
+            $("#btnShow").click(function() {
+                $("#feImageSelector").feImageSelector("open");
+            });
+
+            $("#feImageSelector").feImageSelector("submit", function(id, url) {
+                alert(id + "    " + url);
+            });
+        });
+
+    </script>
+
+
+
+<input id="btnShow" type="button" value="Show" />
+
+<Gf-FeImageSelector id="feImageSelector"
+                    rootdirectoryid="6dfd40570c084bda9b7989837fe24a9f@File"
+                    dialogtitle="选择图片">
+</Gf-FeImageSelector>

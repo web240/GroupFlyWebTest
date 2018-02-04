@@ -1,0 +1,87 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeCharacterSeachBoxViewModel
+<div id='@Model.DialogId'>
+    <table id='@Model.TableId'></table>
+</div>
+
+<script type="text/javascript">
+    function OpenCharacterSelect(Callback, articleList) {
+
+        $('#@Model.TableId').datagrid({
+            //url: '@Url.Action("Get", "FeCharacter")?ArticleList=' + articleList,
+            rownumbers: true,
+            loadMsg: "数据加载中...",
+            //idField: "Id",
+            showHeader: false,
+            columns: [[
+                { field: "Id", title: '选择行', checkbox: true, hidden: false, width: 50, height: 30, align: 'center', halign: 'center' },
+                { field: 'Name', title: '属性名称', halign: 'center', align: 'center', width: "150px" }
+            ]],
+            onLoadSuccess: function (data) {
+                var rowData = data.rows;
+                $.each(rowData, function (index, row) {
+                    if (row.IsChecked == 2) { //如果数据行为已选中则选中改行
+                        $('#@Model.TableId').datagrid("selectRow", index);
+                    }
+
+                });
+            }
+
+        });
+        if (articleList!=undefined) {
+            $.ajax({
+                url: "@Url.Action("Get", "FeCharacter")",
+                type: "post",
+                dataType: "json",
+                data: { ArticleList: JSON.parse(articleList) },
+                success: function (data) {
+                    $('#@Model.TableId').datagrid("loadData", JSON.parse(data.Data));
+                }
+            });
+        } else {
+
+            $.ajax({
+                url: "@Url.Action("Get", "FeCharacter")",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $('#@Model.TableId').datagrid("loadData", JSON.parse(data.Data));
+                }
+            });
+
+        }
+
+        $('#@Model.DialogId').dialog({
+            title: '@Model.Title',
+            width: 400,
+            height: 500,
+            closed: true,
+            cache: false,
+            modal: true,
+            buttons: [
+                        {
+                            text: "确认", handler: function () {
+                                var rows = $("#@Model.TableId").datagrid("getSelections");
+                                if (rows.length <= 0) {
+                                    $.messager.alert('提示', "请选择一条记录", "info");
+                                    return;
+                                }
+                                var arrId = [];
+                                var arrVal = [];
+                                for (var i = 0; i < rows.length; i++) {
+                                    arrId.push(rows[i].Id);
+                                    arrVal.push(rows[i].Name);
+                                }
+                                var Character = { CharacterId: arrId.join(','), CharacterText: arrVal.join(',') };
+                                Callback(Character);
+                                $('#@Model.DialogId').dialog("close")
+                            }
+                        },
+                        { text: "关闭", handler: function () { $('#@Model.DialogId').dialog("close") } }
+            ]
+        });
+        $('#@Model.DialogId').dialog('open');
+    }
+
+</script>

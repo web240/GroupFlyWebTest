@@ -1,0 +1,235 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@{
+    ViewBag.Title = "账户管理-企业信息";
+}
+@model FeOrganizationEditViewModel
+<script type="text/javascript">
+    $.parser.parse();
+    $(function () {
+        //提交编辑
+        $("#btnSubmit").click(function () {
+
+            var postdata = $("#OrganizationForm").serializeObject();
+
+            if (!postdata.OrganizationName) {
+                $.messager.alert('提示', '请填写 ' + '@Html.DisplayNameFor(m => m.OrganizationName)');
+                return;
+            }
+
+            //$("#A_MemInfo").showLoading();
+            platformAjax({
+                url: "@Url.Action("OrganizationEdit", "FeUserInfo")",
+                data: postdata,
+                dataType: "json",
+                success: function (result) {
+                    if (result.Code != 1) {
+                        //$.messager.alert('错误提示', result.ErrorMessage);
+                        $("Gf-FeTemplate-Component-Messager").feComponentMessager("show", { title: "错误提示", msg: result.ErrorMessage, position: 'bottomRight' });
+                    }
+                    else {
+                        //$.messager.alert('提示', "更新成功");
+                        $("Gf-FeTemplate-Component-Messager").feComponentMessager("show", { title: "提示", msg: "会员个人信息更新成功", position: 'bottomRight' });
+                    }
+                },
+                finallyCall: function () {
+                    //$("#A_MemInfo").hideLoading();
+                }
+            });
+
+        });
+
+    });
+
+    //图片选择
+    var TargetElement;
+    function OrganizationOpenSelectImg(target) {
+        $("#OrganizationFeImageSelector").feImageSelector("open");
+        TargetElement = $(target);
+    };
+
+    $("#OrganizationFeImageSelector").feImageSelector("submit", function (id, url) {
+        $(TargetElement).parent().find("img").attr("src", "@Url.Content("~/File")?id=" + id);
+        $(TargetElement).parent().find(":hidden").val(id);
+    });
+
+
+</script>
+
+<Gf-FeImageSelector id="OrganizationFeImageSelector"
+                    rootdirectoryid="@Model.ImageDirectoryId"
+                    dialogtitle="选择图片">
+</Gf-FeImageSelector>
+<div class="dpsc_mian">
+    <p class="ptitle">
+        <span class="spanrig"></span><a href="@Url.Action("Index","FeAccount")">账户管理</a><span class="breadcrume_icon">>></span><span class="breadcrume_text">个人信息</span>
+    </p>
+
+    <div id="A_MemInfo">
+        <form id="OrganizationForm">
+            <div id="list_main" class="list_main">
+                <ul id="sidebar">
+                    <li class='TabbedPanelsTab TabbedPanelsTabSelected'>
+                        <a href="javascript:void(0)" style="text-decoration: none;">个人信息</a>
+                    </li>
+                    <li class='TabbedPanelsTab'>
+                        <a href="javascript:void(0)" style="text-decoration: none;">企业信息</a>
+                    </li>
+                    <li class='TabbedPanelsTab'>
+                        <a href="javascript:void(0)" style="text-decoration: none;">个人头像</a>
+                    </li>
+                </ul>
+                <div id="content">
+                    <div style='display:block'>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabbiao">
+                            <tr>
+                                <td class="tab_r">
+                                    用户名：
+                                </td>
+                                <td>
+                                    <strong style="font-size: 14px;">
+                                        @Html.DisplayFor(m => m.UserName)
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.UserName)
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_ContactLastName">*</span>@Html.DisplayNameFor(m => m.ContactLastName)：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactLastName, new { @class = "textwb", maxlength = 20 })                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_ContactFirstName">*</span>@Html.DisplayNameFor(m => m.ContactFirstName)：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactFirstName, new { @class = "textwb", maxlength = 20 })                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_ContactCellphone">*</span>手机：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactCellphone, new { @class = "textwb", maxlength = 11 })                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_ContactTelephone">*</span>固定电话：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactTelephone, new { @class = "textwb", maxlength = 11 })                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_ContactEmail">*</span>邮箱地址：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactEmail, new { @class = "textwb", maxlength = 50 })                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style='display:none'>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabbiao">
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_companyname">*</span>公司名称：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.OrganizationName, new { @class = "textwb", maxlength = 50 })                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="diqu">*</span>公司规模：
+                                </td>
+                                <td>
+                                    <Gf-ListValueCombobox id="gfCompanyScale" name="@nameof(Model.OrganizationScale)" defaultoption="请选择" value="@Model.OrganizationScale" source="@FeListIDs.PersonScale"></Gf-ListValueCombobox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star">*</span>公司行业：
+                                </td>
+                                <td>
+                                    <Gf-ListValueCombobox id="gfCompanyIndustry" name="@nameof(Model.OrganizationIndustry)" defaultoption="请选择" value="@Model.OrganizationIndustry" source="@FeListIDs.Industry"></Gf-ListValueCombobox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star">*</span>公司性质：
+                                </td>
+                                <td>
+                                    <Gf-ListValueCombobox id="gfCompanyNature" name="@nameof(Model.OrganizationNature)" defaultoption="请选择" value="@Model.OrganizationNature" source="@FeListIDs.OrganizationNature"></Gf-ListValueCombobox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star">*</span>公司地址：
+                                </td>
+                                <td>
+                                    <Gf-MultCombobox id="gfCompanyLocation" name="@nameof(Model.OrganizationLocation)" defaultoption="请选择" value="@Model.OrganizationLocation" valuefield="id" textfield="label" rootvalue="@Model.LocationRoot" data="@Model.LocationData"></Gf-MultCombobox>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tab_r">
+                                    <span class="star" id="span_CompanyAddress">*</span>详细地址：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.OrganizationAddress, new { @class = "textwb", maxlength = 30, style = "width:400px;" })
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div style='display:none'>
+                        <div>
+                            <!--弹出层-->
+                            <table id="A_MemInfo_ctl00_Table1" width="100%" border="0" cellspacing="0" cellpadding="0" class="tabbiao">
+                                <tr>
+                                    <td class="tab_r">
+                                        我的头像：
+                                    </td>
+                                    <td>
+                                        <img id="ImagePath" onerror="javascript: this.src ='@Url.Content("~/FrontEnd/Back/Content/images/admin_pic.jpg")'" src="@Url.Content("~/File")?id=@Model.Avatar" style="border-width:0px;height: 120px; width: 120px; border-width: 0px;" />
+                                        @Html.HiddenFor(m => m.Avatar)<br />
+                                        <!--弹出层-->
+                                        <input name="" type="button" class="selpic" onclick="OrganizationOpenSelectImg(this)" value="选择图片" />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div style="padding:10px;"><input type="button" name="btnSubmit" value="确认修改" id="btnSubmit" class="querbtn" style="margin-left:40%" /></div>
+            </div>
+            <script type="text/javascript">
+                //初始化
+                $("#gfCompanyScale")[0].init();
+                $("#gfCompanyIndustry")[0].init();
+                $("#gfCompanyNature")[0].init();
+                $("#gfCompanyLocation")[0].init();
+
+                //Tab页切换
+                $(function () {
+                    let li = $("#sidebar").children("li")
+                    li.bind("click", function () {
+                        let index = $(this).index()
+                        $(this).addClass("TabbedPanelsTabSelected").siblings().removeClass("TabbedPanelsTabSelected");
+                        $("#content").children("div").eq(index).show().siblings().hide();
+                    })
+                })
+            </script>
+
+        </form>
+    </div>
+</div>

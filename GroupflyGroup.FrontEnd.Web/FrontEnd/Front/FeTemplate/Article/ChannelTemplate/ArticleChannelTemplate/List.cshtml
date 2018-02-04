@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FrontArticleSearchViewModel
+
+@section components{
+
+}
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(window).load(function() {
+
+            $("Gf-FeTemplate-CompositeComponent-ArticleHomeHead").feComponentArticleHomeHead("searchClick", function (text) {
+
+                var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+                var options = {
+                    mode: "Search",
+                    modevalue: text
+                };
+                loadClick(options);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleChannelNavigate").feComponentArticleChannelNavigate("selectcategoryChanged", function (categoryId) {
+                indexClick(categoryId);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("titleClick", function(id) {
+                itemClick(id);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("categoryClick", function (id) {
+                var options = {
+                    mode: "Category",
+                    modevalue: id
+                };
+                loadClick(options);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("tagClick", function (tag) {
+
+                var options = {
+                    mode: "Tag",
+                    modevalue: tag
+                };
+                loadClick(options);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryNewestTitleList").feComponentArticleCategoryTitleList("itemClick", function (id) {
+                itemClick(id);
+            });
+
+            //文章属性
+            $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("listCharacterClick", function (id) {
+                var options = {
+                    mode: "Character",
+                    modevalue: id
+                };
+                loadClick(options);
+            });
+
+        });
+
+        function moreClick(mode, modevalue) {
+            var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+            window.location = document.body["apppath"] + "FeArticle/FrontArticleSearch?channelId=" + encodeURI(channelId) + "&mode=" + encodeURI(mode) + "&modevalue=" + encodeURI(modevalue);
+        }
+
+        function itemClick(id) {
+            window.location = document.body["apppath"] + "FeArticle/FrontArticleDetails?articleId=" + encodeURI(id);
+        }
+
+        function indexClick(id) {
+           
+            var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+            var url = document.body["apppath"] + "FeArticle/FrontChannelIndex?channelId=" + encodeURI(channelId) + "&categoryId=" + encodeURI(id);
+            window.location = url;
+        }
+
+
+        function loadClick(options) {
+            $("Gf-FeTemplate-Component-ArticleNavigate").feComponentArticleNavigate(options);
+            $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList(options);
+        }
+
+    </script>
+
+}
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Index.css";
+}
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+<div class="BodyContent">
+    <Gf-FeTemplate-CompositeComponent-ArticleHomeHead id="articleHomeHead" homehref="http://www.taobao.com" prompt="搜索文章">
+        <div>
+            <div class="tops">
+                <div class="covers">
+                    <div class="left">
+                        <a behaviorId="goHome"></a>
+                    </div>
+                    <Gf-FeTemplate-Component-LoginState behaviorId="loginState"></Gf-FeTemplate-Component-LoginState>
+                </div>
+            </div>
+            <!--广告-->
+            <div class="j-adv-top  j-covers">
+                @{
+                var topImgPath = Model.TemplateDirectoryPath + "Content/Images/topgg.jpg";
+                topImgPath = Url.Content(topImgPath);
+                }
+                <img src="@topImgPath" />
+            </div>
+
+            <!--logo 搜索-->
+            <div class="search clearfix">
+                <Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId" ></Gf-FeTemplate-Component-Logo>
+                <!--搜索-->
+                <div class="sweep-box">
+                    <div>
+                        <div class="offerings">
+                            <input behaviorId="txtSeach" type="text">
+                        </div>
+                        <div class="click">
+                            <input behaviorId="btnSeach" type="button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="j-nav-radio clearfix">
+                <Gf-FeTemplate-Component-ArticleChannelNavigate channelid="@Model.ChannelId" categoryid="@Model.CategoryId"></Gf-FeTemplate-Component-ArticleChannelNavigate>
+            </div>
+        </div>
+    </Gf-FeTemplate-CompositeComponent-ArticleHomeHead>
+
+    <Gf-FeTemplate-Component-ArticleNavigate mode="@Model.Mode" modevalue="@Model.ModeValue"></Gf-FeTemplate-Component-ArticleNavigate>
+
+    <div class="con j-top covers clearfix">
+        <div class="con-fl left">
+            <Gf-FeTemplate-Component-ArticleCategoryDetailsList mode="@Model.Mode" modevalue="@Model.ModeValue" channelid="@Model.ChannelId" showmore="false" showhead="false" showloadmore="true" count="@Model.ColumnCount"></Gf-FeTemplate-Component-ArticleCategoryDetailsList>
+        </div>
+        <div class="j-con-fr fr">
+            <Gf-FeTemplate-Component-ArticleCategoryNewestTitleList mode="Newest" categoryid="@Model.CategoryId" count="@Model.RightColumnCount"></Gf-FeTemplate-Component-ArticleCategoryNewestTitleList>
+            @{
+            var imgPath = Model.TemplateDirectoryPath + "Content/Images/adv.jpg";
+            imgPath = Url.Content(imgPath);
+            }
+            <div class="js-ads">
+                <img src="@imgPath" />
+            </div>
+        </div>
+    </div>
+
+    <Gf-FeTemplate-Component-FootNote></Gf-FeTemplate-Component-FootNote>
+    </div>

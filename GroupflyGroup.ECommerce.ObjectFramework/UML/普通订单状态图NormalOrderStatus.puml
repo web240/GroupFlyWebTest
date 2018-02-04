@@ -1,0 +1,36 @@
+
+@startuml
+NormalWaitBuyerPay等待买家付款:买家已经下单,订单已经生成,此时买家还未付款,可以取消订单,取消订单后订单关闭
+NormalWaitSellerSend等待卖家发货:买家已经付款,等待卖家进行发货操作，此时可以退款订单
+NormalWaitBuyerConfirm等待买家确认收货:卖家已经发货,等待买家收货后进行确认收货操作,可以对订单的商品进行退货
+NormalOrderFinish订单完成:买家已经确认收货,等待买家进行评价操作
+NormalOrderClosed订单关闭:买家已对该订单评价,系统在一定时间段后关闭订单,在此时间段内可以对订单进行追评
+
+
+[*] -d--> NormalWaitBuyerPay等待买家付款:买家下单
+NormalWaitBuyerPay等待买家付款 -d---> NormalWaitSellerSend等待卖家发货:买家付款
+NormalWaitSellerSend等待卖家发货 -d---> NormalWaitBuyerConfirm等待买家确认收货:卖家发货
+NormalWaitBuyerConfirm等待买家确认收货 -d-----> NormalOrderFinish订单完成:买家确认收货
+NormalOrderFinish订单完成 -d---> NormalOrderClosed订单关闭:买家评价订单
+
+
+NormalWaitBuyerPay等待买家付款 -> NormalOrderClosed订单关闭:买家取消订单
+
+
+NormalWaitSellerSend等待卖家发货 -> NormalOrderClosed订单关闭:全部退款
+NormalWaitSellerSend等待卖家发货 -> NormalWaitSellerSend等待卖家发货:退款失败
+NormalWaitSellerSend等待卖家发货 -> NormalWaitSellerSend等待卖家发货:部分退款
+
+
+NormalWaitBuyerConfirm等待买家确认收货 -> NormalOrderClosed订单关闭:全部退款
+NormalWaitBuyerConfirm等待买家确认收货 -> NormalWaitBuyerConfirm等待买家确认收货:退款失败
+NormalWaitBuyerConfirm等待买家确认收货 -> NormalWaitBuyerConfirm等待买家确认收货:部分退款
+
+
+NormalOrderClosed订单关闭 -d--> [*]:系统关闭订单
+@enduml
+
+
+
+        
+   

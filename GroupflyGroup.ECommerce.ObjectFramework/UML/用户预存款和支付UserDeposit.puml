@@ -1,0 +1,178 @@
+@startuml
+
+namespace groupflygroup.ecommerce.objectframework{
+     class Principle as "Principle 主体"<< extends Objekt>>{
+         
+     }          
+     class Account as "Account 账户"<< extends Objekt>>{
+           isEnable:bool是否启用
+           principle:objekt 主体->{Principle}
+           accountType:list 账户类型[AccountType]           
+           deposit:decimal存款
+           accountNumber:string账号
+           AccountStatisticDeposit()账户存款统计
+           AccountDepositCheck()账户存款异常检测
+     }
+          
+     class Attribute as "Attribute 特性"{
+           ApliayPartnerStatusPID:string支付宝合作者身份ID
+           ApliayprivateKey:string支付宝私钥  
+           MerchantID:string微信商户ID
+           MerchantPaymentKey:strin微信g商户支付密钥
+           ChinaUnionPayPublicKeyCertificate:中国银联公钥证书
+           ChinaUnionPayPrivateKeyCertificate:中国银联公钥证书私钥
+     }
+
+           
+     class AccountOperation as "AccountOperation 账户操作"<< extends Objekt>>{
+           account:objekt 账户->{Account}
+           operateStatus:list 操作状态[OperateStatus]
+           serialNumber:string操作流水号                     
+           operateDeposit:decimal操作存款
+           lastDeposit:decimal操作后存款
+           remark:string备注
+           description:string操作说明
+           GetAccountOperationByNumber()根据流水号查询账户操作
+           AccountOperationBeforeSave()检测金额是否为正数,流水号是否存在,不存在创建流水号号
+     }
+
+     class AccountDepositChangeLog as "AccountDepositChangeLog 账户存款变更记录"<< extends Objekt>>{
+           account:objekt 账户->{Account}
+           targetAccount:objekt 目标账户->{Account}             
+           operateDeposit:decimal操作存款
+           lastDeposit:decimal操作后存款
+           remark:string备注
+           description:string描述
+           GetDepositLogList()查询存款变更列表
+           DepositChangeCheck()存款变更异常检测
+     }
+
+     class PaymentServiceRecord as "支付服务记录" << extends Objekt>>{                   
+           paymentInformation:objekt 支付信息->{PaymentInformation}
+           collectionInformation:objekt 收款信息->{CollectionInformation}
+           paymentService:objekt 支付服务->{PaymentService}   
+           treatmentResult:bool处理结果                           
+     }
+
+     class PaymentInformation as "PaymentInformation 支付信息" << extends Objekt>>{      
+           description:string支付说明
+           operateMoney:decimal支付金额             
+           paymentAccount:objekt 支付帐号->{Account}   
+    }
+    
+    class CollectionInformation as "CollectionInformation 收款信息" << extends Objekt>>{
+           description:string收款说明
+           operateMoney:decimal收款金额         
+           collectionAccount:string收款帐号->{Account}                               
+    }
+         
+    abstract class PaymentService as "PaymentService 支付服务"<< extends Objekt>>{
+           name:string支付服务名称
+           description:string支付服务介绍
+           image:objekt 支付服务图标->{File}                     
+    }
+    class AlipayInstantPaymentService as "AlipayInstantPaymentService 支付宝即时到账支付服务"{                              
+           tokenUrl:回调地址
+           Execute()支付宝即时到账支付服务
+           CallBack()支付宝即时到账回调
+    }
+
+    class WeChatScanCodeService as "WeChatScanCodeService 微信扫码支付服务"{         
+           tokenUrl:回调地址
+           Execute()微信扫码支付服务
+           CallBack()微信扫码回调
+    }
+
+    class UnionPayOnlineService as "ChinaUnionPayService 中国银联"{                 
+           tokenUrl:回调地址
+           Execute()中国银联支付服务
+           CallBack()中国银联回调
+    }
+    
+    class DepositPaymentService as "ChinaUnionPayService 预存款支付服务"{
+           Execute()预存款支付服务
+    }
+     
+     Principle "1"->"*"Account
+     Account "1"->"*"AccountDepositChangeLog    
+     Account "1"->"*"AccountOperation
+     Account"*"->"*" Null0:Attribute 特性
+     (Account,Null0) .. Attribute
+
+     PaymentService "1"->"*"PaymentServiceRecord
+     PaymentInformation "1"->"1"PaymentService
+     CollectionInformation "1"->"1"PaymentService
+     PaymentService <|- AlipayInstantPaymentService
+     PaymentService <|- WeChatScanCodeService
+     PaymentService <|- UnionPayOnlineService
+     PaymentService <|- DepositPaymentService
+}
+
+object "AccountType: List" as AccountType{
+    name = "AccountType"
+    label ="账户类型"
+}
+object "PreDepositAccount: Value" as PreDepositAccount{
+    name = "PreDepositAccount"
+    label ="PreDepositAccount预存款账户"
+}
+
+object "PreDepositFrozenAccount: Value" as PreDepositFrozenAccount{
+    name = "PreDepositFrozenAccount"
+    label ="PreDepositFrozenAccount预存款冻结账户"
+}
+
+object "AlipayAccount: Value" as AlipayAccount{
+    name = "AlipayAccount"
+    label ="AlipayAccount支付宝账户"
+}
+object "WeChatAccount: Value" as WeChatAccount{
+    name = "WeChatAccount"
+    label ="WeChatAccount微信账户"
+}
+object "UnionPayAccount: Value" as UnionPayAccount{
+    name = "UnionPayAccount"
+    label ="UnionPayAccount银联账户"
+}
+object "CreditAccount: Value" as CreditAccount{
+    name = "CreditAccount"
+    label ="CreditAccount信用账户"
+}
+object "DebitAccount: Value" as CreditAccount{
+    name = "DebitAccount"
+    label ="DebitAccount借记账户"
+}
+
+AccountType *- PreDepositAccount
+AccountType *- PreDepositFrozenAccount
+AccountType *- AlipayAccount
+AccountType *- WeChatAccount
+AccountType *- UnionPayAccount
+AccountType *- CreditAccount
+AccountType *- DebitAccount
+
+
+
+object "OperateStatus: List" as OperateStatus{
+    name = "OperateStatus"
+    label ="操作状态"
+}
+
+object "Pending: Value" as Pending{
+    name = "Pending"
+    label ="Pending待处理"
+}
+object "ProcessingSuccessful: Value" as ProcessingSuccessful{
+    name = "ProcessingSuccessful"
+    label ="ProcessingSuccessful处理成功"
+}
+object "ProcessingFailure: Value" as ProcessingFailure{
+    name = "ProcessingFailure"
+    label ="ProcessingFailure处理失败"
+}
+OperateStatus *- Pending
+OperateStatus *- ProcessingSuccessful
+OperateStatus *- ProcessingFailure
+
+
+@enduml

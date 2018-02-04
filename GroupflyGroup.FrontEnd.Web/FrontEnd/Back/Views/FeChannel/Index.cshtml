@@ -1,0 +1,158 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+
+
+
+
+    <script type="text/javascript">
+        $(function () {
+
+
+            var columns = [];
+            columns.push({ title: '频道名称', field: 'Name', align: 'center', dataalign: 'center', width: "275px" });
+            columns.push({
+                title: '排序', field: 'SortOrder', align: 'center', dataalign: 'center', width: "280px",
+                //格式化分类排序列，用numberbox显示数据，并可以编辑
+                formatter: function (value, rowData) {
+                    var content;
+                    content = "<input recordId=\"" + rowData.Id + "\" type=\"text\" class=\"easyui-numberbox J_numberbox\" value=\"" + value + "\" style=\"width:80px;\" >";
+                    return content;
+                }
+            });
+            columns.push({ title: '绑定分类', field: 'CategoryName', align: 'center', dataalign: 'center', width: "280px" });
+            columns.push({ title: '绑定域名', field: 'Url', align: 'center', dataalign: 'center', width: "280px" });
+            columns.push({
+                title: '是否启用', field: 'IsDisplay', align: 'center', width: "280px", dataalign: 'center', formatter: function (value, row, index) {
+                    var content;
+                    if (value == "on") {
+                        content = "<input recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" data-options=\"onText:'是',offText:'否'\" checked/>";
+                    }
+                    else {
+                        content = "<input recordId=\"" + row.Id + "\"  class=\"easyui-switchbutton J_switchbutton\" data-options=\"onText:'是',offText:'否'\" />";
+                    }
+                    return content;
+                }
+            });
+
+
+            var frozenColumns = [];
+            frozenColumns.push({
+                title: '操作', field: 'Id',  width: "280px", align: 'center', dataalign: 'center',
+                //格式化操作列，显示编辑和删除按钮
+                formatter: function (value, rowData) {
+                    var content = "<a href=\"#\" onclick=\"ChannelEdit(this);\" recordId=\"" + rowData.Id + "\" class=\"listedit\">编辑</a>";
+                    content += "<a href=\"#\" onclick=\"ChannelDelete(this);\" recordId=\"" + rowData.Id + "\" class=\"listdelete ml20\">删除</a>";
+
+                    return content;
+                }
+            });
+
+            document.querySelector("#FeChannelFeDataList").SetDataGrid(columns, frozenColumns);
+
+            document.querySelector("#FeChannelFeDataList").registerEventHandler("SetDataGridLoadSuccess", function (row, data) {
+                FechannelBindEasyUI();
+            });
+
+
+            FechannelBindData();
+        })
+
+        function FechannelBindEasyUI() {
+
+            $("#FeChannelGridListMain").find('.J_numberbox').numberbox({
+                min:0,
+                precision:2,
+                onChange: function (newValue, oldValue) {
+                    var recordId = $(this).attr("recordId");
+                    FechannelSortOrderChange(newValue, recordId);
+                }
+            });
+
+            $("#FeChannelGridListMain").find('.J_switchbutton').switchbutton({
+                onChange: function (checked) {
+                    var recordId = $(this).attr("recordId");
+                    FechannelIsDisplayChange(checked, recordId);
+                }
+            });
+        }
+
+        function FechannelBindData(pagenumber)
+        {
+            var url = "@Url.Content("~/FeChannel/Get")";
+            document.querySelector("#FeChannelFeDataList").SearchData(url, "", pagenumber);
+        }
+
+
+        function FechannelIsDisplayChange(checked, recordId) {
+            platformAjax({
+                url: '@Url.Content("~/FeChannel/SetIsDisplay")',
+                data: { id: recordId, value: checked },
+                success: function (result) {
+                    if (result.Code != 1) {
+                        $.messager.alert('更新错误', result.ErrorMessage);
+                    }
+                },
+                finallyCall: function () {
+                    FechannelBindData();
+                }
+            });
+        }
+
+        function FechannelSortOrderChange(newValue, recordId) {
+            platformAjax({
+                url: '@Url.Content("~/FeChannel/SetSortOrder")',
+                data: { id: recordId, value: newValue },
+                success: function (result) {
+                    if (result.Code != 1) {
+                        $.messager.alert('更新错误', result.ErrorMessage);
+                    }
+                },
+                finallyCall: function () {
+                    FechannelBindData();
+                }
+            });
+
+        }
+
+        function ChannelEdit(obj) {
+            var id = $(obj).attr("recordId");
+            document.body.tabGoto("@Url.Content("~/FeChannel/Edit?id=")" + id);
+        }
+
+        function ChannelDelete(obj) {
+            var id = $(obj).attr("recordId");
+            platformAjax({
+                url: '@Url.Content("~/FeChannel/Del")',
+                data: { id: id },
+                success: function (result) {
+                    if (result.Code != 1) {
+                        $.messager.alert('更新错误', result.ErrorMessage);
+                    }
+                },
+                finallyCall: function () {
+                    FechannelBindData();
+                }
+            });
+
+        }
+
+    </script>
+
+
+<div id="FeChannelGridListMain" data-options="fit:true" class="main easyui-layout FeChannelGridListMain" style="overflow: hidden;">
+    <div data-options="region:'north',split:false" style="height:46px;max-height:200px;border-top-width:0px;" class="tablelist">
+
+        <div class="datagrid-toolbar">
+            <a class="easyui-linkbutton" onclick="document.body.tabGoto('@Url.Content("~/FeChannel/Create")');" href="javascript:void(0);">添加频道</a>
+        </div>
+
+        
+    </div>
+
+    <div data-options="region:'center',split:false">
+        <Gf-FeDataList id="FeChannelFeDataList"></Gf-FeDataList>
+    </div>
+   
+</div>
+<script type="text/javascript">
+    $.parser.parse();
+</script>

@@ -1,0 +1,130 @@
+﻿
+@using GroupflyGroup.Platform.Web.Common;
+
+<style>
+    html, body {
+        height: 100%; /*设置html和body的width和height为100%，可使全屏生效*/
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .switchbutton-on {
+        background: #0092DC;
+        color: #fff;
+    }
+
+
+
+    .FeArticleTrashPageListMain .tablelist .tabs-header {
+        border: none;
+        background: none;
+        margin-top: 0px;
+    }
+
+    .FeArticleTrashPageListMain .tabs {
+        margin-top: 0px;
+    }
+
+    .FeArticleTrashPageListMain .datagrid-view {
+        margin-top: 0px;
+    }
+
+    .FeArticleTrashPageListMain .tablelist .datagrid-toolbar {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .FeArticleTrashPageListMain .querybox li label {
+        width: 72px;
+        text-align: left;
+    }
+  
+</style>
+
+
+<script>
+    $.parser.parse();
+    $(function () {
+        $("#butFeArticleQuery1").click(function () {
+            BindGrid(0);
+        });
+    });
+
+
+
+</script>
+
+<div data-options="fit:true" class="main easyui-layout FeArticleTrashPageListMain" style="overflow: hidden;">
+    <div data-options="region:'north',split:false" style="height:125px;max-height:200px;margin-top:1px;border-top-width:0px;">
+        <div id="FeArticleQuery1" class="querybox">
+            <ul class="clearfix">
+                <li>
+                    <label for="Title">文章标题：</label>
+                    <input id="Title1" class="easyui-textbox" type="text" name="Title" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Author">作者：</label>
+                    <input id="Author1" class="easyui-textbox" type="text" name="Author" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Creator">发布人：</label>
+                    <input id="Creator1" class="easyui-textbox" type="text" name="Creator" style="width: 185px;" />
+                </li>
+                <li>
+                    <label for="Approver">审核人：</label>
+                    <input id="Approver1" class="easyui-textbox" type="text" name="Approver" style="width: 185px;" />
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <label for="CreatedOn">发布时间：</label>
+                    <input id="CreatedBeginDate1" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                    <a style="padding:0 57px 0 6px;">至</a>
+                    <input id="CreatedEndDate1" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                </li>
+                <li>
+                    <label for="ApprovedOn">审核时间：</label>
+                    <input id="ApprovedBeginDate1" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                    <a style="padding:0 57px 0 6px;">至</a> 
+                    <input id="ApprovedEndDate1" type="text" class="easyui-datebox" style="width: 185px;" data-options="editable:false">
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li style="width:257px">
+                    <label for="Character">文章属性：</label>
+                    @Html.Action("Load", "FeCharacterSeachBox", new
+               {
+                   ControlIdName = "CharacterID1",
+                   ControlTextName = "Character",
+                   Width = 185
+               })
+                </li>
+                <li style="width:257px">
+                    <label for="Category">文章分类：</label>
+                    @Html.Action("Load", "FeArticleCategorySeachBox", new
+               {
+                   parentIdModelFieldName = "CategoryID1",
+                   parentNamePathModelFieldName = "Category",
+                   Title = "选择文章分类",
+                   Width = 185
+               })
+                </li>
+
+                <li>
+                    <label for="pl">是否有评论：</label>
+                    <select id="pl1" class="easyui-combobox" name="pl" style="width: 185px;">
+                        <option value="">--全部--</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </li>
+                <li>
+                    <a id="butFeArticleQuery1" class="easyui-linkbutton ml20" data-options="iconCls:'icon-search'" style="margin-left:0px;">查询</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center',split:false" style="overflow:hidden;" class="tablelist">
+        @Html.Action("Grid", "FeArticle", new { tab = 0 })
+    </div>
+</div>

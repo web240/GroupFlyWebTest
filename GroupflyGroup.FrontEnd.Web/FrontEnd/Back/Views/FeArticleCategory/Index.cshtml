@@ -1,0 +1,226 @@
+﻿
+    <style>
+        .datagrid-view2 .datagrid-body td:first-child{ text-align:left;}
+    </style>
+
+
+
+
+    <script type="text/javascript">
+
+        //表格树控件数据加载完成，并呈现后初始化
+        function PageLoad() {
+
+            //重新渲染表格控件。
+            $.parser.parse($('#tt').parent());
+
+            //初始化滑动开关
+            $('.J_switchbutton').switchbutton({
+                onChange: function (checked) {
+                    var recordId = $(this).attr("recordId");
+                    ShowOrHide(recordId, checked);
+                }
+            });
+
+            $(".operationFieldEditButton").click(function () {
+
+                //获取记录的id
+                var recordId = $(this).attr("recordId");
+
+                document.body.tabGoto("@Url.Content("~/FeArticleCategory/EditArticleCategory")?recordId=" + recordId);
+
+            });
+
+
+            //处理删除操作
+            $(".operationFieldDelButton").click(function () {
+
+                //获取记录的id
+                var recordId = $(this).attr("recordId");
+
+                //调用后台方法修改数据。
+                $.ajax({
+                    url: '@Url.Content("~/FeArticleCategory/DelCategory")',
+                    type: "POST",
+                    data: { id: recordId },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result != true) {
+                            alert("请求失败");
+                        }
+                        else {
+                            alert("删除成功！");
+                            $("#tt").treegrid("reload");
+                        }
+                    },
+                    error: function (textStatus, errorThrown) {
+                        alert("请求失败");
+                    }
+                });
+
+                return false;
+
+            });
+
+            //修改分类排序后触发
+            $(".sortNumberbox").numberbox({
+                "onChange": function (newValue, oldValue) {
+
+                    console.log("排序");
+
+                    //获取记录的id
+                    var recordId = $(this).attr("recordId");
+
+                    //调用后台方法修改数据。
+                    $.ajax({
+                        url: '@Url.Content("~/FeArticleCategory/SetSortOrder")',
+                        type: "POST",
+                        data: { id: recordId, sortOrder: newValue },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result != true) {
+                                alert("请求失败");
+                            }
+                            else {
+                                $("#tt").treegrid("reload");
+                            }
+                        },
+                        error: function (textStatus, errorThrown) {
+                            alert("请求失败");
+                        }
+                    });
+                }
+            });
+
+        }
+
+
+        //滑动开关事件
+        function ShowOrHide(recordId, status) {
+            //调用后台方法修改数据。
+            $.ajax({
+                url: '@Url.Content("~/FeArticleCategory/SetDisplay")',
+                type: "POST",
+                data: { id: recordId, isChecked: status },
+                dataType: "json",
+                success: function (result) {
+                    if (result != true) {
+                        alert("请求失败");
+                    }
+                    else {
+                        $("#tt").treegrid("reload");
+                    }
+                },
+                error: function (textStatus, errorThrown) {
+                    alert("请求失败");
+                }
+            });
+
+        };
+
+        $(function () {
+
+            //初始化树表格控件
+            $('#tt').treegrid({
+                url: '@Url.Content("~/FeArticleCategory/Get")',     //指定数据源
+                idField: 'Id',                                      //指定数据的id的字段
+                rownumbers: true,                                   //是否显示序号列
+                lines: false,                                        //是否显示树控件的线条
+                treeField: 'Name',                                  //显示树结构的字段
+                onLoadSuccess: function (row, data) {               //表格树控件数据加载完成，并呈现后初始化
+                    PageLoad();
+                },
+                columns: [[                                         //普通列
+                    {
+                        title: '操作', field: 'Id', align: 'center', dataalign: 'center',width:"150px",
+
+                        //格式化操作列，显示编辑和删除按钮
+                        formatter: function (value, rowData) {
+
+                            //顶级分类不显操作按钮
+                            if (rowData._parentId == null) {
+                                content = "";
+                            }
+                            else {
+                                var content = "<a href=\"#\" recordId=\"" + rowData.Id + "\" class=\"listedit  operationFieldEditButton\">编辑</a>";
+                                content += "<a href=\"#\" recordId=\"" + rowData.Id + "\" class=\"listdelete ml20  operationFieldDelButton\">删除</a>";
+                            }
+
+                            return content;
+                        }
+                    },
+                    { title: '分类名称', field: 'Name' },
+
+                    {
+                        title: '分类排序', field: 'SortOrder', align: 'center', width: "700px",
+
+                        //格式化分类排序列，用numberbox显示数据，并可以编辑
+                        formatter: function (value, rowData) {
+
+                            var content;
+
+                            //顶级分类不显示排序
+                            if (rowData._parentId == null) {
+                                content = "";
+                            }
+                            else {
+                                //生成numberbox控件，并把数据的id写到自定义recordId属性中
+                                content = "<input recordId=\"" + rowData.Id + "\" type=\"text\" class=\"easyui-numberbox sortNumberbox\" value=\"" + value + "\" style=\"width:80px;\" data-options=\"min:0,precision:2\">";
+                            }
+
+                            return content;
+                        }
+                    },
+                    {
+                        title: '是否启用', field: 'IsDisplay', align: 'center', width: "700px",
+
+                        //格式化是否启用列，用滑动开关显示数据。
+                        formatter: function (value, rowData) {
+
+                            var content;
+
+                            //顶级分类不显是否启用
+                            if (rowData._parentId == null) {
+                                content = "";
+                            }
+                            else {
+
+                                //生成滑动开关，并把数据的id写到自定义recordId属性中
+                                if (value) {
+                                    content = "<input recordId=\"" + rowData.Id + "\" class=\"easyui-switchbutton J_switchbutton lcs_check\" checked data-options=\"onText:'是',offText:'否'\">";
+                                }
+                                else {
+                                    content = "<input recordId=\"" + rowData.Id + "\" class=\"easyui-switchbutton J_switchbutton lcs_check\"  data-options=\"onText:'是',offText:'否'\">";
+                                }
+                            }
+
+                            return content;
+
+                        }
+                    }
+                ]]
+            });
+
+        });
+
+    </script>
+
+
+<div class="main">
+    <div class="tablelist tabletree">
+        <div class="datagrid-toolbar">
+            <a href="javascript:void(0);" onclick="document.body.tabGoto('@Url.Action("CreateArticleCategory","FeArticleCategory")');" class="easyui-linkbutton  l-btn l-btn-small">添加分类</a>
+            @*@Html.ActionLink("添加分类", "CreateArticleCategory", null, new
+            {
+                @class = "easyui-linkbutton "
+            })*@
+
+            @*@Html.ActionLink("初始化数据", "Init", null, new
+           {
+               @class = "easyui-linkbutton"
+           })*@
+        </div>
+       
+        <table id="tt"></table>
+   </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<div class="jumbotron">
+    <h1>MessageEvent</h1>
+    <p class="lead"></p>
+</div>
+
+<div class="row">
+    <div>
+        <input type="button" value="开始" id="begin" />
+        <input type="button" value="返回" id="return" />
+    </div>
+</div>
+<script>
+    $("#begin").click(function() {
+        window.location.href = "@Url.Action("Begin")";
+    });
+    $("#return").click(function () {
+        window.location.href = "@Url.Action("Index","Home")";
+    });
+</script>

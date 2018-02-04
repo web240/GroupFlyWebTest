@@ -1,0 +1,33 @@
+﻿@using GroupflyGroup.Platform.ObjectFramework
+@using GroupflyGroup.Platform.ObjectFramework.Strings
+@using GroupflyGroup.Platform.Web.Common
+@model GroupflyGroup.Platform.Web.Models.ObjektReferencedCollectionViewModel
+
+<Gf-DataGrid idfield="@PropertyNames.id" namefield="@PropertyNames.combinedLabel" hidetools="all" pagination
+             onafterinit="element.queryData([{ field: '@PropertyNames.id', type: '@Const.Oper_Equals', value: '@Model.Id' }]);"
+             dataurl="@Url.Action("GetObjektReferencedCollection", "Platform")?id=@Model.Id">
+    <Gf-Column field="RefKlass" datatype="objekt" title="类" width="200"
+               editor="{ type : '@Const.ElementName_GfObjectSelector', options : 
+               { 
+                    idfield : '@PropertyNames.id', 
+                    namefield : '@PropertyNames.combinedLabel',  
+                    klass : '@KlassNames.Objekt', 
+                    href : '@Url.Action("SelectObjektCollectionView", "Platform")'
+                }}"></Gf-Column>
+    <Gf-Column field="RefObjekt" datatype="objekt" title="对象" width="200"
+               editor="{ type : '@Const.ElementName_GfObjectSelector', options : 
+               { 
+                    idfield : '@PropertyNames.id', 
+                    namefield : '@PropertyNames.combinedLabel',  
+                    klass : '@KlassNames.Objekt', 
+                    href : '@Url.Action("SelectObjektCollectionView", "Platform")'
+                }}"></Gf-Column>
+    <Gf-Column field="RefProperty" datatype="objekt" title="引用属性" width="200"
+               editor="{ type : '@Const.ElementName_GfObjectSelector', options : 
+               { 
+                    idfield : '@PropertyNames.id', 
+                    namefield : '@PropertyNames.combinedLabel',  
+                    klass : '@KlassNames.Objekt', 
+                    href : '@Url.Action("SelectObjektCollectionView", "Platform")' 
+                }}"></Gf-Column>
+</Gf-DataGrid>

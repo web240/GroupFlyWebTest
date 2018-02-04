@@ -1,0 +1,149 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+
+@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeArticleFrontChannelIndexViewModel
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Index.css";
+}
+
+@section components{
+
+}
+
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+@section scripts{
+<script type="text/javascript">
+    $(window).load(function () {
+        $("Gf-FeTemplate-CompositeComponent-ArticleHomeHead").feComponentArticleHomeHead("searchClick", function (text) {
+            moreClick("Search", text);
+        });
+
+        $("Gf-FeTemplate-Component-ArticleChannelNavigate").feComponentArticleChannelNavigate("selectcategoryChanged", function (categoryId) {
+            indexClick(categoryId)
+        });
+
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("titleClick", function (id) {
+            itemClick(id);
+        });
+
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("categoryClick", function (id) {
+            moreClick("Category", id);
+        });
+
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("tagClick", function (tag) {
+            moreClick("Tag", tag)
+        });
+
+        $("Gf-FeTemplate-Component-ArticleClickRankList").feComponentArticleClickRankList("itemClick", function (id) { itemClick(id); });
+
+        //文章属性
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("listCharacterClick", function (id) {
+            moreClick("Character", id);
+        });
+
+    });
+
+
+
+    function moreClick(mode, modevalue) {
+        var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+        window.location = document.body["apppath"] + "FeArticle/FrontArticleSearch?channelId=" + encodeURI(channelId) + "&mode=" + encodeURI(mode) + "&modevalue=" + encodeURI(modevalue);
+    }
+
+    function itemClick(id) {
+        window.location = document.body["apppath"] + "FeArticle/FrontArticleDetails?articleId=" + encodeURI(id);
+    }
+
+    function indexClick(id) {
+        //频道首页分类筛选
+        var options1 = {
+            mode: "Category",
+            modevalue: id
+        };
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList(options1);
+
+        var options2 = {
+            categoryid: id
+        };
+        $("Gf-FeTemplate-Component-ArticleClickRankList").feComponentArticleClickRankList(options2);
+    }
+
+
+
+</script>
+}
+
+<div class="BodyContent">
+    <Gf-FeTemplate-CompositeComponent-ArticleHomeHead id="articleHomeHead" homehref="http://www.taobao.com" prompt="搜索文章">
+        <div>
+            <div class="tops">
+                <div class="covers">
+                    <div class="left">
+                        <a behaviorId="goHome"></a>
+                    </div>
+                    <Gf-FeTemplate-Component-LoginState behaviorId="loginState"></Gf-FeTemplate-Component-LoginState>
+                </div>
+            </div>
+            <!--广告-->
+            <div class="j-adv-top  j-covers">
+                @{
+            var topImgPath = Model.TemplateDirectoryPath + "Content/Images/topgg.jpg";
+            topImgPath = Url.Content(topImgPath);
+                }
+                <img src="@topImgPath" />
+            </div>
+
+            <!--logo 搜索-->
+            <div class="search clearfix">
+                <Gf-FeTemplate-Component-Logo behaviorId="logo"  logoid="@Model.LogoId"></Gf-FeTemplate-Component-Logo>
+                <!--搜索-->
+                <div class="sweep-box">
+                    <div>
+                        <div class="offerings">
+                            <input behaviorId="txtSeach" type="text">
+                        </div>
+                        <div class="click">
+                            <input behaviorId="btnSeach" type="button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="j-nav-radio clearfix">
+                <Gf-FeTemplate-Component-ArticleChannelNavigate behaviorId="channelNavigate" channelid="@Model.ChannelId" categoryid="@Model.CategoryId" url="~/FeChannel/GetChannelList"></Gf-FeTemplate-Component-ArticleChannelNavigate>
+            </div>
+        </div>
+    </Gf-FeTemplate-CompositeComponent-ArticleHomeHead>
+
+    <div class="con covers clearfix">
+        <div class="con-fl left">
+            @*广告*@
+            <Gf-FeTemplate-Component-AdvertBanner></Gf-FeTemplate-Component-AdvertBanner>
+            <!--顶级分类下面的资讯-->
+            <Gf-FeTemplate-Component-ArticleCategoryDetailsList mode="Category" channelid="@Model.ChannelId" modevalue="@Model.CategoryId" showmore="false" showhead="false" showloadmore="true" count="@Model.ColumnCount"></Gf-FeTemplate-Component-ArticleCategoryDetailsList>
+
+        </div>
+
+        <div class="j-con-fr fr">
+            @*点击排行榜*@
+            <Gf-FeTemplate-Component-ArticleClickRankList count="@Model.RightColumnCount" categoryid="@Model.CategoryId"></Gf-FeTemplate-Component-ArticleClickRankList>
+            <div class="js-ads">
+                @{
+                var imgPath = Model.TemplateDirectoryPath + "Content/Images/adv.jpg";
+                imgPath = Url.Content(imgPath);
+                }
+                <img src="@imgPath" />
+            </div>
+        </div>
+
+    </div>
+
+    <Gf-FeTemplate-Component-FootNote></Gf-FeTemplate-Component-FootNote>
+</div>

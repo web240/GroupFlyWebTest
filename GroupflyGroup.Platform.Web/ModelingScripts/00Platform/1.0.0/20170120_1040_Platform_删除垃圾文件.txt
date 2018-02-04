@@ -1,0 +1,255 @@
+﻿//---2017/1/3 10:58:48------------------------------------------------------------------------------------------------
+{"$":"U","id":"2c78ac631e5848dea76386245fdb64f1@Property","readonly":"True","isIndexed":"True","combinedLabel":"relationshipKlass 关联类","modifiedOn":"2017/1/3 10:58:48.387","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:02:09------------------------------------------------------------------------------------------------
+{"$":"U","id":"89a8cf26643c45b8b958823030fda050@Property","isRequired":"True","isIndexed":"True","combinedLabel":"modificator 修改人","modifiedOn":"2017/1/3 11:02:08.878","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"0ac92b9a79604a06919c2fe19d602382@Property","isRequired":"True","isIndexed":"True","combinedLabel":"modifiedOn 修改时间","modifiedOn":"2017/1/3 11:02:08.910","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:03:59------------------------------------------------------------------------------------------------
+{"$":"U","id":"ee99d6501e0b45f887ea525a84fe38d3@Property","isIndexed":"True","combinedLabel":"creator 创建人","modifiedOn":"2017/1/3 11:03:59.522","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:20:15------------------------------------------------------------------------------------------------
+{"$":"U","id":"b9b9a6fc5f204b5697ffee4db7f5dc1e@Property","isIndexed":"True","modifiedOn":"2017/1/3 11:20:15.273","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:20:32------------------------------------------------------------------------------------------------
+{"$":"U","id":"fe1dc70e72c246a09121136330eacce3@Property","isRequired":"True","isIndexed":"True","modifiedOn":"2017/1/3 11:20:32.086","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"459c7bcf0dfa4bf1a4f50dd5b9a6016f@Property","isRequired":"True","isIndexed":"True","combinedLabel":"modifiedOn 修改时间","modifiedOn":"2017/1/3 11:20:32.106","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:21:25------------------------------------------------------------------------------------------------
+{"$":"U","id":"3a4d31fab3034a9b923d09d56843035e@Property","isIndexed":"True","combinedLabel":"klass 类","modifiedOn":"2017/1/3 11:21:25.550","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/3 11:40:50------------------------------------------------------------------------------------------------
+{"$":"U","id":"bb178590dec84b218cc814202d9379f4@Property","hiddenInObjektCollectionView":"True","hiddenInObjektDetailView":"True","hiddenInRocView":"True","modifiedOn":"2017/1/3 11:40:50.653","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"4fb3148984784a78aa4e6eac4a4f1303@Property","hiddenInObjektCollectionView":"True","hiddenInObjektDetailView":"True","hiddenInRocView":"True","modifiedOn":"2017/1/3 11:42:36.363","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"6cca1d6ebd794c91a6a967245298dba9@Property","description":"关联对象集合视图允许删除关联对象","combinedLabel":"allowDelete 允许删除","modifiedOn":"2017/1/16 10:48:18.584","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"ac654d89980f4741b832c3fb1f5af164@Property","description":"关联对象集合视图允许新建关联对象","combinedLabel":"allowNew 允许新建","modifiedOn":"2017/1/16 10:48:18.636","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"786971e4fd99487e854f41982097a688@Property","description":"关联对象集合视图允许移除被关联对象","combinedLabel":"allowRemove 允许移除","modifiedOn":"2017/1/16 10:48:18.641","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"7523710c64be4e4a95008ec16915c4d1@Property","description":"关联对象集合视图允许添加或替换被关联对象","combinedLabel":"allowAdd 允许添加","modifiedOn":"2017/1/16 10:48:18.651","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"cc04711249674004ad11ebfd361fda44@Property","description":"关联对象集合视图自动检索（打开即检索）","combinedLabel":"autoSearch 自动检索","modifiedOn":"2017/1/16 10:48:18.655","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+{"$":"U","id":"f4e507edc97f4d72b4b961c2f487cda2@Property","description":"关联对象复制源对象权限","combinedLabel":"copyPermissions 复制权限","modifiedOn":"2017/1/16 10:48:18.659","modificator":"250fd793f84e446cba113038b5bb7624@User"}
+//---2017/1/17 14:06:30------------------------------------------------------------------------------------------------
+{"$":"U","id":"02fe31efa2c24e84b18416f33e1baf0b@Relationship","label":"关联","description":"在两个类之间建立间接关系","combinedLabel":"Relationship 关联","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/1/17 14:06:30.404","allowAdd":"False","allowRemove":"False"}
+//---2017/1/17 14:27:32------------------------------------------------------------------------------------------------
+{"$":"U","id":"DirectoryMenuItem@Klass","icon":null,"modifiedOn":"2017/1/17 14:27:32.569"}
+{"$":"D","id":"7c07de013c1a42b883fd1c4320074b5e@File"}
+//---2017/1/17 15:41:48------------------------------------------------------------------------------------------------
+{"$":"U","id":"CustomMenuItem@Klass","icon":null,"modifiedOn":"2017/1/17 15:41:48.434"}
+{"$":"D","id":"dfacca4f7c2a4165b198c8e550e50639@File"}
+{"$":"U","id":"ClientExtension@Klass","icon":null,"modifiedOn":"2017/1/17 15:41:48.487"}
+{"$":"U","id":"ClientExtensionPoint@Klass","icon":null,"modifiedOn":"2017/1/17 15:41:48.489"}
+{"$":"D","id":"6b1f040f5e6a4d24848e42482b604d2f@File"}
+{"$":"U","id":"Test@Klass","icon":null,"modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/1/17 15:41:48.520"}
+{"$":"U","id":"User@Klass","icon":null,"modifiedOn":"2017/1/17 15:41:48.524"}
+{"$":"D","id":"2df9805b38f74d429f28bc1b8924f7ad@File"}
+{"$":"D","id":"c67e3f3217294b19bc4ec9a53b7fd34f@File"}
+//---2017/1/17 15:52:26------------------------------------------------------------------------------------------------
+{"$":"D","id":"bd47f4483b1f4a75957eca943e6cfa09@File"}
+{"$":"D","id":"56a6410f6dad4f02bcef6054c5e0aac4@File"}
+{"$":"D","id":"835b20c1b88f4881aa2f14c115f4c098@File"}
+{"$":"D","id":"07054da8cc1f4794bcbd9af93c173da2@File"}
+{"$":"U","id":"Portal@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.114"}
+{"$":"U","id":"PortalLayout@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.117"}
+{"$":"U","id":"PortalLayoutWebPart@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.119"}
+{"$":"D","id":"4813e19768b54542a769003dac315132@File"}
+{"$":"D","id":"f38e7d9ce7be456d9f7803d6eb25b19d@File"}
+{"$":"D","id":"5214f50b8bfb44a181174675a93629bb@File"}
+{"$":"D","id":"c456f4b92a324c49a4b996452958ca87@File"}
+{"$":"D","id":"11fba2be43f34526969b2ffb4d9fb4aa@File"}
+{"$":"D","id":"fae2dbb70dd94dec9ab3be282d8d04f8@File"}
+{"$":"D","id":"de96b4941f184021997d345a59cfac15@File"}
+{"$":"D","id":"c683b6ab0a0d48bfb2b50714422b6a01@File"}
+{"$":"D","id":"72be2aa61d9349ffbc418d111489afb1@File"}
+{"$":"D","id":"5f49c9cb7abf40adae3aa2a82467bf6f@File"}
+{"$":"D","id":"13d0ae68402440088b6a9530db24b5e7@File"}
+{"$":"D","id":"9b2e7673d8854716a375865b9a440d34@File"}
+{"$":"D","id":"2888442aa2474753a0933216820120ed@File"}
+{"$":"U","id":"Filter@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.481"}
+{"$":"D","id":"686210665484411b9da4544750522290@File"}
+{"$":"D","id":"efd2fbf9bc7b411685b450c472e31d40@File"}
+{"$":"U","id":"Identity@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.539"}
+{"$":"U","id":"Organization@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.541"}
+{"$":"U","id":"Role@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:26.543"}
+{"$":"D","id":"a0a49b93cbae4c6896342d607b48e976@File"}
+//---2017/1/17 15:52:56------------------------------------------------------------------------------------------------
+{"$":"D","id":"d8319c5b7fac4cfd8408f95b6ec7a46c@File"}
+{"$":"D","id":"4a7bb51cd3c24847a656ab12806645d3@File"}
+{"$":"D","id":"527e5589ad2f4c72a7fc939880180d47@File"}
+{"$":"D","id":"2aae06cb4bfa410dba886cf846b50f9e@File"}
+{"$":"D","id":"f8f060dab8ec4679b5df7657884b31cd@File"}
+{"$":"D","id":"4c999b76e8674d7480ecf7ebc7411c57@File"}
+{"$":"D","id":"bf0796611c894bd3a6709fc7a596813f@File"}
+{"$":"D","id":"b3134036b37e43e7ae9eb65a50d84321@File"}
+{"$":"D","id":"181db5b5fa194ae19dbe0d3e359d01e3@File"}
+{"$":"D","id":"b7f33c281cd94029b81332163eb524c5@File"}
+{"$":"D","id":"51a0f1a900b14be494d5327cd375b067@File"}
+{"$":"D","id":"d22c682b6a5e4c8a9a1827c71da8dab7@File"}
+{"$":"D","id":"bf7b5833ba974efb88302544b94644b0@File"}
+{"$":"D","id":"03f990a4bf834cf19d7baee775584623@File"}
+{"$":"D","id":"3d3aec04b75e4011a75a9d83f7f2c1f5@File"}
+{"$":"D","id":"c76cd374b82645e3a53564d98845de64@File"}
+{"$":"U","id":"Value@Klass","icon":null,"modifiedOn":"2017/1/17 15:52:56.690"}
+{"$":"D","id":"265f73f809ee4f1ea5d6fefe55d973e2@File"}
+{"$":"D","id":"10c5d2ca5d5740e99a86d40f44104348@File"}
+{"$":"D","id":"6df83be74ccc44dc8b0d420811534875@File"}
+{"$":"D","id":"051bda5d11d64781806c57a21b7b5e21@File"}
+//---2017/1/17 15:53:23------------------------------------------------------------------------------------------------
+{"$":"D","id":"b2f7e05fa33e4ee0985ea7c23a663f7a@File"}
+{"$":"D","id":"1f418d2ee42e41bbb4688a317db75e8f@File"}
+{"$":"U","id":"List@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.633"}
+{"$":"D","id":"39aa6b3a5d0a4772ac8b0f9de15a5b16@File"}
+{"$":"U","id":"MenuItem@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.663"}
+{"$":"D","id":"84d4b5fc067d406d8f8e2da75a00df06@File"}
+{"$":"U","id":"Klass@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.691"}
+{"$":"U","id":"KlassMenuItem@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.693"}
+{"$":"D","id":"64667b3c35ff49f0945f4e9601c19acb@File"}
+{"$":"D","id":"ece75b6761f34d3a85afcfdcd9a29e0c@File"}
+{"$":"D","id":"0da6481a0e0f452bb85fa59725e569b5@File"}
+{"$":"U","id":"Lifecycle@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.776"}
+{"$":"D","id":"8a6a4e06ebee449da74cf37207c4b877@File"}
+{"$":"D","id":"c0dfec6fa89b433c88a4341bcebba172@File"}
+{"$":"U","id":"LifecycleState@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:22.834"}
+{"$":"D","id":"639a41a7a3714148b175e6ae923fbeef@File"}
+{"$":"D","id":"d457273302f643b2a27aad9ec1bbfb97@File"}
+{"$":"D","id":"aea3a8fbcb02414fadadefa5bed93971@File"}
+{"$":"D","id":"b114bd343fe04ff983a84a5023e48fd6@File"}
+{"$":"D","id":"ca224b56fb704979a61fb732111355b4@File"}
+{"$":"D","id":"c65ec0ec70e44851845195d078292630@File"}
+{"$":"D","id":"8f9d9cedd5074d9da1dd19fef7b636a7@File"}
+{"$":"U","id":"Property@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:23.026"}
+{"$":"D","id":"3150fe721f3a4f4783c781ec42a699fe@File"}
+{"$":"D","id":"ce8bf8a267ea4e329b203aa272ac2a41@File"}
+{"$":"D","id":"5a7ff0c0ff2e4e69a96f9d0210038f4a@File"}
+{"$":"D","id":"5c1d1f6523d24ef58e5b4ac6a8abbc6c@File"}
+//---2017/1/17 15:54:02------------------------------------------------------------------------------------------------
+{"$":"D","id":"dc69ec93c3754ef6b8d2201eaa5124f2@File"}
+{"$":"D","id":"38223305f5e94518ae771a2cdc02be54@File"}
+{"$":"D","id":"339806a92c174c368c361d16049f2a5d@File"}
+{"$":"D","id":"8efb3191428b422cb5b5cb480a3ee056@File"}
+{"$":"U","id":"DbScriptUpgradedLog@Klass","icon":null,"modifiedOn":"2017/1/17 15:53:59.753"}
+{"$":"D","id":"486aaa7e8ef7457595f59e3cd58bb51f@File"}
+{"$":"D","id":"9c4e274654c54985bed8730a6cf6d516@File"}
+{"$":"D","id":"f9e993070cbe450eba260d62ebeaa090@File"}
+{"$":"D","id":"e836b55a064c4ebcaaa875b74b5c318a@File"}
+{"$":"D","id":"398d7ca6fa5b4a538e0610db201f9208@File"}
+{"$":"D","id":"d7d6188090f44ab6b6d7c0236c8e78b3@File"}
+{"$":"D","id":"73044447157c49baaaf4a3e46dfbbfc1@File"}
+{"$":"D","id":"5fa088aa5a8e45afa881c45a6615da5b@File"}
+{"$":"D","id":"aea93d16442b41ef8e6ac9dd7b99ded7@File"}
+{"$":"D","id":"4f44e3e2791d41c18ec964a39611f14e@File"}
+{"$":"D","id":"6e96876eb6824c3f943717d2dff32149@File"}
+{"$":"U","id":"ServerExtension@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.071"}
+{"$":"U","id":"ServerExtensionPoint@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.074"}
+{"$":"D","id":"22d81f149ef74a42b7faa31c124a8a92@File"}
+{"$":"D","id":"44d54ca532f5448cb4f0eacb1ecb418b@File"}
+{"$":"D","id":"dc160f6ce83d46dfa53f3e7e4659d4a5@File"}
+{"$":"D","id":"f920c60555594a779b134a5e522476b7@File"}
+{"$":"U","id":"File@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.188"}
+{"$":"U","id":"FileType@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.190"}
+{"$":"D","id":"bfaf07e1fff4497dbb9f2f009f7ae87a@File"}
+{"$":"D","id":"d584c2edb2ae460ebfb55e1699103177@File"}
+{"$":"D","id":"c2e597205d724bd2b5c5d76a2c078df7@File"}
+{"$":"U","id":"Sequence@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.298"}
+{"$":"D","id":"59b4bc831e7b41a484e7701204391718@File"}
+{"$":"U","id":"ObjektReport@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.328"}
+{"$":"D","id":"4b2b1fbf4b1c4f7088e8306f82e365aa@File"}
+{"$":"D","id":"a0cdaae7f4fa4922b07ba99bbe7d39d9@File"}
+{"$":"D","id":"9d3f794c94284d5e9ef074bf3c7a27af@File"}
+{"$":"D","id":"36ce4cd32bf848b78b870df2fc620459@File"}
+{"$":"D","id":"bbc485262baf4c9384223ce5fc2f8cfc@File"}
+{"$":"D","id":"a4e9188ba69548e4baabd3ab0b5da1da@File"}
+{"$":"D","id":"aef19cf673b344f1a2d4c142154b4464@File"}
+{"$":"D","id":"6cdd812bd6be42b2a50cf64b8c58d91d@File"}
+{"$":"U","id":"Workflow@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.553"}
+{"$":"U","id":"WorkflowTemplate@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.555"}
+{"$":"D","id":"b5f22f5946dd4f0da10ef39ac741f33c@File"}
+{"$":"D","id":"1ee84b0ab16b428aa56bed659848fe5b@File"}
+{"$":"D","id":"b5d4e2532bda47f796033638aecae410@File"}
+{"$":"D","id":"57911c3b25a54173b145c83c0cbb95e8@File"}
+{"$":"D","id":"20207bfe8f2246aca4945e7f5a8cede5@File"}
+{"$":"D","id":"ae5dec342a7b43df806d31fb9bc1a52f@File"}
+{"$":"U","id":"Relationship@Klass","icon":null,"modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/1/17 15:54:00.726"}
+{"$":"D","id":"4715a2149c1046b4b5582b77b86b501b@File"}
+{"$":"D","id":"37dffdc49e144c4d8c5abc699137c5cf@File"}
+{"$":"D","id":"d67894ab577b4f0097ad7e3f119dddfa@File"}
+{"$":"D","id":"aae218227149463e999caa9d0f79057b@File"}
+{"$":"D","id":"2593210109fd4582b33327ab1926d23d@File"}
+{"$":"D","id":"c2e3a8c5e8fc49b9a3307bdf2523842a@File"}
+{"$":"D","id":"68e61b59b04e4950bea00c07b584e251@File"}
+{"$":"U","id":"WorkflowTask@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:00.917"}
+{"$":"D","id":"60c03afd32064bc284233ebc01805a16@File"}
+{"$":"D","id":"a13e3c64eefe40e89d6bd1ea21c841c9@File"}
+{"$":"D","id":"2ad822642abc40d9a4584196dcb05515@File"}
+{"$":"D","id":"8133eac1c69e4aa1b48fda37e07eccd6@File"}
+{"$":"D","id":"9ca73e6129c440f6acb2b7b3e3683969@File"}
+{"$":"D","id":"accdea0135d44c2ca765ebc9424c4846@File"}
+{"$":"D","id":"e3fb00ce97734db685dbfe30b325bcec@File"}
+{"$":"D","id":"408a4fc0ef0742bc99a9b628b62feb9c@File"}
+{"$":"D","id":"ba2165cae76140b8afd2f278e92f3453@File"}
+{"$":"D","id":"22fb62d6ab8f40638ec3531a74f145be@File"}
+{"$":"D","id":"140f9672d03d4d1d9ffb85f0e9d08e84@File"}
+{"$":"D","id":"711cfaf7a2fc4fa4ae8b8718f82cd4cc@File"}
+{"$":"D","id":"efb00ff199104c8db061eda11f213368@File"}
+{"$":"D","id":"fc9fe7bcba03434fb4f707516f78de4d@File"}
+{"$":"D","id":"65458e43e0a3478f9cb500b9dcc4c12b@File"}
+{"$":"D","id":"449160e0c2ed47a1a05992003806b085@File"}
+{"$":"D","id":"35b234f709f34d6a986e9acb045b1715@File"}
+{"$":"D","id":"c6fdd632bd69492fa2cfd859bfb18643@File"}
+{"$":"D","id":"33d2bf824bb44de78f66943d0c3422a7@File"}
+{"$":"D","id":"a142cefd9d714250bf754b53f87e2f6c@File"}
+{"$":"D","id":"ecdefefc12134ac0bec466b743749ce3@File"}
+{"$":"D","id":"3f8d46a671cd4263bf2c125deddca0d7@File"}
+{"$":"D","id":"bc99ec293c574fae8ca90f342a5de0f7@File"}
+{"$":"D","id":"1ff9ac6cd39247a8a2a231e3bdbcede9@File"}
+{"$":"D","id":"17c2c2664f3d427191170e38a580ab4d@File"}
+{"$":"D","id":"93a839cfba0645688c9bb0cc9906fec7@File"}
+{"$":"U","id":"AvailablePermissionItem@Klass","icon":null,"modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/1/17 15:54:01.613"}
+{"$":"U","id":"Permission@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:01.616"}
+{"$":"U","id":"PermissionDetail@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:01.618"}
+{"$":"U","id":"PermissionItem@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:01.620"}
+{"$":"D","id":"aea48dbfd20f47e28422789b4323fb6d@File"}
+{"$":"U","id":"Revision@Klass","icon":null,"modifiedOn":"2017/1/17 15:54:01.656"}
+{"$":"D","id":"1b5fb59da9ef4504bf0d9df0394ce776@File"}
+{"$":"D","id":"6b04110354a84c388e8ef88b3ebf46ce@File"}
+{"$":"D","id":"e6408f6caa354042b2d7a5b4300cd2d4@File"}
+{"$":"D","id":"57d120420d2846179ace2ce24f7d7159@File"}
+{"$":"D","id":"5ecbef9badeb4b3ca942bb8976025b3d@File"}
+{"$":"D","id":"aae4856a4d5c407b8fbecf0faa564bfe@File"}
+{"$":"D","id":"4f591a571be54d0884ac5acbc55120e4@File"}
+{"$":"D","id":"d7dbe28d95bd495399e079c50cf6e994@File"}
+{"$":"D","id":"e62a549451b04b6a8a913df3434e5111@File"}
+{"$":"D","id":"de60f8e98aae430f9ebe99f136850918@File"}
+{"$":"D","id":"2818983752644d7a909cf4710b5f3d40@File"}
+{"$":"D","id":"58842ae0c2c4414aa60553cafcbdfd06@File"}
+{"$":"D","id":"103d7e676fed4936b1d49e2d18a2bc5d@File"}
+{"$":"D","id":"bfb76c81734b4a399fd0d531a587cb5c@File"}
+{"$":"D","id":"b3f5ead73f2540bda4902d684885ca41@File"}
+{"$":"D","id":"8fc7a2a846754f8da38a7353d24768c6@File"}
+{"$":"D","id":"324d70579c304e179d9b31a11916dec6@File"}
+{"$":"D","id":"0a7e80e48c714aeb86e7c1db3fa24b82@File"}
+{"$":"D","id":"90fba9fcf4b24ed3a1c1984c8581a07a@File"}
+{"$":"D","id":"da10e73ce2a34aed8e7abe0c50b7fb47@File"}
+{"$":"D","id":"6de0326608b04db38771ea87b561a460@File"}
+{"$":"D","id":"55b0e3fd72574d53ac4bef7dd6bab5ac@File"}
+{"$":"D","id":"d0037e2d513e41a3bf6519a170696f88@File"}
+{"$":"D","id":"962afd502ed94efdab22b7f5567f65d1@File"}
+{"$":"D","id":"c27a6c33298b4e5ebdbfe49938a704b0@File"}
+{"$":"D","id":"f1d235a7d98649c29eac62b10d30aed7@File"}
+{"$":"D","id":"e61f529a898346e9a681b3a1314096d4@File"}
+{"$":"D","id":"0acb74a8473a4ebba05d0739942dbfe9@File"}
+{"$":"D","id":"6b864ecbac584f0797932ddd17f3c9a5@File"}
+//---2017/1/17 15:54:43------------------------------------------------------------------------------------------------
+{"$":"D","id":"60abdc51a116466cb0224f88de47f680@File"}
+{"$":"D","id":"e82f9027acd64774a99063a15b6e8217@File"}
+{"$":"D","id":"bbc0d70c1d1f4193a5dc97b2f8112d50@File"}
+{"$":"D","id":"c9d240d12f7944d0a5f62794f33fd5b9@File"}
+{"$":"D","id":"67020818836c4cb8b0b291582541374f@File"}
+{"$":"D","id":"46e2381b9dbc4c27800fce958ee3ffe6@File"}
+{"$":"D","id":"b83ebcc27ec34e4ba4d2485eea90f97c@File"}
+{"$":"D","id":"126c6bd444b44e379d5f2f4a3f8699b8@File"}
+{"$":"D","id":"226d88396a7a4d3f92e05a44157e3f36@File"}
+{"$":"D","id":"b3b215074c7e47ab812936aeea3939fd@File"}
+{"$":"U","id":"4f62ab2850cd463a9c34856fcc8729ae@FileType","icon":null,"modifiedOn":"2017/1/17 15:54:43.762"}
+{"$":"D","id":"c32847a8eb6e4bbebb17dc100d766b2a@File"}
+//---2017/1/17 15:54:56------------------------------------------------------------------------------------------------
+{"$":"D","id":"361e3e5807754cbdb643aee73139d505@File"}
+//---2017/1/17 16:04:16------------------------------------------------------------------------------------------------
+{"$":"D","id":"0b46282b1e0f4d33a7a675a87ebce20e@Sequence"}
+{"$":"D","id":"ec25a780ad85469d994da73769014415@Sequence"}
+//---2017/1/19 9:16:00------------------------------------------------------------------------------------------------
+{"$":"D","id":"7430ed0d2c144cdda61b552623de74ab@Property"}
+//---2017/1/19 9:17:46------------------------------------------------------------------------------------------------
+{"$":"C","id":"a8ef98cb06cf4224b2b53c080f072bea@Property","source":"Value@Klass","name":"color","dataType":"0ce934524195428aa506260b0f97baf0@Value","label":"颜色","sortOrder":"200.000000","isRequired":"False","readonly":"False","isIndexed":"False","isKeyed":"False","isCascade":"False","createOnly":"False","storedLength":"32","isRichText":"False","multiline":"False","isI18N":"False","isColor":"True","hiddenInObjektCollectionView":"False","hiddenInObjektDetailView":"False","hiddenInRocView":"False","generation":"0","config":"a8ef98cb06cf4224b2b53c080f072bea@Property","bigintDefaultValue":"0","majorRev":"0","combinedLabel":"color 颜色","isCurrent":"False","klass":"Property@Klass","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","minorRev":"0","isReleased":"False","notLockable":"False","integerDefaultValue":"0","booleanDefaultValue":"False","modifiedOn":"2017/1/19 09:17:45.586","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","createdOn":"2017/1/19 09:17:45.586","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","newVersion":"False","isTrash":"False"}

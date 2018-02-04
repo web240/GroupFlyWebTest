@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+
+@using GroupflyGroup.FrontEnd.Web.Models
+@using GroupflyGroup.Platform.ObjectFramework.Persistence
+
+@model FrontEndLoginViewModel
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Login.css";
+}
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(window).load(function () {
+            $("#frontendLogin").feComponentFrontEndLogin("AfterLoginSuccess", function () {                                
+                if (document.referrer != "") {
+                    window.location.href = document.referrer;
+                }
+                else {
+                    window.location.href = document.body["apppath"] + "/FeArticle/FrontIndex";
+                }
+            });
+        });
+    </script>
+}
+
+<div class="wrapBox LogoMessage">
+    <Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId"></Gf-FeTemplate-Component-Logo>
+</div>
+
+
+@if (SessionContext.Current.User.Id == GroupflyGroup.Platform.ObjectFramework.Strings.UserIDs.guest)
+{
+    <div class="wrapBox" style="height:352px;">
+        <div class="Advertisement fl">
+            @{
+                var imgPath = Model.TemplateDirectoryPath + "Content/Images/LoginLeftImg.jpg";
+                imgPath = Url.Content(imgPath);
+            }
+            <img src="@imgPath" />
+        </div>
+        <div class="fcon_login fr"><Gf-FeTemplate-Component-FrontEndLogin id="frontendLogin"></Gf-FeTemplate-Component-FrontEndLogin></div>
+    </div>
+}
+else
+{
+    <div class="wrapBox">
+        <Gf-FeTemplate-Component-FrontEndLogin id="frontendLogin"></Gf-FeTemplate-Component-FrontEndLogin>
+    </div>
+}
+<div class="wrapBox FootMessage">
+    <Gf-FeTemplate-Component-FootDown></Gf-FeTemplate-Component-FootDown>
+</div>

@@ -1,0 +1,93 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models
+@model FeReferenceDialogViewModel
+
+<script type="text/javascript">
+
+    $(function() {
+
+        $("#@Model.ControlId").fereferencedialog({
+            url: "@Model.Url",
+            pageSize: @Model.PageSize,
+            controlId: "@Model.ControlId",
+            objectClick:function(id) {
+                //alert(id);
+            }
+        });
+
+    });
+
+</script>
+
+<style type="text/css">
+
+    .noselect {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+     .FeReferenceDialogContainer {
+         border-color: #AEAEAE;
+         border-width: 5px;
+         border-style: solid;
+     }
+
+    .FeReferenceDialogContainer div {
+        border-width: 0px;
+        border-style: none;
+    }
+
+    .FeReferenceDialogContainer .layout {
+        width: @{ @Model.Width}px;
+        height: @{ @Model.Height}px;
+        margin: 10px 10px 10px 10px;
+    }
+
+    .FeReferenceDialogContainer .layout .LeftTitle {
+        font-family: 微软雅黑 Bold, 微软雅黑;
+        font-weight: 700;
+        font-size: 16px;
+        color: #333333;
+    }
+
+    .FeReferenceDialogContainer .layout .CenterTitle {
+        font-size: 12px;
+        color: #999999;
+        font-family: 微软雅黑 Regular, 微软雅黑;
+        font-weight: 400;
+        margin-left: 5px;
+    }
+
+    .FeReferenceDialogContainer .layout .Close {
+        font-family: "宋体 Bold", "宋体";
+        font-weight: 700;
+        font-size: 18px;
+        color: #999999;
+        cursor: pointer;
+        float: right;
+    }
+
+    .datagrid-header-inner {
+        width: 100%;
+    }
+
+</style>
+
+<div id="@{@Model.ControlId}_dialog">
+    <div id="@{@Model.ControlId}_container" class="FeReferenceDialogContainer">
+        <div class="easyui-layout layout">
+            <div data-options="region:'north',collapsible:false" style="height: 50px;">
+                <span class="LeftTitle">查看引用</span><span id="@{@Model.ControlId}_refCount" class="CenterTitle"></span><span id="@{@Model.ControlId}_btnClose" class="Close noselect">x</span>
+            </div>
+            <div data-options="region:'south',collapsible:false" style="height: 30px;">
+                <div id="@{@Model.ControlId}_pagination">
+                </div>
+            </div>
+            <div data-options="region:'center'">
+                <div id="@{@Model.ControlId}_datagrid"></div>
+            </div>
+        </div>
+    </div>
+    <div id="@Model.ControlId" style="display: none;"></div>
+</div>

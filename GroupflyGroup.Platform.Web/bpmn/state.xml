@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProcessState isSuspended="False">
+  <ProcessPath>
+    <sPathEntry elementID="StartEvent_1" status="Waiting" startTime="20170727171929622" />
+    <sPathEntry elementID="StartEvent_1" status="Succeeded" startTime="20170727171929622" endTime="20170727171929626" outgoingID="SequenceFlow_0r2tu3d" />
+    <sPathEntry incomingID="StartEvent_1" elementID="SequenceFlow_0r2tu3d" status="Succeeded" startTime="20170727171929709" endTime="20170727171929709" outgoingID="Task_1ixmjyu" />
+    <sPathEntry incomingID="SequenceFlow_0r2tu3d" elementID="Task_1ixmjyu" status="Waiting" startTime="20170727171929719" />
+    <sPathEntry incomingID="SequenceFlow_0r2tu3d" elementID="Task_1ixmjyu" status="Succeeded" startTime="20170727171929719" endTime="20170727171954376" CompletedByID="system" outgoingID="SequenceFlow_1pwtzs4" />
+    <sPathEntry incomingID="Task_1ixmjyu" elementID="SequenceFlow_1pwtzs4" status="Succeeded" startTime="20170727171954379" endTime="20170727171954379" outgoingID="EndEvent_1efj2tr" />
+    <sPathEntry incomingID="SequenceFlow_1pwtzs4" elementID="EndEvent_1efj2tr" status="Waiting" startTime="20170727171954381" />
+    <sPathEntry incomingID="SequenceFlow_1pwtzs4" elementID="EndEvent_1efj2tr" status="Succeeded" startTime="20170727171954381" endTime="20170727171954381" />
+  </ProcessPath>
+  <ProcessVariables />
+  <SuspendedSteps />
+</ProcessState>

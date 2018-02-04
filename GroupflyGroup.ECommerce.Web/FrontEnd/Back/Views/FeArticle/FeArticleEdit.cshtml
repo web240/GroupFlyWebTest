@@ -1,0 +1,374 @@
+﻿
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeArticleModel
+
+
+<link href="~/FrontEnd/Back/Content/Css/feImageSelector.css" rel="stylesheet" />
+<style>
+    .switchbutton-on {
+        background: #0092DC;
+        color: #fff;
+    }
+</style>
+
+
+
+<script type="text/javascript" src="@Url.Content("~/Platform/Content/Scripts/ckeditor/ckeditor.js")"></script>
+<script type="text/javascript">
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+    $(function () {
+
+        var second = 60;
+        var interval;
+        clearInterval(interval);
+        interval = setInterval(function () {
+            if ($("#spSecond").length > 0) {
+                $("#spSecond").text(second);
+                if (second > 0) {
+                    second -= 1;
+                }
+                else {
+                    second = 60;
+                    SaveDraft();
+                }
+            } else {
+                clearInterval(interval);
+            }
+        }, 1000);
+
+
+        BindDateBox();
+
+    });
+
+
+    function BindDateBox() {
+        $('#CreatedOn').datebox({
+            editable: false
+        });
+    }
+
+    //保存文章
+    function SaveFeArticle(isDraft) {
+        var model = $("#FeArticleFrom").serializeObject();
+        //model.Content = contentEditor.getValue();
+
+        var titleEditor = $("#titleEditor")[0];
+        if (!titleEditor.validate()) { return; }
+        if (titleEditor.haschange) {
+            $("#TitleIsModify").val(true);
+        }
+        var htmlTitle = titleEditor.getValue();
+        model.Title = htmlTitle;
+        var textTitle = $(htmlTitle.replace(/\n/g, '<br>')).text();
+        $("#TitleValue").val(textTitle);
+
+        var contentEditor = $("#contentEditor")[0];
+        if (!contentEditor.validate())
+            return;
+        if (contentEditor.haschange) {
+            $("#ContentIsModify").val(true);
+        }
+
+        $.ajax({
+            url: "@Url.Action("SaveFeArticle", "FeArticle")",
+            async: isDraft,
+            type: "post",
+            data: { mode: $("#FeArticleFrom").serializeObject(), isDraft: isDraft },
+            dataType: "json",
+            success: function (data) {
+                if (data.IsSuccess != true) {
+                    if (data.Message) {
+                        $.messager.alert('异常', data.Message, "error");
+                    } else {
+                        $.messager.alert('异常', "保存失败！", "error");
+                    }
+                } else {
+                    if (!isDraft) {
+                        @*location.href = "@Url.Action("Index", "FeArticle",new { Tab = @Model.Tab })";*@
+                        document.body.tabGoback();
+                    }
+                }
+            }
+        });
+    }
+
+    //自动保存文章
+    function SaveDraft() {
+        if ($("input[name='Title']").val() && $("input[name='CategoryID']").val() && $("input[name='Content']").val()) {
+            SaveFeArticle(true);
+        }
+    }
+
+    function openSelectImg() {
+        @*OpenSelectImg(function (obj) {
+                $("#ImageFileId").val(obj.fileId).prev().attr("src", "@Url.Content("~/File")?id=" + obj.fileId);
+            });*@
+        $("#feImageSelector").feImageSelector("open");
+    }
+
+    //$(window).load(function () {
+
+    //});
+
+</script>
+
+
+@Html.Action("Index", "SelectImg", new
+{
+    IsMultiselect = false,
+    DirectoryId = @FeFileIDs.FeArticle
+})
+<div class="main">
+    <div class="editbox">
+        @{ MvcForm mvcForm = Html.BeginForm("SaveFeArticle", "FeArticle", FormMethod.Post, new
+            {
+                id = "FeArticleFrom"
+            }); }
+
+        @if (string.IsNullOrEmpty(Model.Id))
+        {
+            ViewBag.Title = "添加文章";
+        }
+        else
+        {
+            ViewBag.Title = "编辑文章";
+        }
+
+
+        @using (mvcForm)
+        {
+
+        <Gf-FeImageSelector id="feImageSelector"
+                            rootdirectoryid="@FeFileIDs.FeArticle"
+                            dialogtitle="选择图片">
+        </Gf-FeImageSelector>
+
+        @Html.HiddenFor(m => m.Id)
+        <h1><b>文章内容</b></h1>
+        <table class="content" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="label" valign="top"><span class="red">*</span> @Html.LabelFor(m => m.Title)：</td>
+                <td class="right">
+                    @Html.HiddenFor(m => m.TitleValue)
+
+                    <Gf-Editor required id="titleEditor" label="文章标题" name="Title" width="800" propertyname="Title" toolbar="MyToolbar" value="@Model.Title"></Gf-Editor>
+
+                    @Html.HiddenFor(m => m.TitleIsModify)
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <span class="red">*</span> @Html.LabelFor(m => m.Category)：
+                </td>
+                <td class="right">
+                    @Html.Action("Load", "FeArticleCategorySeachBox", new
+                   {
+                       parentId = Model.CategoryID,
+                       parentNamePath = Model.Category,
+                       parentIdModelFieldName = "CategoryID",
+                       parentNamePathModelFieldName = "Category",
+                       id = ""
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.SortOrder)：</td>
+                <td class="right">
+                    @Html.EditorFor(m => m.SortOrder, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-numberbox sortNumberbox inputText",
+                           data_options = "min:0,precision:2",
+                           style = "width:400px;"
+                       }
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label" valign="top"> @Html.LabelFor(m => m.ImageFileId)：</td>
+                <td class="right">
+                    <div style="width:200px;height:200px;">
+                        @if (!string.IsNullOrEmpty(Model.ImageFileId))
+                            {
+
+
+                            <img src="@Url.Content("~/File")?id=@Model.ImageFileId" height="100%" width="100%" onerror="javascript: this.src = '@Url.Content("~/FrontEnd/Back/Content/Images/noImage.gif")'" />
+
+                            }
+                            else
+                            {
+                            <img src="" height="100%" width="100%" onerror="javascript: this.src = '@Url.Content("~/FrontEnd/Back/Content/Images/noImage.gif")'" />
+                            }
+                        @Html.HiddenFor(m => m.ImageFileId)
+                    </div>
+                    <div onclick="openSelectImg()" style="width:200px;height:30px;background:#2084cc; color:#fff;text-align:center;vertical-align:central;cursor:pointer;">选择图片</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" valign="top"><span class="red">*</span> @Html.LabelFor(m => m.Content)：</td>
+                <td class="right">
+
+                    <Gf-Editor required id="contentEditor" label="文章内容" name="Content" width="800" height="800" propertyname="Content" value="@Model.Content"></Gf-Editor>
+                    @Html.HiddenFor(m => m.ContentIsModify)
+                </td>
+            </tr>
+        </table>
+        <h1><b>其他信息</b></h1>
+        <table class="content" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.Tag)：</td>
+                <td class="right">
+
+                    @Html.Action("TagKeyInput", "Tag", new
+                   {
+                       Tag = Model.Tag,
+                       TagModelFieldName = "Tag"
+                   })
+                    <span class="gray">(','号分开,单个标签小于12字节)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.IsDisplay)：</td>
+                <td class="right">
+                    @Html.EditorFor(m => m.IsDisplay, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-switchbutton",
+                           data_options = "onText:'是',offText:'否'"
+                       }
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.CanComment)：</td>
+                <td class="right">
+                    @Html.EditorFor(m => m.CanComment, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-switchbutton",
+                           data_options = "onText:'是',offText:'否'"
+                       }
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.Character)：</td>
+                <td class="right">
+                    @Html.Action("Load", "FeCharacterSeachBox", new
+                   {
+                       Id = Model.CharacterID,
+                       Text = Model.Character,
+                       ControlIdName = "CharacterID",
+                       ControlTextName = "Character"
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.Author)：</td>
+                <td class="right">
+                    @Html.TextAreaFor(m => m.Author, new
+                   {
+                       @class = "easyui-textbox inputText",
+                       style = "width:400px;"
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.HitsNum)：</td>
+                <td class="right">
+                    @Html.TextAreaFor(m => m.HitsNum, new
+                   {
+                       @class = "easyui-textbox inputText",
+                       style = "width:400px;"
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.From)：</td>
+                <td class="right">
+                    @Html.TextAreaFor(m => m.From, new
+                   {
+                       @class = "easyui-textbox inputText",
+                       style = "width:400px;"
+                   })
+                </td>
+            </tr>
+        </table>
+        <h1><b>文章seo</b></h1>
+        <table class="content" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.SeoTitle)：</td>
+                <td class="right">
+                    @Html.EditorFor(m => m.SeoTitle, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "easyui-textbox inputText",
+                           style = "width:400px;"
+                       }
+                   })
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.SeoKeys)：</td>
+                <td class="right">
+                    @Html.Action("SeoKeysInput", "Seo", new
+                   {
+                       seoKeys = Model.SeoKeys,
+                       seoKeysModelFieldName = "SeoKeys"
+                   })
+                    <span class="gray">(','号分开)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">@Html.LabelFor(m => m.SeoDescription)：</td>
+                <td class="right">
+                    @Html.TextAreaFor(m => m.SeoDescription, new
+                   {
+                       @class = "easyui-validatebox textArea",
+                       style = "width:400px;height:160px"
+                   })
+                </td>
+            </tr>
+        </table>
+        <div class="LayerBtn">
+            <span class="gray"><span id="spSecond">60</span>S秒钟自动保存</span>
+            <input type="button" onclick="SaveFeArticle(false);" class="savebtn" value="保存" />
+            @*<input type="button" class="savebtn" onclick="gotoPage('@Model.Id');" value="预览" />*@
+            <a class="savebtn" href='@Url.Action("FrontArticleDetails", "FeArticle")?articleId=@Model.Id' target="_blank">预览</a>
+            <input type="button" onclick="document.body.tabGoback();" class="savebtn" value="取消" />
+            @*@Html.ActionLink("取消", "Index", new
+                {
+                    Tab = @Model.Tab
+                })*@
+        </div>
+        }
+    </div>
+
+</div>
+<script>
+    document.querySelector("#titleEditor").init();
+    document.querySelector("#contentEditor").init();
+    $("#feImageSelector").feImageSelector("submit", function (id, url) {
+        $("#ImageFileId").val(id).prev().attr("src", "@Url.Content("~/File")?id=" + id);
+    });
+</script>

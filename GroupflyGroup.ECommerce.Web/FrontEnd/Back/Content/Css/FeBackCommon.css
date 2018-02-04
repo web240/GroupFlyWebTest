@@ -1,0 +1,156 @@
+﻿
+
+.listedit { background:url(../images/new-edit.png) no-repeat left center; padding-left:18px; color:#4e9cce;}
+.listdelete {background:url(../images/new-delete.png) no-repeat left center; padding-left:18px; color:#4e9cce;}
+.listview {background:url(../images/new-view.png) no-repeat left center; padding-left:18px; color:#4e9cce;}
+
+.main { height:100%; overflow:auto;}
+
+/*-----自定义样式-----*/
+.querybox { padding-top:10px;}
+.querybox li { float:left; margin:10px 10px 0 0;}
+
+.querybox li label { width:100px; text-align:left; float:left;line-height:26px;}
+.querybox .l-btn { border:0; background:#4e9cce; color:#fff; padding:0 12px; height:26px;}
+.querybox .l-btn-text { line-height:26px;}
+.querybox input { height: 18px;line-height: 18px; }
+
+.checkbox { margin:0 20px 0 5px;}
+.checkbox input { position:relative; top:4px; width:15px; height:18px; right:5px;}
+
+.tablelist {}
+/*设置easyui toobar工具栏样式*/
+.tablelist .datagrid-toolbar { padding-top:10px; padding-bottom: 10px; background:none; border:0;}
+/*设置easyui toobar工具栏按钮样式*/
+.tablelist .datagrid-toolbar .l-btn {margin-right:10px; border:1px solid #e1e6eb; background:#f5f6fa; color:#4e9cce; padding:0 12px;}
+.tablelist .datagrid-toolbar .l-btn:hover { padding:1px;-moz-border-radius:3px;-webkit-border-radius:3px; border-radius:3px; opacity: 0.8;padding:0 12px;}
+
+.tabletree .datagrid-view2 .datagrid-header td:last-child { border-right:0;}
+.tabletree .datagrid-view2 .datagrid-body td {border-bottom:1px solid #e1e6eb; border-right:0; color:#666;}
+.tabletree .datagrid-view2 .datagrid-body td:first-child{ text-align:center;}
+
+.tabsul{ padding:0 0 20px;}
+.tabsul li{ float:left; width:124px; margin:10px 10px 0 0; position:relative;}
+.tabsul li .img{ border:1px solid #4e9cce; padding:1px; width:120px; height:120px; box-sizing:content-box;}
+.tabsul li .img span{ width:120px; height:120px;display:table-cell; vertical-align:middle; text-align:center;*display: block; *font-size:104.76px;*font-family:Arial;}
+.tabsul li .img img{ max-width:120px; max-height:120px; vertical-align:middle;}
+.tabsul li .info{ color:#333; padding-top:5px;}
+.tabsul li .info p{ white-space:nowrap; overflow:hidden; line-height:20px;}
+.tabsul li .info p span{ color:#666;}
+.tabsul li .btn{ padding-top:5px;}
+.tabsul li .btn .abtn{ width:86px; height:24px; display:inline-block; background:#4e9cce; border-radius:3px; text-align:center; line-height:24px; color:#fff;}
+.tabsul li .btn .abtn.dis{ background:#b3b3b3;}
+.tabsul li i{ position:absolute; width:16px; height:16px;}
+.tabsul li i.removeicon{ top:2px; right:2px;background:url(../images/tabs-remove-icon.png) no-repeat; line-height:100px; overflow:hidden; display:none;}
+.tabsul li:hover i.removeicon{ display:block;}
+.tabsul li i.selected{right:6px; top:96px;background:url(../images/tabs-selected-icon.png) no-repeat;}
+.editbox { padding-bottom:80px; overflow:auto;}
+.editbox h1{ border-bottom:1px solid #e1e6eb; padding:10px 0; }
+.editbox h1 b { font-size:14px; font-weight:bold; border-left:3px solid #4e9cce; padding-left:10px;}
+.editbox .content { padding:20px 0;}
+.editbox .content .item { padding-bottom:20px; line-height:26px;}
+.editbox .content .item label {  text-align:right; float:left;}
+.editbox .content .item p.j-explain { width:540px; line-height:25px; color:#999; padding:50px 0 20px;}
+.editbox .content td {  padding-bottom:20px;}
+.editbox .content .label {  width:120px; text-align:right;line-height:26px;}
+.editbox input[type=checkbox] {position:relative; top:4px; width:15px; height:18px;}
+#Jiugongge { width:300px; text-align:center;}
+.item.j-items { padding-top:20px;}
+.LayerBtn{  background:#fff;  position: fixed; left:0;right:0;bottom:30px;border-top:1px solid #dae1e6; padding:15px 0;  text-align:center;}
+.LayerBtn a{ padding:0 18px; height:30px; line-height:30px; display:inline-block; font-size:14px; background:#d4d7da; color:#333; margin:0 5px; -moz-border-radius: 2px;-webkit-border-radius:2px;border-radius:2px;}
+.LayerBtn .savebtn{cursor:pointer; padding:0 18px; height:30px; line-height:30px; border:0; display:inline-block; background:#2084cc; color:#fff;margin:0 5px; -moz-border-radius: 2px;-webkit-border-radius:2px;border-radius:2px;}
+.LayerBtn .closedbtn{cursor:pointer; padding:0 18px; height:30px; line-height:30px; border:0; display:inline-block;background:#d4d7da; color:#333;margin:0 5px; -moz-border-radius: 2px;-webkit-border-radius:2px;border-radius:2px;}
+
+.Layerbox .panel-body-noheader{ border-top:0;}
+.Upimg-h{ padding:20px; border-bottom:1px solid #e1e6eb;}
+.Upimg-h .querybox{ padding-top:0;}
+.Upimg-con{ padding:10px;}
+.Upimg-con ul{ width:100%; height:363px; overflow:auto;}
+.Upimg-list li{ width:76px; height:76px; float:left; border:1px solid #e1e6eb; padding:2px; margin:6px 10px 7px; position:relative;}
+.Upimg-list li span{ width:70px; height:70px; display:table-cell; vertical-align:middle; text-align:center;*display: block; *font-size:61.11px;*font-family:Arial;}
+.Upimg-list li img{ max-width:70px; max-height:70px; vertical-align:middle;}
+.Upimg-list li em{ position:absolute; width:16px; height:16px;right:6px; top:6px;background:url(../images/tabs-selected-icon.png) no-repeat; display:none;}
+.Upimg-list li.cur em{ display:block;}
+.Upimg-list li .name{ position:absolute; bottom:0; left:0; right:0; height:24px; background-color:rgba(0,0,0,0.4); color:#fff; text-align:center; line-height:24px; white-space:nowrap; overflow:hidden; }
+
+
+
+.field {position: relative;float:left;}
+.field input { width: 100%; height: 24px; line-height:24px; font-size: 12px; padding:4px; border:1px solid #e1e6eb;}
+.field input:focus { outline: 0;}
+
+.Commentbox{ padding-bottom:0;}
+.Comment{ padding:10px 0;}
+.Comment h4{ margin:0;}
+.Comment h4 b{ color:#2084cc;}
+.Comment h4 .time{ color:#999; font-weight:normal; margin-left:20px;}
+.Comment .cont{ margin:10px 0; line-height:1.5;}
+.replybtn{ float:right; padding:0 20px;}
+.replybox{ background:#f5f5f5; padding:15px; border-radius:5px;}
+.replybox p{ color:#666; line-height:20px;}
+.replybox p span{ color:#2084cc; margin-left:10px;}
+.replybox .inpbtn { background:#4e9cce; color:#fff; margin-left:10px;}
+.replybox .inpbtn:hover{ background:#2084cc; color:#fff;}
+.replybox .inpbtn .l-btn-text{ line-height:38px; padding:0 15px;}
+.replybox p.error{ color:#f00;}
+.replyitem{ padding:15px 0; border-bottom:1px dashed #e1e6eb;}
+.replyitem h5{ margin:0; font-weight:normal; color:#666;}
+.replyitem h5 span{ color:#2084cc;}
+.replyitem .cont{ margin:10px 0; line-height:1.5;}
+.replyitem .time{ color:#999;}
+.replyitem a.blue{ float:right; background:none; border:0; color:#4e9cce; margin-right:10px; }
+
+/** Simplecomplete **/
+.autocompleter { width: 100%; background: #dddddd; position: absolute; top: 24px;  left: 0; z-index: 100;}
+.autocompleter,.autocompleter-hint { position: absolute;}
+.autocompleter-list { box-shadow: inset 0px 0px 6px rgba(0,0,0,0.1); list-style: none; margin: 0; padding: 0; text-align: left; -webkit-box-sizing: border-box; box-sizing: border-box;}
+.autocompleter-item-selected { background: #aaa;}
+.autocompleter-item { color: #444444; font-size: 12px; cursor: pointer;}
+.autocompleter-item:hover { background: #dbed8a;}
+.autocompleter-item strong { background: #f9de8f; text-shadow: 0 1px 0 #ffffff;}
+.autocompleter-item span { color: #bbbbbb;}
+.autocompleter-hint { color: #ccc; text-align: left; top: -35px; font-weight: 400; left: 0; width: 100%; padding: 12px 12px 12px 6px; font-size: 12px; display: none;}
+.autocompleter-hint span { color: transparent;}
+.autocompleter-hint-show { display: block;}
+.autocompleter-closed {  display: none;}
+
+/*添加图片尺寸*/
+.j-location .content .item { padding-top:20px;}
+.j-location .content .item .easyui-box { width:265px; border: 1px solid #e1e6eb; height:22px;}
+.content label.j-left{  width:100px; text-align:right; display:inline-block;}
+.j-location .content .savebtn {cursor:pointer; padding:0 18px; height:30px; line-height:30px; border:0; display:inline-block; background:#2084cc; color:#fff;margin:0 5px; -moz-border-radius: 2px;-webkit-border-radius:2px;border-radius:2px;}
+.j-location .content .closedbtn{cursor:pointer; padding:0 18px; height:30px; line-height:30px; border:0; display:inline-block;background:#d4d7da; color:#333;margin:0 5px; -moz-border-radius: 2px;-webkit-border-radius:2px;border-radius:2px;}
+.datagrid-cell a { color:#0066CC;}
+.datagrid-cell a.j-delete{ padding-left:10px;}
+.AddImageSzie.j-top{ padding:10px 0 0 10px; color:#FF3300;display: block; cursor:pointer; font-weight:bold;}
+.editbox .j-size { font-size:12px;color: #999; padding-left:10px; font-weight:100;}
+.j-textarea { width:394px; border:1px solid #e1e6eb;}
+.j-content { position:relative;}
+.j-watermark {width:200px;height:200px; float:left; border:1px solid #e1e6eb; margin-bottom:20px;}
+.j-setup { position:relative;}
+.j-setup .l-btn-small { position:absolute; left:46%; bottom:20px;}
+
+/*模板管理*/
+.templatetabsul{ padding:0 0 20px;}
+.templatetabsul li{ float:left; width:232px; margin:10px 10px 0 0; position:relative;}
+.templatetabsul li .img{ border:1px solid #fff; padding:1px; width:228px; height:288px; box-sizing:content-box;}
+.templatetabsul li .img span{display:table-cell; vertical-align:middle; text-align:center;*display: block; *font-size:104.76px;*font-family:Arial;}
+.templatetabsul li .img img{ max-width:228px; max-height:288px; vertical-align:middle;}
+.templatetabsul li .info{ color:#333; padding-top:5px;}
+.templatetabsul li .info p{ white-space:nowrap; overflow:hidden; line-height:20px;}
+.templatetabsul li .info p span{ color:#666;}
+.templatetabsul li .info .btn{ padding-top:5px;}
+.templatetabsul li .info .btn span {width:32%;display:inline-block;}
+.templatetabsul li .info .btn span.enabled {color: #b3b3b3;}
+.templatetabsul li em {display:inline-block;padding:5px 5px;  position:absolute;  font-style:normal;text-align:center;width:48px;}
+.templatetabsul li em.system {top:1px;right:1px;background-color:#33cc33;color:#fff;}
+.templatetabsul li em.btn {display:inline-block;position:absolute;z-index:3;}
+.templatetabsul li em.btn.used {top:30px;right:1px;background-color:#999999;color:#fff;}
+.templatetabsul li em.btn.enabled {top:65%;right:40%;background-color:#ff0000;color:#fff;}
+.templatetabsul li span.mark {width:228px;height:288px;background-color:#e7e7e7;position:absolute;z-index:2;top:1px;right:1px;text-align:center;vertical-align:middle;line-height:288px;opacity: 0.8; filter:alpha(opacity=80);  }
+.templatetabsul li em.btn.abled {top:65%;right:40%;background-color:#169bd5;color:#fff;}
+.templatetabsul li b {line-height:20px;padding:0 2px;cursor:pointer;}
+.templateselected {position: absolute;top: 10px;left: 10px;width: 18px;height: 18px;display: none;z-index:3;}
+
+#editTemplateWindow .item {padding:20px 0 0 20px;}
+

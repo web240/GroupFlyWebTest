@@ -1,0 +1,153 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework;
+@using GroupflyGroup.Platform.Web.Common;
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings;
+
+
+
+<style>
+  
+</style>
+
+<div data-options="fit:true" class="easyui-layout main FeImageType">
+    <div data-options="region:'north',split:false" style="height:47px;max-height:200px;border-top-width:0px;">
+        <div class="tablelist">
+            <div class="datagrid-toolbar" style="padding:10px 0;">
+                <ul class="clearfix">
+                    <li>
+                        <a name="FeImageTypeAdd" class="easyui-linkbutton" onclick="FeImageTypeAdd()">添加</a>
+                       
+                    </li>
+                </ul>
+            </div>
+        </div>
+     </div>
+     <div class="tablelist" data-options="region:'center',split:false">
+         <Gf-FeDataList id="FeImageTypeGridList"></Gf-FeDataList>
+     </div>
+</div>
+
+<script>
+    $.parser.parse();
+
+    //绑定表头
+    function FeImageTypeBindGrid() {
+        var columns = [];
+        columns.push({
+            field: 'ID', title: "操作", align: 'center', width: "335px",
+            formatter: function (value, row, index) {
+                var e = '<a onclick="document.body.tabGoto(\'@Url.Action("GotoAddImageType", "FeImageType")?TypeID=' + value + '\');" href="javascript:void(0);" >编辑</a> ';
+                e = e + '<a href="javascript:void(0);" onclick="$.messager.confirm(\'提示\', \'确认删除?\', function(r){ if (r){ delTemplate(\'' + value + '\'); }})" >删除</a> ';
+                return e;
+            }
+        });
+        columns.push({ field: 'TypeName', title: '图片类型', align: 'center', width: "335px" });
+        columns.push({ field: 'Description', title: '类型说明', align: 'center', width: "335px" });
+        columns.push({ field: 'Height', title: '最大宽度 (px)', align: 'center', width: "335px", formatter: function (value, row, index) { if (value == "-1") { return "*"; } else { return value; } } });
+        columns.push({ field: 'Width', title: '最大高度(px) ', align: 'center', width: "335px", formatter: function (value, row, index) { if (value == "-1") { return "*"; } else { return value; } } });
+
+        document.querySelector("#FeImageTypeGridList").SetDataGrid(columns);
+        document.querySelector("#FeImageTypeGridList").registerEventHandler("SetDataGridLoadSuccess", function (row, data) {
+           
+            onLoadSuccess(row);
+        });
+    };
+
+    function FeImageTypeAdd()
+    {
+        document.body.tabGoto("@Url.Action("GotoAddImageType", "FeImageType")");
+    }
+
+
+    function FeImageTypeBindData(pagenumber)
+    {
+        var url = "@Url.Action("GetImageTypePageList", "FeImageType")";
+        document.querySelector("#FeImageTypeGridList").SearchData(url, "", pagenumber);
+    }
+
+
+    $(function () {
+        //绑定表头
+        FeImageTypeBindGrid();
+        //绑定数据
+        FeImageTypeBindData();
+    });
+
+    function onLoadSuccess(data) {
+       
+        var arrayObj = new Array();　//创建一个数组
+        var str = "[";　//创建一个数组
+        var curryi=0
+        for (var l = 0; l < data.rows.length;l++)
+        {
+            if (!contains(arrayObj, data.rows[l].TypeName))
+            {
+                var count = GetTypeNameCount(data, data.rows[l].TypeName);
+                if (count != 1)
+                {
+                    str = str + "{ index:" + l + ",rowspan:" + count + "},";
+                    curryi = curryi + 1;
+                }
+                arrayObj.push(data.rows[l].TypeName);
+            }
+        }
+        if (str.length > 2) { str = str.substring(0, str.length - 1); }
+        str = str + "]";　//创建一个数组     
+        var merges = eval('(' + str + ')');
+
+        for (var i = 0; i < merges.length; i++) {
+
+            document.querySelector("#FeImageTypeGridList").SetMergeCells({
+                index: merges[i].index,
+                field: 'ID',
+                rowspan: merges[i].rowspan
+            });
+            document.querySelector("#FeImageTypeGridList").SetMergeCells({
+                index: merges[i].index,
+                field: 'TypeName',
+                rowspan: merges[i].rowspan
+            });
+            document.querySelector("#FeImageTypeGridList").SetMergeCells({
+                index: merges[i].index,
+                field: 'Description',
+                rowspan: merges[i].rowspan
+            });
+        }
+    }
+
+    function GetTypeNameCount(data,typename)
+    {
+        var i=0;
+        for (var l = 0; l < data.rows.length;l++)
+        {
+            if (data.rows[l].TypeName == typename)
+            {
+                i=i+1;
+            }
+        }
+        return i
+    }
+
+    function contains(arr, obj) {
+        var i = arr.length;
+        while (i--) {
+                if (arr[i] === obj) {
+                      return true;
+                }
+            }
+        return false;
+    }
+
+
+    //删除
+    function delTemplate(obj) {
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("DelImageTypeOne", "FeImageType")',
+            data: { id: obj },
+            datatype: "json",
+            success: function (data) {
+                FeImageTypeBindData();
+            }
+        });
+    }
+</script>

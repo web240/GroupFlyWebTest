@@ -1,0 +1,163 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+
+@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeArticleFrontIndexViewModel
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Index.css";
+}
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+@section components{
+
+}
+
+
+@section scripts{
+<script type="text/javascript">
+    $(window).load(function () {
+        //搜索
+        $("Gf-FeTemplate-CompositeComponent-ArticleHomeHead").feComponentArticleHomeHead("searchClick", function (text) {
+            moreClick("Search", text);
+        });
+        //导航栏
+        $("Gf-FeTemplate-Component-ChannelNavigate").feComponentChannelNavigate("selectChanged", function (index, id, text, url) {
+            indexClick(id);
+        });
+        //文章列表-更多
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("moreClick", function (mode, modevalue) {
+            moreClick(mode, modevalue);
+        });
+        //文章列表-标题
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("titleClick", function (id) {
+            itemClick(id);
+        });
+        //文章列表-分类
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("categoryClick", function (id) {
+            moreClick("Category", id);
+        });
+        //文章列表-标签
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("tagClick", function (tag) {
+            moreClick("Tag", tag);
+        });
+
+        //文章列表-文章属性
+        $("Gf-FeTemplate-Component-ArticleCategoryDetailsList").feComponentArticleCategoryDetailsList("listCharacterClick", function (id) {
+            moreClick("Character", id);
+        });
+
+        $("Gf-FeTemplate-Component-ArticleCategoryOutlineImageList").feComponentArticleCategoryOutlineImageList("moreClick", function (characterid) {
+            moreClick("Character", characterid);
+        });
+        //标题图列表-标题
+        $("Gf-FeTemplate-Component-ArticleCategoryOutlineImageList").feComponentArticleCategoryOutlineImageList("itemClick", function (id) {
+            itemClick(id);
+        });
+        //标题图列表-更多
+        $("Gf-FeTemplate-Component-ArticleCategoryTitleImageList").feComponentArticleCategoryTitleImageList("moreClick", function (characterid) {
+            moreClick("Character", characterid);
+        });
+        //标题图列表-标题
+        $("Gf-FeTemplate-Component-ArticleCategoryTitleImageList").feComponentArticleCategoryTitleImageList("itemClick", function (id) {
+            itemClick(id);
+        });
+        //标签
+        $("#tagView").feComponentTagView("click", function (tag) {
+            moreClick("Tag", tag.Name);
+        });
+        
+    });
+    ////消息提示
+    //$(window).load(function () {
+    //    $("Gf-FeTemplate-Component-Messager").feComponentMessager("show", { title: "aaaaa", position: 'bottomRight' });
+    //});
+
+    function moreClick(mode, modevalue) {
+        window.location = document.body["apppath"] + "FeArticle/FrontArticleSearch?mode=" + encodeURI(mode) + "&modevalue=" + encodeURI(modevalue);
+    }
+
+    function itemClick(id) {
+        window.location = document.body["apppath"] + "FeArticle/FrontArticleDetails?articleId=" + encodeURI(id);
+    }
+
+    function indexClick(id) {
+        window.location = document.body["apppath"] + "FeArticle/FrontChannelIndex?channelId=" + encodeURI(id);
+    }
+</script>
+}
+
+<div class="BodyContent">
+    <Gf-FeTemplate-CompositeComponent-ArticleHomeHead id="articleHomeHead" homehref="http://www.taobao.com">
+        <div class="j-news-box">
+            <div class="j-tops">
+                <div class="j-covers clearfix">
+                    <div class="j-left fl">
+                        <a behaviorId="goHome">返回商城首页</a>
+                    </div>
+                    <Gf-FeTemplate-Component-LoginState behaviorId="loginState"></Gf-FeTemplate-Component-LoginState>
+                </div>
+            </div>
+            <!--logo 搜索-->
+            <div class="j-search-box clearfix j-covers">
+                <Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId"></Gf-FeTemplate-Component-Logo>
+                <!--搜索-->
+                <div class="j-sweep-box fr">
+                    <div class="j-sweep">
+                        <div>
+                            <div class="j-offerings fl">
+                                <input behaviorId="txtSeach" type="text" class="j-search-text">
+                            </div>
+                            <div class="j-click fr">
+                                <input behaviorId="btnSeach" type="button" class="j-buttons">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigate">
+                <Gf-FeTemplate-Component-ChannelNavigate behaviorId="channelNavigate"></Gf-FeTemplate-Component-ChannelNavigate>
+            </div>
+        </div>
+    </Gf-FeTemplate-CompositeComponent-ArticleHomeHead>
+
+    <div class="con covers clearfix">
+        <div class="con-fl left">
+            @*广告*@
+            <Gf-FeTemplate-Component-AdvertBanner></Gf-FeTemplate-Component-AdvertBanner>
+            <!--头条资讯-->
+            <Gf-FeTemplate-Component-ArticleCategoryDetailsList mode="Character" modevalue="@Model.Head" count="@Model.ColumnCount"></Gf-FeTemplate-Component-ArticleCategoryDetailsList>
+
+            @*一级分类*@
+            @foreach (var category in Model.Categories)
+        {
+                <Gf-FeTemplate-Component-ArticleCategoryDetailsList mode="Category" modevalue="@category" count="@Model.ColumnCount"></Gf-FeTemplate-Component-ArticleCategoryDetailsList>
+        }
+
+        </div>
+
+        <div class="j-con-fr fr">
+            @*热点资讯*@
+            <Gf-FeTemplate-Component-ArticleCategoryOutlineImageList characterid="@Model.Hot" count="@Model.RightColumnCount"></Gf-FeTemplate-Component-ArticleCategoryOutlineImageList>
+            <div class="js-ads">
+                @{
+                var imgPath = Model.TemplateDirectoryPath + "Content/Images/adv.jpg";
+                imgPath = Url.Content(imgPath);
+                }
+                <img src="@imgPath" />
+            </div>
+            <!--推荐资讯-->
+            <Gf-FeTemplate-Component-ArticleCategoryTitleImageList characterid="@Model.Recommend" count="@Model.RightColumnCount"></Gf-FeTemplate-Component-ArticleCategoryTitleImageList>
+            <!--热门标签-->
+            <Gf-FeTemplate-Component-TagView id="tagView" count="@Model.FeTagCount"></Gf-FeTemplate-Component-TagView>
+        </div>
+
+    </div>
+
+    <Gf-FeTemplate-Component-FootNote></Gf-FeTemplate-Component-FootNote>
+</div>

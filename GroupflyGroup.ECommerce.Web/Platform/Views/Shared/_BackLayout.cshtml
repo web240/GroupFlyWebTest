@@ -1,0 +1,17 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@{
+    Layout = "_Layout.cshtml";
+}
+@section css{
+    @Url.Css("~/Platform/Content/Css/colorpicker.css")
+    @Url.Css("~/Platform/Content/Css/backCommon.css")
+    @RenderSection("css", false)
+}
+@section scripts {
+    @Url.Script("~/Platform/Content/Scripts/jquery.table2excel.js")
+    @Url.Script("~/Platform/Content/Scripts/compress.js")
+    @Url.Script("~/Platform/Content/Scripts/colorpicker.js")
+    @RenderSection("scripts", false)
+}
+
+@RenderBody()

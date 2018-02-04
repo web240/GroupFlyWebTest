@@ -1,0 +1,27 @@
+﻿<script type="text/javascript">
+    //以JSON格式显示图表的模型函数
+    function save() {
+        document.getElementById("mySavedModel").value = document.querySelector("#Lifecycle").GetDiagramData();
+       
+    
+    }
+
+    function edit() {
+
+        document.querySelector("#Lifecycle").SwitchState()
+        
+    }
+</script>
+
+<div>
+    <div style="width: 100%; height: 800px">
+        <Gf-Lifecycle id="Lifecycle" lifecycleid="1ad31a14c6cc469889faf50a0208313e@Lifecycle"></Gf-Lifecycle>               
+    </div>
+    <div>
+        <div>
+            <button id="SaveButton" onclick="save()">Save</button>
+            <button id="edit" onclick="edit()">edit</button>
+        </div>
+        <textarea id="mySavedModel" style="width:100%;height:300px"></textarea>
+    </div>
+</div>

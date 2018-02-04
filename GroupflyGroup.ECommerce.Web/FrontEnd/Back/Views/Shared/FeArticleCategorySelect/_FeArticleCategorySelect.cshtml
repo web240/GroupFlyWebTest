@@ -1,0 +1,40 @@
+﻿
+<script type="text/javascript">
+    $(function () {
+        $('#@ViewBag.FeArticleCategoryDialog').dialog({
+            title: '选择文章分类',
+            width: 400,
+            height: 500,
+            closed: true,
+            cache: false,
+            modal: true
+        });
+
+    });
+    function OpenCategoryTree(Callback) {
+        $('#@ViewBag.FeArticleCategoryDialog').dialog('open');
+        $('#@ViewBag.FeArticleCategoryTree').treegrid({
+            url: '@Url.Content("~/FeArticleCategory/Get")',
+            idField: 'Id',
+            rownumbers: true,
+            lines: true,
+            treeField: 'Name',
+            onSelect: function (row) {
+                $('#@ViewBag.FeArticleCategoryDialog').dialog('close');
+                if (Callback instanceof Function) {
+                    Callback(row);
+                }
+                else {
+                    $.messager.alert("异常","函数调用错误！","error");
+                }
+            },
+            columns: [[
+                { field: "Id", hidden: true, align: 'center' },
+                { title: '分类名称', field: 'Name', width: '355px', halign: 'center', align: 'left' }
+            ]]
+        });
+    }
+</script>
+<div id="@ViewBag.FeArticleCategoryDialog">
+    <table id='@ViewBag.FeArticleCategoryTree'></table>
+</div>

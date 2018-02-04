@@ -1,0 +1,268 @@
+﻿
+@using GroupflyGroup.FrontEnd.Web.Models
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings;
+
+@model FeChannelViewModel
+
+
+    @* ReSharper disable once ConditionIsAlwaysConst *@
+    <script type="text/javascript">
+
+        function radioChange(type) {
+            $("div[domainTextContent]").css("display", "none");
+            $("div[domainTextContent='" + type + "']").css("display", "");
+        }
+
+        $(function () {
+            //设置默认域名类型。
+            if ("" == "@Model.DomainType") {
+                $('input[radioDomainType="DirectoryName"]').attr("checked", true);
+                radioChange("DirectoryName");
+            }
+            else {
+                var type = $("input[value='@Model.DomainType']").attr("radioDomainType");
+                radioChange(type);
+            }
+
+            var operationType = "@Model.OperationType";
+
+            //提交方法。
+            $("#btnSave").click(function () {
+
+                var url;
+
+                if (operationType == 1) {
+                    url = '@Url.Content("~/FeChannel/Add")';
+                }
+                else {
+                    url = '@Url.Content("~/FeChannel/Edit")';
+                }
+
+                $("#main").showLoading();
+
+                platformAjax({
+                    url: url,
+                    data: $("#form1").serializeArray(),
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.Code != 1) {
+                            $.messager.alert('更新错误', result.ErrorMessage);
+                        }
+                        else {
+                            document.body.tabGoback();
+                        }
+                    },
+                    finallyCall: function () {
+                        $("#main").hideLoading();
+                    }
+                });
+
+            });
+
+        });
+
+    </script>
+
+
+
+<div id="main" class="main">
+    <div class="editbox">
+        <h1><b>分类信息</b>
+        </h1>
+
+        <form id="form1">
+
+            <table class="content" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="label"><span class="red">*</span> @Html.LabelFor(m => m.Name)：</td>
+                    <td class="right">
+                        @Html.EditorFor(m => m.Name, new
+                        {
+                            htmlAttributes = new
+                            {
+                                @class = "easyui-textbox inputText",
+                                style = "width:400px;"
+                            }
+                        })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        <span class="red">*</span> @Html.LabelFor(m => m.CategoryId)：
+                    </td>
+                    <td class="right">
+                        @Html.Action("Load", "FeArticleCategorySeachBox", new
+                        {
+                            parentId = Model.CategoryId,
+                            parentNamePath = Model.CategoryNamePath,
+                            parentIdModelFieldName = "CategoryId",
+                            parentNamePathModelFieldName = "CategoryNamePath",
+                            id = "",
+                            title = "请选择分类",
+                            loadingIndicatorId = "main"
+                        })
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td class="label">@Html.LabelFor(m => m.TemplateId)：</td>
+                    <td class="right">
+                        @Html.DropDownListFor(m => m.TemplateId, Model.TemplateList, new
+                        {
+                            style = "width:400px;height:25px"
+                        })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label"><span class="red">*</span>@Html.LabelFor(m => m.DomainType)：</td>
+                    <td class="right">
+                        @Html.RadioButtonFor(m => m.DomainType, FeValueIDs.FeDomainType_DirectoryName, new
+                        {
+                            radioDomainType = "DirectoryName",
+                            onchange = "radioChange('DirectoryName');"
+                        })
+                        使用目录名称
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.RadioButtonFor(m => m.DomainType, FeValueIDs.FeDomainType_SecondDomain, new
+                        {
+                            radioDomainType = "SecondDomain",
+                            onchange = "radioChange('SecondDomain');"
+                        })
+                        二级域名
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.RadioButtonFor(m => m.DomainType, FeValueIDs.FeDomainType_TopDomain, new
+                        {
+                            radioDomainType = "TopDomain",
+                            onchange = "radioChange('TopDomain');"
+                        })
+                        顶级域名
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label"></td>
+                    <td class="right">
+                        <div domainTextContent="DirectoryName" style="display: none;">
+                            http://www.host.com/@Html.EditorFor(m => m.DirectoryNameDomainText, new
+                                                {
+                                                    htmlAttributes = new
+                                                    {
+                                                        style = "width:100px;"
+                                                    }
+                                                })/index.html
+                        </div>
+                        <div domainTextContent="SecondDomain" style="display: none;">
+                            http://@{@Html.EditorFor(m => m.SecondDomainDomainText, new
+                                     {
+                                         htmlAttributes = new
+                                         {
+                                             style = "width:100px;"
+                                         }
+                                     })}.host.com
+                                     </div>
+                                     <div domainTextContent="TopDomain" style="display: none;">
+                                         http://@Html.EditorFor(m => m.TopDomainDomainText, new
+                                                {
+                                                    htmlAttributes = new
+                                                    {
+                                                        style = "width:200px;"
+                                                    }
+                                                })
+                    </div>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="label">@Html.LabelFor(m => m.IsDisplay)：</td>
+                        <td class="right">
+
+                            @if (Model.IsDisplay == "on")
+                            {
+                                <input id="sbtnIsDisplay" class="easyui-switchbutton" name="@nameof(Model.IsDisplay)" checked data-options="onText:'是',offText:'否'"/>
+                            }
+                            else
+                            {
+                                <input id="sbtnIsDisplay" class="easyui-switchbutton" name="@nameof(Model.IsDisplay)" data-options="onText:'是',offText:'否'"/>
+                            }
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">@Html.LabelFor(m => m.Logo)：</td>
+                        <td class="right">
+                            <Gf-ObjectSelector autoinit namefield="name" value="{'id':'@Model.LogoId','name':'@Model.LogoName','title':'LOGO', 'permissioncode' : '@Model.LogoPermissionCode'}" name="@nameof(Model.Logo)" klass="FeLogo"></Gf-ObjectSelector>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">@Html.LabelFor(m => m.SortOrder)：</td>
+                        <td class="right">
+
+                            @Html.EditorFor(m => m.SortOrder, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @class = "easyui-numberbox sortNumberbox inputText",
+                                    data_options = "min:0,precision:2",
+                                    style = "width:400px;"
+                                }
+                            })
+                        </td>
+                    </tr>
+                    </table>
+
+                    <h1><b>分类seo</b>
+                    </h1>
+                    <table class="content" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="label">@Html.LabelFor(m => m.SeoTitle)：</td>
+                            <td class="right">
+                                @Html.EditorFor(m => m.SeoTitle, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "easyui-textbox inputText",
+                                        style = "width:400px;"
+                                    }
+                                })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Html.LabelFor(m => m.SeoKeys)：</td>
+                            <td class="right">
+                                @Html.Action("SeoKeysInput", "Seo", new
+                                {
+                                    seoKeys = Model.SeoKeys,
+                                    seoKeysModelFieldName = "SeoKeys"
+                                })
+                                <span class="gray">@Html.DisplayFor(m => m.SeoKeyRemark)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">@Html.LabelFor(m => m.SeoDescription)：</td>
+                            <td class="right">
+                                @Html.TextAreaFor(m => m.SeoDescription, new
+                                {
+                                    @class = "easyui-validatebox textArea",
+                                    style = "width:400px;height:160px"
+                                })
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="LayerBtn">
+                        <input type="button" class="savebtn" id="btnSave" value="保存"/>
+                        <a onclick="document.body.tabGoback();" href="javascript:void(0);">取消</a>
+                    </div>
+                    <div style="display: none">
+                        @Html.EditorFor(m => m.OperationType)
+                        @Html.EditorFor(m => m.Id)
+                        @Html.EditorFor(m=>m.UrlId)
+                    </div>
+                    </form>
+                    </div>
+                    </div>
+
+<script type="text/javascript">
+    $.parser.parse();
+</script>

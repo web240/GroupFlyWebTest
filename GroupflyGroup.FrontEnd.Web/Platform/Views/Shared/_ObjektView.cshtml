@@ -1,0 +1,22 @@
+﻿@using GroupflyGroup.Platform.ObjectFramework;
+@using GroupflyGroup.License;
+@using GroupflyGroup.Platform.ObjectFramework.Utils
+@model GroupflyGroup.Platform.Web.Models.ObjektViewModel
+
+<form onsubmit="return false;">
+    <table class="ObjektView">
+        @{
+            Model.Properties.ForEach(o =>
+            {
+                if (!o.Hidden)
+                {
+                    Html.RenderPartial("../Shared/_PropertyView", o);
+                }
+                else
+                {
+                    Html.Raw(Html.Hidden(o.Name, o.Value));
+                }
+            });
+        }
+    </table>
+</form>

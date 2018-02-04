@@ -1,0 +1,38 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models
+
+@model FeCharacterSeachBoxViewModel
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#@Model.SelectTextId").textbox({
+            editable:false,
+            prompt: '@Model.Title',
+            width: @Model.Width,
+            icons: [{
+                iconCls:'icon-remove',
+                handler: function(e){
+                    $(e.data.target).textbox('clear');
+                    $("#@Model.SelectValueId").val("");
+                }
+            },{
+                iconCls:'searchbox-button',
+                handler: function(e){
+                    OpenCharacterSelect(function(obj){                        
+                        $("#@Model.SelectTextId").searchbox("setValue", obj.CharacterText);
+                        $("#@Model.SelectValueId").val(obj.CharacterId);
+                    });
+                }
+            }]
+        });
+
+    })
+
+
+</script>
+
+<input id='@Model.SelectTextId' class="easyui-textbox" name='@Model.ControlTextName' value='@Model.Text' />
+
+<input type="hidden" id='@Model.SelectValueId' name='@Model.ControlIdName' value='@Model.Id' />
+
+@Html.Action("Load", "FeCharacterSelect")

@@ -1,0 +1,6 @@
+*.lic
+/test/
+/fileupload/
+/temp/
+*.mc
+/DeployPackage/

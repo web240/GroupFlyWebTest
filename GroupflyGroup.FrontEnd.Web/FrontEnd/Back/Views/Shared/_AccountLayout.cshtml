@@ -1,0 +1,46 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@{
+    Layout = "~/Platform/Views/Shared/_BackLayout.cshtml";
+}
+@section css{
+    @Url.Css("~/FrontEnd/Back/Content/Css/feaccount.css")
+    @RenderSection("css", false)
+}
+@section scripts {
+    @Url.Script("~/FrontEnd/Back/Content/Scripts/jquery.zclip.js")
+    @Url.Script("~/FrontEnd/Back/Content/Scripts/feaccount.js")
+    @RenderSection("scripts", false)
+    
+    <script type="text/javascript">
+            //window.onerror = function () { return true; };
+            function refreshRight(url) {
+                $("#right").load(url);
+            }
+    </script>
+}
+
+<div id="containe_bg">
+    <!--头部Top-->
+    @Html.Action("Head", "FeAccount")
+    <!--内容部分Content-->
+    <div id="content_bg">
+        <div id="content1">
+            <div id="content2">
+                <span id="A_Left">
+                    <!--左边导航nav-->
+                    @Html.Action("Left", "FeAccount")
+                </span>
+                <!--右边框架-->
+                <div class="ifr_right" style="width:794px;" name="win" id="right">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <!--底部文件调用-->
+    @Html.Action("Foot", "FeAccount")
+    <!--底部文件调用-->
+</div>
+<Gf-FeTemplate-Component-Messager></Gf-FeTemplate-Component-Messager>

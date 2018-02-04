@@ -1,0 +1,58 @@
+﻿@using GroupflyGroup.Platform.Web.Common
+@model GroupflyGroup.Platform.Web.Models.BaseViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @* 默认样式 *@
+    @Url.Css("~/Platform/Content/Css/normalize.css")
+    @Url.Css("~/Platform/Content/themes/default/easyui.css")
+    @Url.Css("~/Platform/Content/Css/font-awesome.css")
+
+    @* 扩展样式 *@
+    @RenderSection("css", false)
+    @Html.Raw(Model.CssSection)
+
+    @* 默认脚本 *@
+    @Url.Script("~/Platform/Content/Scripts/jquery.min.js")
+    @Url.Script("~/Platform/Content/Scripts/jquery.easyui.min.js")
+    @Url.Script("~/Platform/Content/Scripts/easyui-lang-zh_CN.js")
+    @Url.Script("~/Platform/Content/Scripts/x-tag-core.min.js")
+    @Url.Script("~/Platform/Content/Scripts/Common.js")
+
+    @* 扩展脚本 *@
+    @RenderSection("scripts", false)
+    @Html.Raw(Model.ScriptSection)
+
+    @* 组件声明 *@
+    @Url.Script("~/Platform/Content/Scripts/Components.js")
+    @Html.Raw(Model.UIComponentDefineSection)
+    @RenderSection("components", false)
+
+    @* 组件扩展 *@
+    @Html.Raw(Model.UIExtensionSection)
+
+    @* 组件注册 *@
+    @Url.Script("~/Platform/Content/Scripts/ComponentsRegister.js")
+    @Html.Raw(Model.UIComponentRegisterSection)
+
+</head>
+<body class="easyui-layout" is="gf-page" apppath="@Url.Content("~")" exchangefileurl="@Url.Action("UpLoadExchangeProcess", "File")"
+      menuhandleurl="@Url.Action("MenuClick", "Home")" getobjekturl="@Url.Action("GetObjekt","Platform")"
+      selectobjekturl="@Url.Action("SelectObjektCollectionView", "Platform")"
+      referenceurl="@Url.Action("ObjektReferencedCollectionView","Platform")"
+      editurl="@Url.Action("ObjektEdit", "Platform")" GetObjWithMetaUrl="@Url.Action("GetObjektWithPropertyMeta", "Platform")"
+      onchangesaveurl="@Url.Action("PropertySave", "Platform")" errorurl="@Url.Action("Error", "Home")" upfileserver="@Url.Action("UpLoadProcess", "File")?AjaxType=Operation"
+      trashurl="@Url.Action("SetTrash", "Platform")" getnewobjekturl="@Url.Action("GetNewObjekt", "Platform")" listexporturl="@Url.Action("GridExport","platform")"
+      listdataurl="@Url.Action("GetObjektCollection", "platform")" listsaveUrl="@Url.Action("ListSave", "platform")" rocviewurl="@Url.Action("ObjektROCView", "Platform")"
+      GetKlassTree="@Url.Action("GetKlassTree", "Platform")" GetAuthorizationUrl="@Url.Action("GetAuthorization", "Authorization")"
+      GetListDataUrl="@Url.Action("GetListValues", "Platform")" getumlurl="@Url.Action("GetUmlUrl", "Platform")" CheckUmlUrl="@Url.Action("CheckUmlUrl", "Platform")"
+      AuthorizeUrl="@Url.Action("Authorize", "Authorization")" GetNewPrivatePermissionUrl="@Url.Action("GetDefaultPrivatePermission", "Authorization")">
+    @RenderBody()
+</body>
+</html>
+ 

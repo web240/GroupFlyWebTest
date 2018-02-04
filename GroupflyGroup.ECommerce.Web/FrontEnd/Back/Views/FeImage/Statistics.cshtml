@@ -1,0 +1,141 @@
+﻿@using GroupflyGroup.Platform.Web.Common;
+
+
+<script src="~/FrontEnd/Back/Content/Scripts/echarts.js"></script>
+<div id="divPanel" class="main">
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div>
+        <div style="height:80px">
+            <table width="80%">
+                <tr>
+                    <td align="center">
+                        <p>当前存储量</p>
+                        <p><h1 id="hSumSize"></h1></p>
+                        <p id="pDescription"></p>
+                    </td>
+                    <td align="center">
+                        <p>文件总数</p>
+                        <p>
+                            <h1 id="hSumCount"></h1>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="main" style="height:400px"></div>
+    </div>
+
+    <!-- ECharts单文件引入 -->
+    @*<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>*@
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init($('#main')[0]);
+
+                var xArray = [];
+                var yArray = [];
+                var sumSize = 0, sumCount = 0, currtDaySumSize = 0;
+                $.ajax({
+                    url: "@Url.Action("GetFileStatisticsInfo", "FeImage")",
+                    type: "post",
+                    async: false,
+                    data: {},
+                    dataType: "json",
+                    success: function (result) {
+                        var data = eval("(" + result.Data + ")");
+                        sumCount = data[7].FileCount;
+                        sumSize = data[7].FileSumSize;
+                        $(data).each(function () {
+                            xArray.push(this.CreateOn);
+                            yArray.push(this.FileSumSize);
+                            currtDaySumSize += this.CurrtRealSize;
+                            //sumCount += this.FileCount;
+                        });
+                    }
+                });
+
+                option = {
+                    title: {
+                        text: '图片统计',
+                        subtext: 'Y轴单位（KB）'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    //dataZoom: { backgroundColor: 'rgba(5,6,7,8)' },
+                    //grid:{backgroundColor: 'rgba(5,6,7,8)'},
+                    legend: {
+                        show: false,
+                        data: ['文件大小']
+                        //data: ['日期', '大小', '个数']
+                    },
+                    //toolbox: {
+                    //    show: true,
+                    //    feature: {
+                    //        mark: { show: true },
+                    //        dataView: { show: true, readOnly: false },
+                    //        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                    //        restore: { show: true },
+                    //        saveAsImage: { show: true }
+                    //    }
+                    //},
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xArray
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                            //type: 'category'
+                        }
+                    ],
+                    series: [
+                        {
+                            //opacity:0.5,
+                            name: '文件大小',
+                            type: 'line',
+                            smooth: true,
+                            itemStyle: {
+                                normal: { areaStyle: { type: 'default' }, color: 'green', },
+                                //normal: { areaStyle: { type: 'default', color: '#7CCE9A' }, color: 'green', },
+                                //emphasis: {
+                                //    lineStyle: {
+                                //        color: 'red',
+                                //        shadowColor: 'rgba(22,14,40,50)',
+                                //        shadowBlur:7
+                                //    },
+                                //    areaStyle:{  color:'green'}
+                                //}
+                            },
+                            data: yArray
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+                $("#hSumSize").html(sumSize + "KB");
+                $("#pDescription").html("(比" + xArray[0] + "增加了" + currtDaySumSize + "KB)");
+                $("#hSumCount").html(sumCount + "个");
+            }
+        );
+    </script>
+</div>

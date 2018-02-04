@@ -1,0 +1,5 @@
+*.lic
+*.mc
+/FileStore/
+/Log/
+/DeployPackage/

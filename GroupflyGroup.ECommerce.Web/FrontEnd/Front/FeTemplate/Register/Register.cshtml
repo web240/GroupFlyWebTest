@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+@using GroupflyGroup.Platform.Web.Common
+@using GroupflyGroup.FrontEnd.Web.Models
+@using GroupflyGroup.Platform.ObjectFramework.Persistence
+
+@model FrontEndRegisterViewModel
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Register.css";
+}
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+@section components{
+
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(window).load(function () {
+
+            $(".Member").click(function (e) {
+                $(".Member").removeClass("Selected");
+
+                $(e.target).addClass("Selected");
+
+                $(".Member").removeClass("UnSelected");
+
+                $(e.target).siblings().addClass("UnSelected");
+
+                $(".RegisterContent").hide();
+
+                var ChoseIndex = $(e.target).attr("ChoseIndex");
+
+                $(".RegisterContent[ChoseIndex='" + ChoseIndex + "']").show();
+            });
+
+            $("Gf-FeTemplate-Component-FrontEndRegister").feComponentFrontEndRegister("AfterRegisterSuccess", function () {
+                window.location.href = document.body["apppath"] + "/FeArticle/FrontIndex";
+            });
+
+
+        });
+    </script>
+}
+
+<div class="BodyContent">
+    <div class="wrapBox LogoMessage">
+        <Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId"></Gf-FeTemplate-Component-Logo>
+    </div>
+
+    <div class="wrapBox">
+        <div>
+            <div class="Member Selected" ChoseIndex="1">个人用户注册</div>
+            <div class="Member UnSelected" ChoseIndex="2">企业用户注册</div>
+        </div>
+        <div class="RegisterDiv">
+            <div class="RegisterContent" ChoseIndex="1" style="display:block">
+                <Gf-FeTemplate-Component-FrontEndRegister id="frontendGeneralRegister" MemberType="General" messagetemplateid="@Const.SmsVerifyCodeTemplate" messagesenderid="de316e04d8484b4283ee7570c8326944@MessageSender"></Gf-FeTemplate-Component-FrontEndRegister>
+            </div>
+            <div class="RegisterContent" ChoseIndex="2" style="display:none">
+                <Gf-FeTemplate-Component-FrontEndRegister id="frontendCompanyRegister" MemberType="Company" messagetemplateid="@Const.SmsVerifyCodeTemplate" messagesenderid="de316e04d8484b4283ee7570c8326944@MessageSender"></Gf-FeTemplate-Component-FrontEndRegister>
+            </div>
+        </div>
+    </div>
+    <div class="wrapBox FootMessage">
+        <Gf-FeTemplate-Component-FootDown></Gf-FeTemplate-Component-FootDown>
+    </div>
+</div>

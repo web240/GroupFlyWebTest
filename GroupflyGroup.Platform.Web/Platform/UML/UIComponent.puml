@@ -1,0 +1,367 @@
+@startuml
+
+    enum UIState{
+        edit
+        browse
+    }
+
+    class ObjektJson{
+        'json数据结构如下所示，四种情况'
+        '{"$":"O","id":"Dashboard@Klass","name":"Dashboard","entityClassAssembly":"GroupflyGroup.Platform.ObjectFramework","entityClass":"GroupflyGroup.Platform.ObjectFramework.Dashboard","label":"欢迎页","isVersionable":"False","isRelationshipKlass":"False","workflowEnabled":"False","manualSwitchingState":"False","abstract":"False","sealed":"True","manualVersioning":"False","unlockOnLogout":"True","autoSearch":"False","defaultPageSize":"25","isTrash":"False","allowPrivatePermission":"False","operationLog":"False","logMaxNumber":"0","logRetentionTime":"0","parent":"Personalization@Klass","objektDetailViewLayout":"c729dc4cce634d318f0887da3cc71c2a@Value","klassPath":"Objekt@Klass\\Personalization@Klass\\Dashboard@Klass","klass":"Klass@Klass","combinedLabel":"Dashboard 欢迎页","createdOn":"2017/8/14 17:46:28.144","dbTable":"Personalization","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","enforceDiscovery":"False","modifiedOn":"2017/8/14 17:46:28.144","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"Dashboard@Klass","isUsingSourcePermission":"False","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain","permission":"31f57973ad1243119bcf5db93ad0debd@KlassPermission"}'
+        '{"$":"U","id":"79ec01d56e054c448231d1a366161565@Property","description":"是否只读","modifiedOn":"2017/8/14 16:27:46.846"}'
+        '{"$":"C","id":"cb46d5b564c04074a70e61581798ffac@Property","isTrash":"False","source":"ObjektCollectionViewContent@Klass","name":"isSortable","dataType":"f7036b21e6e34919b504df2cfc2d88e2@Value","label":"排序","description":"是否能排序","isRequired":"False","readonly":"False","isIndexed":"False","isKeyed":"False","isCascade":"False","klass":"Property@Klass","createOnly":"False","isRichText":"False","multiline":"False","enableExpress":"False","isI18N":"False","isColor":"False","hiddenInObjektCollectionView":"False","hiddenInObjektDetailView":"False","hiddenInRocView":"False","combinedLabel":"isSortable 排序","booleanDefaultValue":"False","bigintDefaultValue":"0","integerDefaultValue":"0","createdOn":"2017/8/14 16:27:46.850","creator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","modifiedOn":"2017/8/14 16:27:46.850","modificator":"e2c4e2f4ecec4d6d8dce2fe6c831352e@User","state":"130a2908340148d7a9c0c5ee6d0e9cce@LifecycleState","isCurrent":"True","majorRev":"A","isReleased":"False","notLockable":"False","generation":"1","newVersion":"True","config":"cb46d5b564c04074a70e61581798ffac@Property","permission":"31f57973ad1243119bcf5db93ad0debd@KlassPermission","domain":"6c52d6fa749c4a3fa951254f1fc2f6cb@Domain","sortOrder":"600.000"}'
+        '{"$":"D","id":"54a6b8e0a4cb4fe1a6166bed3348dece@Property"}'
+    }
+
+    abstract class UIComponentBase  extends HTMLElement{
+        '构造方法'
+        'componentEditState = getComponentEditState() '
+        'componentBrowseState = getComponentBrowseState'
+        public UIComponentBase()
+
+        private currentState:UIState
+        '获取当前状态'
+        public UIState getCurrentState()
+        '切换状态'
+        public switchToState(UIState state)
+        '组件当前状态对象，代理所有与状态有关的行为'
+        private componentState:UIComponentBaseState
+
+        private componentEditState:UIComponentBaseState
+        '组件编辑状态代理对象，由具体子类实现'
+        protected UIComponentBaseEdit createComponentEditState()
+
+        private componentBrowseState:UIComponentBaseState
+        '组件浏览状态代理对象，由具体子类实现'
+        protected UIComponentBaseBrowse createComponentBrowseState()
+
+        '编辑状态dom'
+        private editContent:HTMLElement
+        '浏览状态dom'
+        private browseContent:HTMLElement
+
+        '对象数据,尝试设计为组件树共享，作为一个统一的数据缓存区'
+        private objektData:Map<string,ObjektJson> 
+        '整体刷新对象数据，调用后端API Map<string,ObjektData> ifModified(Map<string,datetime>) 返回相应的对象id和对象数据键值对，如最后修改时间没有变，则对象数据为空'
+        private RefreshObjektData()
+        '从对象缓存区获取对象，缓存区没有则从后端获取，并加入缓存区'
+        protected ObjektJson getObjektData(string objektId)
+        '从对象缓存区获取对象，缓存区没有则从后端获取，并加入缓存区'
+        protected Map<string,ObjektJson> getObjektData(Set<objektId> objektIds)
+        '合并对象数据到组件树缓存区'
+        protected mergeObjektData(Set<ObjektJson> objekts)
+        
+        '自己或者子孙组件任意为true，则为true(递归过程)'
+        public IsMoidified()
+
+        private _isRendered:bool
+        '内容是否已渲染'
+        public bool IsRendered()
+
+        private _isMessageBorder:bool
+        public isMessageBorder()
+        '设置是否消息边界，默认为false'
+        public SetMessageBorder(bool isBorder)
+
+        '截取dom树事件自动维护的子组件列表'
+        public componentChildren:List<UIComponentBase>
+        private parentComponent:UIComponentBase
+        '获取父组件'
+        public UIComponentBase getComponentParent() 
+        '获取子组件列表'
+        public List<UIComponentBase> getComponentChildren()
+        
+        '向上报告消息，直到消息边界或者组件树根'
+        private reportMessage(UIMessage message,UIComponentBase source)
+        '消息边界或组件树根向下广播消息，重复广播检查（健壮性保证，一个10元素的已处理消息队列）'
+        private broadcastMessage(UIMessage message,UIComponentBase source)
+        '发送一个消息'
+        public sendMessage(UIMessage message,UIComponentBase source)
+
+        '如componentState有效，转设componentState._onRender'
+        private _onRender : function<HTMLElement> 
+        '如componentState有效，转设componentState._onRecievedMessage'
+        private _onRecievedMessage : function
+        '如componentState有效，转设componentState.'
+        private _onObjektDataWriteback
+
+        '如componentState有效，转交componentState.onRender(...)'
+        public HTMLElement onRender() 
+        '处理UIMessageSaving（边界或根执行保存并级联触发Saved消息）、UIMessageRefreshing（刷新对象数据缓存区）等消息；如componentState有效并转交componentState.onRecieveMessage(...)'
+        public onRecievedMessage(UIMessage message, UIComponentBase source)
+        '遍历子组件+自己搜集对象数据，并触发onObjektDataWriteback'
+        private objektDataWriteback()
+        '把组件的属性值写入ObjektData，如componentState有效，转交componentState'
+        public onObjektDataWriteback() 
+    }
+    UIComponentBase ..|> Comoponent
+    UIComponentBase *--> UIComponentBaseState : componentState
+    UIComponentBase "*" -->"1" UIComponentBase : parent
+    abstract class UIComponentBaseState{
+        '包装器（组件）'
+        private wrapper:UIComponentBase
+        public getWrapper()
+
+        private _onRender : function<HTMLElement> 
+        private _onRecievedMessage : function
+        private _onObjektDataWriteback
+
+        abstract onRender()
+        abstract onRecievedMessage(UIMessage message, UIComponentBase source)
+        abstract onObjektDataWriteback()
+    }
+    note "与状态有关的行为（方法）直接转交给【UIComponentBaseState】." as N1
+    UIComponentBase .. N1
+    N1 .. UIComponentBaseState
+
+    abstract class UIComponentBaseEdit extends UIComponentBaseState{
+
+    }
+    abstract class UIComponentBaseBrowse extends UIComponentBaseState{
+        
+    }
+
+    'UI消息'
+    abstract class UIMessage{
+        id:guid
+    }
+
+    '前消息阻止原因'
+    class PreventDoingReason{
+        '原因，不重复'
+        reasons:Set<String>
+
+        '已添加过的串，忽略'
+        addReason(reason:String)
+        '获取整合的原因字符串，用换行符分隔'
+        getReasons()
+
+        '定义一些常用原因字符串字面量'
+        'notSaved=有未保存的数据，继续操作将丢失这些修改！'
+        static notSaved:String
+    }
+    '前消息'
+    abstract class UIDoingMessage extends UIMessage{
+        '是否继续处理，默认true'
+        private _continuing:bool 
+        '是否可忽略阻止，默认true'
+        private _isIgnorable:bool
+        '阻止原因'
+        reason:PreventDoingReason
+
+
+        public continuing()
+        public isIgnorable()
+
+        '可忽略的阻止处理(continuing设continuing为false)'
+        public preventDoing()
+        '可忽略的阻止处理，并设定一个原因(continuing设continuing为false)'
+        public preventDoing(reason:String)
+        '是否可忽略的阻止处理，并设定一个原因(continuing设continuing为false)'
+        public preventDoing(reason:String,isIgnorable:bool)
+
+        ''
+        public getReasons()
+    }
+    UIDoingMessage *--> PreventDoingReason
+
+    '后消息'
+    abstract class UIDidMessage extends UIMessage{
+
+    }
+    '保存前消息'
+    class UIMessageSaving extends UIDoingMessage{
+        
+    }
+    '保存后消息'
+    class UIMessageSaved extends UIDidMessage{
+        
+    }
+
+    '刷新前消息'
+    class UIMessageRefreshing extends UIDoingMessage{
+        
+    }
+
+    '对象选择前消息'
+    class UIMessageObjektSelecting extends UIDoingMessage{
+        originalSelected:Set<Objekt>
+        currentSelected:Set<Objekt>
+    }
+
+    '对象选择后处理'
+    class UIMessageObjektSelected extends UIDidMessage{
+        originalSelected:Set<Objekt>
+        currentSelected:Set<Objekt>
+    }
+
+    '值改变后消息'
+    class UIMessageValueChanged  extends UIDidMessage{
+        originalValue:string
+        currentValue:string
+    }
+
+    '状态切换前消息'
+    class UIMessageStateSwitching extends UIDoingMessage{
+        originalState:UIState
+        currentState:UIState
+    }
+
+    '状态切换后消息'
+    class UIMessageStateSwitched extends UIDidMessage{
+        originalState:UIState
+        currentState:UIState
+    }
+
+
+
+
+    '对象属性组件基类'
+    abstract  class ObjektPropertyView extends UIComponentBase{
+        '组件Attribute'
+        objektId:string
+        '组件Attribute'
+        propertyName:string
+
+        '值是否发生改变'
+        private _isModified
+        '原值'
+        private _originalValue:string
+        '当前值'
+        private _currentValue:string
+
+        'return _currentValue'
+        public getValue()
+        '与当前值比较，相等直接返回；否则set当前值，再与原值比较，相等设置_isModified为false，否则_isModified为true'
+        public setValue(string value)
+        '...'
+    }
+
+    '对象属性组件基类编辑状态'
+    abstract  class ObjektPropertyViewEdit extends UIComponentBaseEdit{
+        '如果isModified,则将组件Attitude的值写入ObjektData'
+        onObjektDataWriteback()
+        onRecievedMessage(UIMessage message, UIComponentBase source)
+        '...'
+    }
+    '对象属性组件基类浏览状态'
+    abstract  class ObjektPropertyViewBowse extends UIComponentBaseBrowse{
+        
+        '浏览状态直接return'
+        onObjektDataWriteback()
+        onRecievedMessage(UIMessage message, UIComponentBase source)
+        '...'
+    }
+
+    class ObjektStringPropertyView extends ObjektPropertyView{
+        'return new ObjektStringPropertyViewEdit'
+        UIComponentBaseEdit createComponentEditState()
+        'return new ObjekStringPropertyViewBrowse()'
+        UIComponentBaseBrowse createComponentBrowseState()
+        '...'
+    }
+    class ObjektStringPropertyViewEdit extends ObjektPropertyViewEdit{
+
+    }
+    class ObjekStringPropertyViewBrowse extends ObjektPropertyViewBowse{
+
+    }
+
+    '纯容器组件,对象属性视图适配器'
+    class ObjektPropertyViewAdapter extends UIComponentBase{
+        objektId:string
+        propertyName:string
+        propertyView:ObjektPropertyView
+        'return null不区分状态'
+        UIComponentBaseEdit createComponentEditState()
+        'return null不区分状态'
+        UIComponentBaseBrowse createComponentBrowseState()
+
+        '根据数据类型构造具体数据类型的XxxPropertyView实例赋值到propertyView (getObjektData(objektId).Klass.getProperty(propertyName).dataType);'
+        '并且propertyView.onRender()'
+        onRender()
+        'propertyView.onRecievedMessage(...)'
+        onRecievedMessage(UIMessage message, UIComponentBase sender) 
+        'propertyView.onObjektDataWriteback()'
+        onObjektDataWriteback()
+        'propertyView.switchToState(...)'
+        switchToState(UIState state)
+    }
+    ObjektPropertyViewAdapter o->ObjektPropertyView
+
+    '钩子上下文'
+    class HookContext{
+        '默认参数any?，用于单参数情况'
+        _param:any
+        'key,value参数集，如果有多个参数时使用'
+        context:Map<String,object>;
+
+        '无参数构造'
+        HookContext()
+        '单参数构造'
+        HookContext(param:any?)
+
+        '获取参数'
+        getParam()
+        addParam(name:String,value:any?):HookContext
+        getParam(name:String):any?
+    }
+
+    '代码钩子'
+    '分层架构中，层次越高，顺序越大，执行时升序排序，其中创建单组件Hook取有效的末尾'
+    interface Hook{
+        int getOrder()
+        String getDescription()
+    }
+
+    '前处理钩子'
+    interface BeforeDoHook extends Hook{
+        '返回是否进行了实质的处理'
+        bool doBefore(context:HookContext)
+    }
+
+    '处理钩子'
+    interface DoHook extends Hook{
+        '返回是否进行了实质的处理'
+        bool do(context:HookContext)
+    }
+    '后处理钩子'
+    interface AfterDoHook extends Hook{
+        '返回是否进行了实质的处理'
+        bool doAfter(context:HookContext)
+    }
+
+    '组件'
+    interface Comoponent{
+
+    }
+
+    '创建单组件钩子'
+    interface CreateComponentHook extends Hook{
+        C createComponent<C>(context:HookContext)
+    }
+    '创建多个组件钩子'
+    interface CreateComponentsHook extends Hook{
+        Set<C> createComponents<C>(context:HookContext)
+    }
+
+    '加工组件钩子'
+    interface ProcessComponentHook extends Hook{
+        '返回是否进行了实质的处理'
+        bool processComponent<C>(component:C,context:HookContext)
+    }
+
+    '代码钩子挂载工具类'
+    class Hooks{
+        '前处理挂钩,返回已实质进行处理的钩子数量'
+        public static int doBefore<H extends BeforeDoHook>(context:HookContext)
+        '处理挂钩，返回已实质进行处理的钩子数量'
+        public static int do<H extends DoHook>(context:HookContext)
+        '后处理挂钩，返回已实质进行处理的钩子数量'
+        public static int doAfter<H extends AfterDoHook>(context:HookContext)
+        '创建单组件挂钩'
+        public static C createComponent<C extends Component>(context:Context)
+        '创建多个组件挂钩'
+        public static List<C> createComponents<C extends Component>(context:Context)
+    }
+@enduml

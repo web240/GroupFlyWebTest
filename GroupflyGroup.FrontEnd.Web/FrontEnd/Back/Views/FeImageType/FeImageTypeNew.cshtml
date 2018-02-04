@@ -1,0 +1,58 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeImageSizeModel
+
+@{
+  
+    ViewBag.Title = "图片尺寸基本信息";
+   
+}
+
+
+    @*滑动开关样式*@
+    <link rel="stylesheet" href="@Url.Content("~/FrontEnd/Back/Content/Css/normalize.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Platform/Content/themes/icon.css")">
+    <link rel="stylesheet" href="@Url.Content("~/FrontEnd/Back/Content/Css/main.css")">
+
+
+<div class="main">
+    <div class="editbox">
+        <h1 id="LabTag"><b>新增图片类型</b></h1>
+        <div class="content">
+            <div class="item"><label>图片类型：</label><input id="ImageTypeName" type="text" class="input-text"  />
+            
+            
+            </div>
+            <div class="item">
+              <label>规格说明：</label>
+                <textarea id="ImageTypedescription" class="j-textarea"   rows="5" cols="20"></textarea>
+            </div>
+        </div>
+        <div class="LayerBtn"><a onclick="ImageTypeSave()" class="savebtn">保存</a>
+        <a class="closedbtn" onclick="document.body.tabGoback();" href="javascript:void(0);">取消</a></div>
+    </div>
+
+</div>
+<input id="isEdit" type="hidden"  value="0"/>
+
+    <script>
+        $.parser.parse();
+        $(function () {
+            
+        });
+
+        function ImageTypeSave() {
+            var tname = $("#ImageTypeName").val();
+            var tdes = $("#ImageTypedescription").val();
+            platformAjax({
+                url: "@Url.Action("OpFeImageType", "FeImageType")",
+                type: "post",
+            data: { tname: tname, tdes: tdes },
+            async: false,
+            success: function (data) {
+                document.body.tabGoback();
+            }
+        });
+        }
+
+    </script>

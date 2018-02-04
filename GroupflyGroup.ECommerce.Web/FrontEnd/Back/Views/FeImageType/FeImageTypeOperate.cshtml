@@ -1,0 +1,260 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeImageSizeModel
+
+@{
+    string TypeID = Request.QueryString["TypeID"] ?? "";
+    ViewBag.Title = "图片尺寸基本信息";
+   
+}
+
+
+<div class="main">
+    <div class="editbox">
+        <h1 id="LabTag"><b>编辑图片类型</b></h1>
+        <div class="content">
+            <div class="item"><label>图片类型：</label><input id="ImageTypeName" type="text" class="input-text"  value="@Model.TypeName" />
+            
+            
+            </div>
+            <div class="item">
+              <label>规格说明：</label>
+                <textarea id="ImageTypedescription" class="j-textarea"   rows="5" cols="20">@Model.Description</textarea>
+            </div>
+        </div>
+        <h1 id="LabSizelist"><b>图片尺寸列表</b><span class="j-size">(如果上传的图片小于设置的尺寸则不进行裁剪，但是命名按照此规则)</span></h1>
+      
+            <div class="tablelist">
+                <table id="dg"></table>
+                <a class="AddImageSzie j-top" onclick="AddNewSize()" >+添加尺寸</a>
+            </div>
+
+        <div class="LayerBtn"><a onclick="ImageTypeSave()" class="savebtn">保存</a>
+        <a class="closedbtn" onclick="document.body.tabGoback();" href="javascript:void(0);">取消</a></div>
+    </div>
+
+
+    <div id="dlg" class="easyui-dialog j-location" title="添加图片尺寸" style="width:450px;height:330px;padding:10px; position:relative;" data-options="iconCls:'icon-save',closed:'false'">      
+        <div class="content">
+            <div class="item">
+                <label  class="j-left">裁切类型：</label>              
+                <span class="checkbox"><input type="radio" id="radio0" value="@FeValueIDs.FeImageCutType_LeftTop" name="radiolist" checked="checked" title="左上角裁切"  onchange="clearTypedisabled()" />左上角裁切</span>
+                <span class="checkbox"><input type="radio" id="radio1" value="@FeValueIDs.FeImageCutType_RatioZoom" name="radiolist" title="比例缩放" onchange="clearTypedisabled()" />比例缩放</span>
+            </div>
+            <div class="item"><label class="j-left">最大宽度：</label><input id="textSizeWidth" type="text" onChange="changeValues(this)"  class="easyui-numberbox easyui-box"  data-options="min:0,precision:0" /><label id="labelWidth">px</label></div>
+            <div class="item"><label class="j-left">最大高度：</label><input id="textSizeHeight" type="text" onChange="changeValues(this)" class="easyui-numberbox easyui-box"  data-options="min:0,precision:0" /><label id="labelHeight">px</label></div>
+            @*<div class="item"><label class="j-left">图片命名前缀：</label><input id="textPre" type="text" class="easyui-box" /></div>*@
+            <div style="text-align: center; margin-top: 10px; position:absolute; bottom:20px; left:42%;">
+                <a onclick="ImageSizeSave()" class="savebtn">保存</a>  
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<input id="isEdit" type="hidden"  value="0"/>
+
+    <script>
+        $.parser.parse();
+        $(function () {
+            $("#LabTag b").html("编辑标签");
+
+            BindGridTab();
+
+            $("#textSizeHeight").numberbox({
+                "onChange": function () {
+                    changeValues(this);
+                }
+            });
+
+            $("#textSizeWidth").numberbox({
+                "onChange": function () {
+
+                    changeValues(this)
+                }
+            });
+
+        });
+
+        //新增
+        function AddNewSize()
+        {
+            $('#textSizeHeight').numberbox('setValue', "");
+            $("#textSizeWidth").numberbox('setValue', "");
+            $("#textSizeHeight").numberbox({ disabled: false });
+            $("#textSizeWidth").numberbox({ disabled: false });
+            $("input[name=radiolist]:eq(0)").attr("checked", 'checked');
+
+            $('#isEdit').val(0);
+            $('#dlg').dialog('open')
+        }
+
+        // 编辑图片类型
+        function ImageTypeSave() {
+            var tname = $("#ImageTypeName").val();
+            var tdes = $("#ImageTypedescription").val();
+            platformAjax({
+                url: "@Url.Action("OpFeImageType", "FeImageType")",
+                type: "post",
+                data: { id: '@TypeID', tname: tname, tdes: tdes },
+            async: false,
+            success: function (data) {
+                document.body.tabGoback();
+            }
+        });
+        }
+
+        //新增修改图片尺寸
+        function ImageSizeSave() {
+
+            var cuttype = $("input[name='radiolist']:checked").val();
+            var height = $('#textSizeHeight').numberbox('getValue');
+            var width =  $('#textSizeWidth').numberbox('getValue');
+            if(cuttype=='@FeValueIDs.FeImageCutType_LeftTop')
+            {
+                if (height == "" || width == "") { return; }
+            }
+             else
+            {
+                if (height == "" && width == "") { return;}
+                if (height == "") { height = "-1"; }
+                if (width == "") { width = "-1"; }
+            }
+
+            var editvalue = $("#isEdit").val();
+            platformAjax({
+                url: "@Url.Action("OpFeImageTypeSize", "FeImageType")",
+                type: "post",
+                data: { theight: height, twidth: width, tcuttype: cuttype, imagetypid: '@TypeID', typesizesizeid: editvalue },
+            async: false,
+            success: function (data) {
+                if (editvalue == "0") {
+                    $('#textSizeHeight').numberbox('setValue', "");
+                    $("#textSizeWidth").numberbox('setValue', "");
+                    $('#dlg').dialog('close');
+                    BindGridTab();
+
+                } else { document.body.tabGoback(); }
+            }
+            });
+        }
+
+        //新增修改图片尺寸信息
+        function GetFeImageTypeSize(obj) {
+            $('#isEdit').val(obj);
+            var editvalue = $("#isEdit").val();
+            platformAjax({
+                url: "@Url.Action("GetFeImageTypeSize", "FeImageType")",
+                type: "post",
+                data: { typesizesizeid: editvalue },
+            async: false,
+            success: function (data) {
+
+                if (data!=null)
+                {
+                    //clearTypedisabled();
+                    $('#dlg').dialog('open');
+
+                   if (data.CutType == '@FeValueIDs.FeImageCutType_LeftTop') {
+                        $("input[name=radiolist]:eq(0)").attr("checked", 'checked');
+                    } else {
+
+                        $("#labelHeight").html("%");
+                        $("#labelWidth").html("%");
+                        $("input[name=radiolist]:eq(1)").attr("checked", 'checked');
+                    }
+                    if (data.Height != "-1") { $("#textSizeHeight").numberbox('setValue', data.Height); }
+                    if (data.Width != "-1") { $("#textSizeWidth").numberbox('setValue', data.Width); }
+
+                }
+            }
+        });
+        }
+
+        //删除图片类型尺寸
+        function DelImageTypeSize(obj) {
+            platformAjax({
+                url: "@Url.Action("DelFeImageTypeSize", "FeImageType")",
+                type: "post",
+                data: { typesizesizeid:obj},
+            async: false,
+            success: function (data) {
+                BindGridTab();
+            }
+        });
+        }
+
+        function BindGridTab() {
+            platformAjax({
+            url: "@Url.Action("GetImageTypeSizeList", "FeImageType")",
+            type: "post",
+            data: { ttypeid: '@TypeID' },
+            dataType: "json",
+            async:false,
+            success: function (result) {
+                $('#dg').datagrid({
+                    rownumbers: true,
+                    pagination: false,
+                    data: result,
+                    columns: [[
+                    { field: 'Width', title: '最大宽度 (px)', align: 'center', formatter: function (value, row, index) { if (value == "-1") { return "*"; } else { return value; } } },
+                    { field: 'Height', title: '最大高度(px) ', align: 'center', formatter: function (value, row, index) { if (value == "-1") { return "*"; } else { return value; } } },
+                    { field: 'CutType', title: '裁切类型', align: 'center' },
+                    { field: 'SizeName', title: '图片命名前缀', align: 'center' },
+                    { field: 'Creator', title: '操作人', align: 'center' },
+                    { field: 'CreatedOn', title: '创建时间', align: 'center' },
+                    {
+                        field: 'ID', title: "操作", align: 'center',
+                        formatter: function (value, row, index) {
+                            var e = '<a href="javascript:void(0)" class="easyui-linkbutton" onclick="GetFeImageTypeSize(\'' + value + '\')">编辑</a>';
+                            e = e + '<a href="javascript:void(0)" class="easyui-linkbutton j-delete" onclick="$.messager.confirm(\'提示\', \'确认删除?\', function(r){if (r){DelImageTypeSize(\'' + value + '\');}})">删除</a>';
+                            return e;
+                        }
+                    }
+                    ]]
+
+                });
+
+            }
+            });
+        }
+
+        function changeValues(obj)
+        {
+            if ($("input[name='radiolist']:checked").val() == "@FeValueIDs.FeImageCutType_RatioZoom") {
+                if ($(obj).val() == "") {
+                    $("#textSizeHeight").numberbox({ disabled: false });
+                    $("#textSizeWidth").numberbox({ disabled: false });
+                } else {
+                    if ($(obj).attr("id") == "textSizeWidth") {
+                        $(obj).numberbox({ disabled: false });
+                        $("#textSizeHeight").numberbox('setValue', "");
+                        $("#textSizeHeight").numberbox({ disabled:true });
+                    } else {
+                        $(obj).numberbox({ disabled: false });
+                        $("#textSizeWidth").numberbox('setValue',"");
+                        $("#textSizeWidth").numberbox({ disabled: true });
+                    }
+                }
+            }
+        }
+
+        function clearTypedisabled()
+        {
+            $("#textSizeHeight").numberbox('setValue', "");
+            $("#textSizeWidth").numberbox('setValue', "");
+            $("#textSizeHeight").numberbox({ disabled:false });
+            $("#textSizeWidth").numberbox({ disabled: false });
+            if ($("input[name='radiolist']:checked").val() == "@FeValueIDs.FeImageCutType_RatioZoom")
+            {
+                $("#labelHeight").html("%");
+                $("#labelWidth").html("%");
+            } else
+            {
+                $("#labelHeight").html("px");
+                $("#labelWidth").html("px");
+            }
+
+        }
+    </script>

@@ -1,0 +1,492 @@
+﻿<style>
+
+    .FeDocumentMain .querybox li label {
+        width: 72px;
+    }
+
+</style>
+   
+
+
+
+
+
+<!--查看引用-->
+@Html.Action("FeReferenceDialog","FeImage", new
+{
+    url = Url.Content("~/FeImage/GetReferenceList"),
+    controlId = "ferenceDialog",
+    pageSize = 6,
+    htmlAttributes = new
+    {
+        width = 775,
+        height = 366
+    }
+})
+
+<div class="main FeDocumentMain">
+    <div id="Query" class="querybox" style="margin: 5px 5px 5px 5px;">
+        <ul class="clearfix">
+            <li>
+                <label for="labeldicName">文件夹：</label>
+                <input id="textdicName" class="easyui-textbox" type="text" name="dicName" style="width: 150px;" />
+            </li>
+            <li>
+                <label for="labelPicName">文档名称：</label>
+                <input id="textPicName" class="easyui-textbox" type="text" name="PicName" style="width: 150px;" />
+            </li>
+            <li>
+                <label for="labelCreator">上传者：</label>
+                <input id="textCreator" class="easyui-textbox" type="text" name="Creator" style="width: 150px;" />
+            </li>
+            <li>
+                <label for="pl">是否引用：</label>
+                <select id="pl" class="easyui-combobox" name="pl" style="width: 150px;" data-options="editable:false"  >
+                    <option value="-1">--全部--</option>
+                    @*<option value="1">是</option>
+                    <option value="0">否</option>*@
+                </select>
+            </li>          
+        </ul>
+        <ul class="clearfix" style="margin-bottom: 10px;">
+            <li>
+                <label for="CreatedOn">发布时间：</label>
+                <input id="CreatedBeginDate" type="text" class="easyui-datebox" editable="false" style="width: 185px;"> 至 <input id="CreatedEndDate" type="text" editable="false" class="easyui-datebox" style="width: 185px;">
+            </li>           
+            <li>
+                <input type="checkbox" id="AloneShowDocument" name="AloneShowDocument" value="1" />只显示文件
+            </li>
+            <li>
+                <a id="butQuery" class="easyui-linkbutton ml20" data-options="iconCls:'icon-search'" onclick="SearchDocumentIndex()">查询</a>
+            </li>
+        </ul>
+    </div>
+    <div id="picboxDocumentIndex" style="margin: 5px 5px 5px 5px;">
+        <div style="margin-top: 10px; margin-left: 10px;">
+            <a id="butLoadDocument" class="easyui-linkbutton">上传文档</a>
+            <a id="butCreateDict" style="margin-left: 10px;" class="easyui-linkbutton" onclick="$('#dlg').dialog('open'); $('#textnewDicName').textbox('textbox').focus();; $('#textnewDicName').textbox('setText', '');">新建文件夹</a>
+        </div>
+
+        <Gf-GfFeDataGrid id="DocumentGfFeDataGrid"
+                         autodirectoryclick
+                         fit
+                         navrighttext="大小12.3G 共12个文件夹和3个文档"
+                         url="@Url.Content("~/FeDocument/Get")"
+                         showcheckbox
+                         toolbuttons="['移动','替换','查看引用','下载','放入回收站','彻底删除']"
+                         pagination
+                         loadmodel="cs"
+                         paginationargs="{'showPageList':false,'loading':true,'showRefresh':false}"
+                         @*isrefasyncurl="@Url.Content("~/FeDocument/FileIsReference")"*@
+                         datacolumns="[
+                 {'title':'名称','field':'Name','align':'center'},
+                 {'title':'类型','field':'FileType','align':'center','width':'100'},               
+                 {'title':'大小','field':'FileSize','align':'center','width':'100'},
+                 {'title':'是否引用','field':'IsRef','align':'center','width':'100','formatter':function (value,rowData,rowIndex){ if(value) {return '是';} else {return '否';} }},
+                 {'title':'引用次数','field':'RefCount','align':'center','width':'100'},
+                 {'title':'上传者','field':'Creator','align':'center'},
+                 {'title':'上传时间','field':'CreateOn','align':'center','width':'233','formatter':function(value,rowData,rowIndex){ return DataFormater(value); }}
+                 ]"
+                         sortfields="[
+                 {'name':'文件名','field':'name'},
+                 {'name':'大小','field':'Size'},
+                 {'name':'类型','field':'FileType'},
+                 {'name':'修改时间','field':'ModifiedOn'},
+                 {'name':'创建时间','field':'CreatedOn'}
+                 ]">
+        </Gf-GfFeDataGrid>
+    </div>
+</div>
+
+@*'移动',  '替换', '查看引用', '下载', '放入回收站', '彻底删除'*@
+<div id="dlg" class="easyui-dialog" title="新建文件夹" style="width:450px;height:200px;padding:10px;" data-options="iconCls:'icon-save',closed:'false'">
+    <div class="content" style="margin-top: 30px;">
+        <div class="item">
+            <label>文件夹名称：</label><input id="textnewDicName" type="text" class="easyui-textbox" style="width: 300px; margin-left: 10px;" />
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+           <a onclick="NewDicNameSave()" style="margin-left: 30px;" class="easyui-linkbutton">保  存</a>
+        </div>
+
+        <input id="isEdit" type="hidden" value="0" />
+    </div>
+</div>
+
+<div id="dlgMove" class="easyui-dialog" title="移动" style="width:450px;height:330px;padding:10px;" data-options="iconCls:'icon-save',closed:'false'">
+    <div class="content">
+        <div>移动到：<span id="moveToDirectory"></span></div>
+        <div class="item">
+            <ul id="dicTree" class="easyui-tree"></ul>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <a onclick="MoveSave()" class="easyui-linkbutton">保 存</a>
+        </div>
+        <input id="isMove" type="hidden" value="0"/>
+    </div>
+</div>
+
+<!--添加文档-->
+<Gf-GfFeUpFileDialog id="documentUpFileDialog"
+    upfileserver="@Url.Content("~/File/UpLoadProcess")"
+    >
+</Gf-GfFeUpFileDialog>
+
+<script type="text/javascript">
+    document.querySelector("#DocumentGfFeDataGrid").init();
+    $(function () {
+
+        $("#documentUpFileDialog")[0].registerEventHandler("onSubmit", function () {
+            $("#DocumentGfFeDataGrid")[0].reLoad();
+        });
+
+        $("#documentUpFileDialog")[0].overrideEventHandler("uploadBeforeSend", function (object, data, headers) {
+
+            if ($("#" + this.xtag.watermarCheckboxId).is(":checked")) {
+                data.watermarkId = $("#" + this.xtag.watermarSelectId).val();
+            }
+
+            if ($("#" + this.xtag.imgSizeCheckboxId).is(":checked")) {
+                data.sizeIds = $("#" + this.xtag.imgSizeSelectId).combobox("getValues");
+            }
+
+            data.uploadType = this.xtag.uploadType;
+            data.replaceId = this.xtag.replaceId;
+
+        });
+
+
+        $("#butLoadDocument").click(function () {
+
+            $.ajax({
+                url: "@Url.Content("~/FeFileUploadConfig/FileExtConfig?uploadType=Document")",
+                type: "GET",
+                cache: false,
+                dataType: "text",
+                success: function(ext) {
+
+                    $.ajax({
+                        url: "@Url.Content("~/FeFileUploadConfig/FileSizeConfig?uploadType=BackDocument")",
+                        type: "GET",
+                        cache: false,
+                        dataType: "text",
+                        success: function(size) {
+
+                            $("#documentUpFileDialog")[0].xtag.uploadType = "new";
+                            $("#documentUpFileDialog")[0].directoryid = $("#DocumentGfFeDataGrid")[0].getDirectoryId();
+                            $("#documentUpFileDialog")[0].directoryname = $("#DocumentGfFeDataGrid")[0].getDirectoryName();
+                            $("#documentUpFileDialog")[0].showimagesizecheckbox = "true";
+                            $("#documentUpFileDialog")[0].fileNumLimit = 100;
+                            $("#documentUpFileDialog")[0].ext = ext;
+                            $("#documentUpFileDialog")[0].fileSingleSizeLimit = size;
+                            $("#documentUpFileDialog")[0].open();
+
+                        }
+                    });
+
+                }
+            });
+
+            
+        });
+
+        $("#picboxDocumentIndex").height(document.body.clientHeight - $("#Query").height() - 60);
+     
+        $("#DocumentGfFeDataGrid").each(function () {
+            this.dataitemdblclick = function (dataItem, target) {
+                //$("#DocumentViewer")[0].reload(dataItem.Id);
+                //$('#dialog').dialog('open');
+            };
+            this.changeviewstate = function (state, target) {
+                //alert("changeviewstate"+state+"||"+target);
+            };
+            this.toolbuttonsclick = function (text, target) {
+                //var dirId = $("#DocumentGfFeDataGrid")[0].getCruuentDirectoryId();  //外部调用方式
+                //var dirId = target.getCruuentDirectoryId(); //内部调用方式
+                var checklist = target.getCheckList();
+                //alert(target.getCheckList());
+                //'移动','替换','查看引用','下载','放入回收站','彻底删除'
+                if (text == "彻底删除") {
+                    $.messager.confirm('提示', '确认删除?', function (r) {
+                        if (r) {
+                            delFile(checklist);
+                        }
+                    });
+                } else if (text == "移动") {
+                    $('#dlgMove').dialog('open');
+                    loadTree();
+
+                } else if (text == "替换") {
+                    $('#dlgReplace').dialog('open');
+                    if (checklist.length > 0) {
+                        imageReplace(checklist[0].Id);
+                    }
+
+                } else if (text == "查看引用") {
+
+                    var obj = $("#DocumentGfFeDataGrid")[0].getCheckList();
+                    var checkval = "";
+                    for (var i in obj) {
+                        checkval += obj[i].Id + ",";
+                    }
+                    if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+                    $("#ferenceDialog").fereferencedialog("open", checkval);
+                } else if (text == "下载") {
+                    DownloadFile();
+                } else if (text == "放入回收站") {
+                    TrashFile();
+                }
+
+                //获取当前目录id
+                // alert(dirId);
+            };
+
+            this.changecheck = function (items, target) {
+
+                if (items && items.length > 0) {
+
+                    var imgCount = 0;
+                    var dirCount = 0;
+                    var isRef = false;
+
+                    for (var i = 0; i < items.length; i++) {
+
+                        if (items[i].IsDirectory) {
+                            dirCount++;
+                        } else {
+                            imgCount++;
+                        }
+
+                        if (items[i].IsRef) {
+                            isRef = true;
+                        }
+                    }
+
+                    //已选12个文件夹和3个文档
+                    target.setLeftText("已选" + dirCount + "个文件夹和" + imgCount + "个文档");
+                    var buttons = [];
+                    buttons.push('移动');
+                    //只有一张文档
+                    if (imgCount == 1 && dirCount == 0) {                      
+                        buttons.push('替换');
+                        buttons.push('查看引用');
+                        buttons.push('下载');
+                    } else if (dirCount == 0) { //多张文档                    
+                        buttons.push('下载');
+                    } else { //包含文件夹
+                        buttons.push('下载');
+                    }
+                    if (!isRef) {
+                        buttons.push('放入回收站');;
+                        buttons.push('彻底删除');
+                    }
+                    target.setButtons(buttons);
+
+                } else {
+                    target.setButtons();
+                    target.setLeftText();
+                }
+
+            };
+
+            this.loaded = function (target) {
+                target.setButtons();             
+                target.setNavRightText(target.getResult().NavRightText);       
+            };
+
+        });
+
+    });
+
+    function SearchDocumentIndex() {       
+        $("#DocumentGfFeDataGrid")[0].setQueryParams([
+            { 'field': 'dicname', 'value': $("#textdicName").val(), 'operator': '=' },
+            { 'field': 'picname', 'value': $("#textPicName").val(), 'operator': '=' },
+            { 'field': 'creator', 'value': $("#textCreator").val(), 'operator': '=' },
+            { 'field': 'isref', 'value': $('#pl').combobox('getValue'), 'operator': '=' },
+            //{ 'field': 'pictype', 'value': $('#textPicType').combobox('getValue'), 'operator': '=' },
+            { 'field': 'showdocument', 'value': $("#AloneShowDocument").is(":checked"), 'operator': '=' },
+            { 'field': 'begindate', 'value': $("#CreatedBeginDate").val(), 'operator': '<' },
+            { 'field': 'enddate', 'value': $("#CreatedEndDate").val(), 'operator': '<' }
+        ]);
+        $("#DocumentGfFeDataGrid")[0].reLoad();
+    }
+
+    //新增文档文件夹
+    function NewDicNameSave() {
+        var strnewdicname = $("#textnewDicName").val();
+        var ishave = "false";
+        platformAjax({
+            url: "@Url.Action("ISExist", "FeDocument")",
+            type: "post",
+            data: { parentdic: $("#DocumentGfFeDataGrid")[0].getDirectoryId(), newdicname: strnewdicname },
+            async: false,
+            success: function (data) {
+                if (data.Data == "true") {
+                    platformAjax({
+                        url: "@Url.Action("AddNewDic", "FeDocument")",
+                        type: "post",
+                        data: { parentdic: $("#DocumentGfFeDataGrid")[0].getDirectoryId(), newdicname: strnewdicname },
+                        async: false,
+                        success: function () {
+                            $('#dlg').dialog('close');
+                            SearchDocumentIndex();
+                        }
+                    });
+                } else {
+                    $.messager.alert('异常', "当前目录文件夹已经存在！", "error");
+                }
+            }
+        });
+    }
+
+    //删除文件
+    function delFile(obj) {
+        var checkval = "";
+        for (var i in obj) {
+            checkval += obj[i].Id + ",";
+        }
+        if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+        platformAjax({
+            url: "@Url.Action("delFile", "FeDocument")",
+            type: "post",
+            data: { fileids: checkval },
+            async: false,
+            success: function (data) {
+                SearchDocumentIndex();
+            }
+        });
+    }
+
+    //移动目录
+    function MoveSave() {
+        var obj = $("#DocumentGfFeDataGrid")[0].getCheckList();
+        var checkval = "";
+        for (var i in obj) {
+            checkval += obj[i].Id + ",";
+        }
+        if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+
+        var beMoveId = checkval;
+        var moveToId = $("#isMove").val();
+
+        platformAjax({
+            url: "@Url.Action("MoveFile", "FeDocument")",
+            type: "post",
+            data: { moveid: beMoveId, moveToid: moveToId },
+            async: false,
+            success: function (data) {
+                $('#dlgMove').dialog('close');
+                SearchDocumentIndex();
+            }
+        });
+    }
+
+    function loadTree() {
+        var curryid = $("#DocumentGfFeDataGrid")[0].getDirectoryId();
+        var obj = $("#DocumentGfFeDataGrid")[0].getCheckList();
+        var checkval = "";
+        for (var i in obj) {
+            checkval += obj[i].Id + ",";
+        }
+        if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+
+        $('#dicTree').treegrid({
+            url: '@Url.Action("DicTree", "FeDocument")?parentId=' + curryid + "&isTrash=0&noShowId=" + checkval,
+            idField: 'Id',
+            rownumbers: true,
+            lines: true,
+            treeField: 'Name',
+            singleSelect: true,
+            onSelect: function (row) {
+                $("#isMove").val(row.Id);
+                $("#moveToDirectory").text(row.Name);
+            },
+            columns: [
+                [
+                    { field: "Id", hidden: true, align: 'center' },
+                    { title: '目录名称', field: 'Name', width: '355px', halign: 'center', align: 'left' }
+                ]
+            ]
+        });
+    }
+
+    //下载
+    function DownloadFile() {
+        var checkval = "";
+        var obj = $("#DocumentGfFeDataGrid")[0].getCheckList();
+        for (var i in obj) {
+            checkval += obj[i].Id + ",";
+        }
+        if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+        location.href = '@Url.Action("DownLoadPic", "FeDocument")?ids=' + checkval;
+    }
+
+    //回收
+    function TrashFile() {
+        var checkval = "";
+        var obj = $("#DocumentGfFeDataGrid")[0].getCheckList();
+        for (var i in obj) {
+            checkval += obj[i].Id + ",";
+        }
+
+        if (checkval.length > 1) { checkval = checkval.substring(0, checkval.length - 1); }
+        platformAjax({
+            url: "@Url.Action("TrashFile", "FeDocument")",
+            type: "post",
+            data: { ids: checkval },
+            success: function (data) {
+                SearchDocumentIndex();
+            }
+        });
+    }
+
+    //查看文档预览
+    $(window).load(function () {
+        $('#dialog').dialog({
+            closed: true,
+            cache: false,
+            modal: true,
+            title: ''
+        });
+
+    });
+
+
+
+
+
+    function imageReplace(sourceFileId) {
+
+        $.ajax({
+            url: "@Url.Content("~/FeFileUploadConfig/FileExtConfig?uploadType=Document")",
+            type: "GET",
+            cache: false,
+            dataType: "text",
+            success: function(ext) {
+
+                $.ajax({
+                    url: "@Url.Content("~/FeFileUploadConfig/FileSizeConfig?uploadType=BackDocument")",
+                    type: "GET",
+                    cache: false,
+                    dataType: "text",
+                    success: function(size) {
+
+                        $("#documentUpFileDialog")[0].xtag.uploadType = "replace";
+                        $("#documentUpFileDialog")[0].xtag.replaceId = sourceFileId;
+                        $("#documentUpFileDialog")[0].directoryid = $("#DocumentGfFeDataGrid")[0].getDirectoryId();
+                        $("#documentUpFileDialog")[0].directoryname = $("#DocumentGfFeDataGrid")[0].getDirectoryName();
+                        $("#documentUpFileDialog")[0].showimagesizecheckbox = "false";
+                        $("#documentUpFileDialog")[0].fileNumLimit = 1;
+                        $("#documentUpFileDialog")[0].ext = ext;
+                        $("#documentUpFileDialog")[0].fileSingleSizeLimit = size;
+                        $("#documentUpFileDialog")[0].open();
+
+                    }
+                });
+
+            }
+        });
+
+    }
+
+</script>

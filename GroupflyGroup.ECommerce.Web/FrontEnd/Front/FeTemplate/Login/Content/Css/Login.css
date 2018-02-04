@@ -1,0 +1,46 @@
+﻿body {
+   background: #f6f6f6;
+   position: relative;
+   min-width: 1190px;
+   font: 12px Arial,Helvetica,sans-serif;
+   margin: 0;
+   padding: 0;
+   outline: none;
+   display: block;
+}
+
+.wrapBox {
+    width: 960px;
+    margin: 0 auto;
+    outline: none;
+    display: block;
+    list-style-type: none;
+}
+.LogoMessage {
+    padding: 10px 0 80px 0;
+    min-height: 75px;
+}
+.FootMessage {
+    text-align: center;
+    padding: 80px 0 40px;
+    color: #666;
+    line-height: 25px;
+}
+
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.Advertisement {
+    width:477px;
+    height:352px;
+}
+
+.fcon_login {
+    width:360px;
+    height: 325px;
+    overflow: hidden;
+    padding:20px 20px 6px 0;
+}

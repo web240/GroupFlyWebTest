@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "~/FrontEnd/Front/FeTemplate/_FrontLayout.cshtml";
+}
+
+
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FrontArticleDetailViewModel
+
+@section components{
+
+}
+
+@section scripts{
+
+
+<script type="text/javascript" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+<script type="text/javascript" src="http://static.bshare.cn/b/bshareC0.js"></script>
+ 
+
+    <script type="text/javascript">
+
+        $(window).load(function () {
+
+            
+            $("Gf-FeTemplate-CompositeComponent-ArticleHomeHead").feComponentArticleHomeHead("searchClick", function (text) {
+                moreClick("Search", text);
+            });
+
+            $("Gf-FeTemplate-Component-ArticleChannelNavigate").feComponentArticleChannelNavigate("selectcategoryChanged", function (categoryId) {
+                indexClick(categoryId);
+            });
+ 
+            $("Gf-FeTemplate-Component-ArticleHomeDetail").feComponentArticleHomeDetail("tagClick", function (tag) {
+                moreClick("Tag", tag)
+            });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryTitleList").feComponentArticleCategoryTitleList("itemClick", function (id) { itemClick(id); });
+
+            $("Gf-FeTemplate-Component-ArticleCategoryTitleList").feComponentArticleCategoryTitleList("moreClick", function (id) {
+                moreClick("Character", id);
+            });
+
+            //文章属性
+            $("Gf-FeTemplate-Component-ArticleHomeDetail").feComponentArticleHomeDetail("detailCharacterClick", function (id) {
+                moreClick("Character", id);
+            });
+
+            $("#articleCommentSubmit").feComponentCommentSubmit("AfterCommentSubmitClick", function () {
+                $("#articleCommentDetailList").feComponentCommentDetailList("ContentListRefresh");
+
+            });
+        });
+
+        //分享代码
+        function dolog(_info, _callback) {
+            var img = new Image();
+            img.onload = img.onerror = _callback;
+            img.src = '';
+        }
+
+       
+        function onMouseoverXCode() {
+            $("#layerWxcode").show();
+        }
+        function onMouseoutXCode() {
+            $("#layerWxcode").hide();
+        }
+
+
+      
+
+
+        function itemClick(id) {
+            window.location = document.body["apppath"] + "FeArticle/FrontArticleDetails?articleId=" + encodeURI(id);
+        }
+
+        function indexClick(id) {
+
+            var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+            var url = document.body["apppath"] + "FeArticle/FrontChannelIndex?channelId=" + encodeURI(channelId) + "&categoryId=" + encodeURI(id);
+            window.location = url;
+        }
+
+        function moreClick(mode, modevalue) {
+            var channelId = $("Gf-FeTemplate-Component-ArticleChannelNavigate")[0].channelid;
+            window.location = document.body["apppath"] + "FeArticle/FrontArticleSearch?channelId=" + encodeURI(channelId) + "&mode=" + encodeURI(mode) + "&modevalue=" + encodeURI(modevalue);
+        }
+
+
+
+       
+    </script>
+
+}
+
+@{
+    var cssPath = Model.TemplateDirectoryPath + "Content/Css/Index.css";
+}
+
+@section css{
+    <link href="@Url.Content(cssPath)" rel="stylesheet" />
+}
+
+<div class="BodyContent">
+    <Gf-FeTemplate-CompositeComponent-ArticleHomeHead id="articleHomeHead" homehref="http://www.taobao.com" prompt="搜索文章">
+        <div>
+            <div class="tops">
+                <div class="covers">
+                    <div class="left">
+                        <a behaviorId="goHome"></a>
+                    </div>
+                    <Gf-FeTemplate-Component-LoginState behaviorId="loginState"></Gf-FeTemplate-Component-LoginState>
+                </div>
+            </div>
+            <!--广告-->
+            <div class="j-adv-top  j-covers">
+                @{
+                    var topImgPath = Model.TemplateDirectoryPath + "Content/Images/topgg.jpg";
+                    topImgPath = Url.Content(topImgPath);
+                }
+                <img src="@topImgPath" />
+            </div>
+
+            <!--logo 搜索-->
+            <div class="search clearfix">
+                <Gf-FeTemplate-Component-Logo behaviorId="logo" logoid="@Model.LogoId" ></Gf-FeTemplate-Component-Logo>
+                <!--搜索-->
+                <div class="sweep-box">
+                    <div>
+                        <div class="offerings">
+                            <input behaviorId="txtSeach" type="text">
+                        </div>
+                        <div class="click">
+                            <input behaviorId="btnSeach" type="button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="j-nav-radio clearfix">
+                <Gf-FeTemplate-Component-ArticleChannelNavigate behaviorId="channelNavigate" channelid="@Model.ChannelId" categoryid="@Model.CategoryId" url="~/FeChannel/GetChannelList"></Gf-FeTemplate-Component-ArticleChannelNavigate>
+            </div>
+        </div>
+    </Gf-FeTemplate-CompositeComponent-ArticleHomeHead>
+
+    <Gf-FeTemplate-Component-ArticleNavigate mode="Article" modevalue="@Model.ArticleId"></Gf-FeTemplate-Component-ArticleNavigate>
+
+    <div class="con j-top covers clearfix">
+        <div class="con-fl left">
+
+            <Gf-FeTemplate-Component-ArticleHomeDetail id="articleHomeDetail" articleid="@Model.ArticleId"></Gf-FeTemplate-Component-ArticleHomeDetail>
+            <!--文章提交评论-->
+            <Gf-FeTemplate-Component-CommentSubmit autoinit id="articleCommentSubmit" sourceid="@Model.ArticleId" sourceurl="~/FeArticleComment/AddArticleComment">
+            </Gf-FeTemplate-Component-CommentSubmit>
+            <!--文章评论列表-->
+            <Gf-FeTemplate-Component-CommentDetailList id="articleCommentDetailList" sourceid="@Model.ArticleId" sourceurl="~/FeArticleComment/GetArticleAllComment">
+            </Gf-FeTemplate-Component-CommentDetailList>
+        </div>
+        <div class="j-con-fr fr">
+            <Gf-FeTemplate-Component-ArticleCategoryTitleList characterid="@Model.Hot" count="@Model.RightColumnCount"></Gf-FeTemplate-Component-ArticleCategoryTitleList>
+        </div>
+    </div>
+
+    <Gf-FeTemplate-Component-FootNote></Gf-FeTemplate-Component-FootNote>
+</div>

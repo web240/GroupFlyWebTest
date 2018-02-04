@@ -1,0 +1,2089 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C4C6F7CF-98C0-41A1-9B7E-D8131D11D624}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GroupflyGroup.FrontEnd.Web</RootNamespace>
+    <AssemblyName>GroupflyGroup.FrontEnd.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\GroupflyGroup.FrontEnd.Web.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\GroupflyGroup.FrontEnd.Web.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EB.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.Web.1.0.0-alpha046\lib\net461\EB.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enyim.Caching, Version=2.11.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnyimMemcached.2.11\lib\net35\Enyim.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enyim.Caching.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enyim.Caching.Web.1.0.0.1\lib\net40\Enyim.Caching.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GroupflyGroup.Platform.Extension, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.Extension.1.0.0\lib\net461\GroupflyGroup.Platform.Extension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GroupflyGroup.Platform.ObjectFramework, Version=1.0.97.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.ObjectFramework.1.0.97\lib\net461\GroupflyGroup.Platform.ObjectFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GroupflyGroup.Platform.ObjectFramework.WebAdapter, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.ObjectFramework.WebAdapter.1.0.7\lib\net461\GroupflyGroup.Platform.ObjectFramework.WebAdapter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GroupflyGroup.Platform.Service, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.Service.1.0.0-alpha1\lib\net461\GroupflyGroup.Platform.Service.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GroupflyGroup.Platform.Web, Version=1.0.0.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupflyGroup.Platform.Web.1.0.0-alpha046\lib\net461\GroupflyGroup.Platform.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Membase, Version=2.14.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Membase.2.14\lib\net35\Membase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.2.4\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.2.4\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.2.4\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.GridFS, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.GridFS.2.2.4\lib\net45\MongoDB.Driver.GridFS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Ude, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UDE.CSharp.1.1.0\lib\Ude.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="FrontEnd\Back\Content\Css\feaccount.css" />
+    <Content Include="FrontEnd\Back\Content\images\account_safety_ico_right.png" />
+    <Content Include="FrontEnd\Back\Content\images\account_safety_ico_warn.png" />
+    <Content Include="FrontEnd\Back\Content\images\addbtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\admin_pic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\authorization.png" />
+    <Content Include="FrontEnd\Back\Content\images\backup.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\BaiDu.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\bannedew.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baocbtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baocbtn01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baocbtn02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baoztb01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baoztb02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baoztb03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\baoztb04.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\biaotbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\btn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\btnx.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\btn_ss.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buz01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buz02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buz03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buz04.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho01_1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho02_1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzho03_1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\buzou1.png" />
+    <Content Include="FrontEnd\Back\Content\images\buzou1_hov.png" />
+    <Content Include="FrontEnd\Back\Content\images\buzou2.png" />
+    <Content Include="FrontEnd\Back\Content\images\buzou2_hov.png" />
+    <Content Include="FrontEnd\Back\Content\images\buzou3.png" />
+    <Content Include="FrontEnd\Back\Content\images\buzou3_hov.png" />
+    <Content Include="FrontEnd\Back\Content\images\bzpic01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\bzpic02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\bzpic03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\bzpic04.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\c.gif" />
+    <Content Include="FrontEnd\Back\Content\images\chang_btn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\chaxbtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\chenggtb.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\chepic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\chongzbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\contentbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\credit.png" />
+    <Content Include="FrontEnd\Back\Content\images\czthbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\datePicker.gif" />
+    <Content Include="FrontEnd\Back\Content\images\dffwqk.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\dingdantit.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\dppfpic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\duiha.gif" />
+    <Content Include="FrontEnd\Back\Content\images\e102c.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\1.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\10.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\11.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\12.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\13.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\14.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\15.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\16.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\17.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\18.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\19.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\2.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\20.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\21.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\22.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\23.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\24.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\25.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\26.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\27.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\28.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\29.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\3.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\30.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\31.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\32.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\33.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\34.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\35.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\36.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\37.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\38.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\39.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\4.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\40.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\41.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\42.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\43.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\44.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\45.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\46.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\47.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\48.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\49.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\5.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\50.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\51.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\52.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\53.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\54.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\55.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\56.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\57.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\58.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\59.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\6.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\60.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\61.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\62.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\63.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\64.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\65.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\66.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\67.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\68.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\69.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\7.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\70.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\71.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\72.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\73.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\74.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\75.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\8.gif" />
+    <Content Include="FrontEnd\Back\Content\images\EmoticonImage\9.gif" />
+    <Content Include="FrontEnd\Back\Content\images\erweim.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\esteem.png" />
+    <Content Include="FrontEnd\Back\Content\images\fabiaopic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fabuslie.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\faceall.png" />
+    <Content Include="FrontEnd\Back\Content\images\facespot.png" />
+    <Content Include="FrontEnd\Back\Content\images\fahuo.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fangdj_2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fenleisous.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fenyeleft.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh02.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh03.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh04.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh04.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh05.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh05.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh06.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh06.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh07.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh07.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh08.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh08.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh09.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh09.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh10.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh10.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh11.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh11.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh12.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh12.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fh13.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fh13.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\flashxc.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\foot-icn.png" />
+    <Content Include="FrontEnd\Back\Content\images\footerbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fyxiangmu.gif" />
+    <Content Include="FrontEnd\Back\Content\images\fyxiangmu.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\fyxiangmu_l.gif" />
+    <Content Include="FrontEnd\Back\Content\images\gg1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\gouwuche.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\gpouwup.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\grip.gif" />
+    <Content Include="FrontEnd\Back\Content\images\h.gif" />
+    <Content Include="FrontEnd\Back\Content\images\huado01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\huado02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\icon-bj.png" />
+    <Content Include="FrontEnd\Back\Content\images\icon1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\j-more-down.png" />
+    <Content Include="FrontEnd\Back\Content\images\j-more-up.png" />
+    <Content Include="FrontEnd\Back\Content\images\jia.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jiangex.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jiantouzxl.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jiantouzxr.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jidongt.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jidongt01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jidongt02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\jidongt03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\kapic01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\kapic02.gif" />
+    <Content Include="FrontEnd\Back\Content\images\kongbxx.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lb1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lb2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lb3.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lb4.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lb5.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg0.gif" />
+    <Content Include="FrontEnd\Back\Content\images\libg0.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\libg01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\libg3.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\line.png" />
+    <Content Include="FrontEnd\Back\Content\images\lipic1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lipic2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\listbg01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\listbg02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\listbg03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\list_bot.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\list_mid.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\list_top.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\lmft_line.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\feaccount\loading.gif" />
+    <Content Include="FrontEnd\Back\Content\images\logo.png" />
+    <Content Include="FrontEnd\Back\Content\images\logodfwe.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\logo_hy.gif" />
+    <Content Include="FrontEnd\Back\Content\images\mamsz01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\mamsz02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\mamsz03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\man.GIF" />
+    <Content Include="FrontEnd\Back\Content\images\mbtn2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\moban01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\mobantb.gif" />
+    <Content Include="FrontEnd\Back\Content\images\msntubi.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\nav01_1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\nav01_2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\nav01_4.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\navbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\nextx_btn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\feaccount\noImage.gif" />
+    <Content Include="FrontEnd\Back\Content\images\notbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\noticebg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\oncorrect.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\onerror.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\ontips.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\picbtn01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\picbtn09.gif" />
+    <Content Include="FrontEnd\Back\Content\images\picbtn_28.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\picbtn_42.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\picxtu01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingf.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingf1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingf2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingf3.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingjhua.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingjhua02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\pingjhua03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\plbb.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\prod01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\profushi.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\proxiao1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\QQ.gif" />
+    <Content Include="FrontEnd\Back\Content\images\querbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\record.png" />
+    <Content Include="FrontEnd\Back\Content\images\renzheng1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\renzheng2.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\rilit.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\sctb.gif" />
+    <Content Include="FrontEnd\Back\Content\images\search_bg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\selpic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shagnpt01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shanc03.gif" />
+    <Content Include="FrontEnd\Back\Content\images\shangjia.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shangssbtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shangswen.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shaptop.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\shoujitb.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\ss_bg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\sxtitle.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\T2Dh4uXm.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\tanhao01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\TaoBao.png" />
+    <Content Include="FrontEnd\Back\Content\images\th_bg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\tianjia.gif" />
+    <Content Include="FrontEnd\Back\Content\images\tjdz.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\top_bg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\track.gif" />
+    <Content Include="FrontEnd\Back\Content\images\up-icon.png" />
+    <Content Include="FrontEnd\Back\Content\images\wechat.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\welbg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xiajia.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xiaojtou.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xiaojtous.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xiaoshanjj.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xiaox.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xin.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xingxing01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\xingxing02.gif" />
+    <Content Include="FrontEnd\Back\Content\images\XinLang.png" />
+    <Content Include="FrontEnd\Back\Content\images\xiougaibg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\xuants_bg.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_01.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_010.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_02.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_03.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_04.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_05.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_06.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_07.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_08.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanse_09.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanzhegnm.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yanzheng.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yingy01.gif" />
+    <Content Include="FrontEnd\Back\Content\images\youjiantb.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\yulan02.gif" />
+    <Content Include="FrontEnd\Back\Content\images\zhanwutp.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\ZhiFuBao.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\zhuibtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\zhuipic.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\zhuipic1.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\zhuyi.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\_c.gif" />
+    <Content Include="FrontEnd\Back\Content\images\_h.gif" />
+    <Content Include="FrontEnd\Back\Content\Scripts\FeCommon.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\feaccount.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\FeComponents.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\jquery.pack.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\SpryTabbedPanels.js" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\img-ref-bg.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\tabs-selected-icon.png" />
+    <Content Include="FrontEnd\Front\Content\Scripts\jquery.superslide.2.1.1.js" />
+    <Content Include="FrontEnd\Back\Content\themes\default\FeComponent.css" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\faceall.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\facespot.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\foot-icn.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\icon-bj.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\imagecode.gif" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\j-more-down.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\j-more-up.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\line.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\login-icn.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\LoginBtn.jpg" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\Loginicon1.jpg" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\Loginicon2.jpg" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\up-icon.png" />
+    <Content Include="FrontEnd\Back\Content\themes\default\images\upper.png" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Content\Css\Index.css" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Content\Images\adv.jpg" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Content\Images\topgg.jpg" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\thumb.jpg" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\Content\Css\Index.css" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\Content\Images\adv.jpg" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\thumb.jpg" />
+    <Content Include="FrontEnd\Back\Views\FeArticle\Grid.cshtml" />
+    <Content Include="FrontEnd\Back\Content\Css\FeBackCommon.css" />
+    <Content Include="FrontEnd\Back\Content\Css\jquery.autocompleter.css" />
+    <Content Include="FrontEnd\Back\Content\Css\lc_switch.css" />
+    <Content Include="FrontEnd\Back\Content\Css\normalize.css" />
+    <Content Include="FrontEnd\Back\Content\Css\showLoading.css" />
+    <Content Include="FrontEnd\Back\Content\images\colorpicker.gif" />
+    <Content Include="FrontEnd\Back\Content\images\folder.png" />
+    <Content Include="FrontEnd\Back\Content\images\loading-bars.gif" />
+    <Content Include="FrontEnd\Back\Content\images\loading.gif" />
+    <Content Include="FrontEnd\Back\Content\images\lock.png" />
+    <Content Include="FrontEnd\Back\Content\images\new-delete.png" />
+    <Content Include="FrontEnd\Back\Content\images\new-edit.png" />
+    <Content Include="FrontEnd\Back\Content\images\new-view.png" />
+    <Content Include="FrontEnd\Back\Content\images\noImage.gif" />
+    <Content Include="FrontEnd\Back\Content\images\noimage.png" />
+    <Content Include="FrontEnd\Back\Content\images\tabs-remove-icon.png" />
+    <Content Include="FrontEnd\Back\Content\images\tabs-selected-icon.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-copy-bg.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-copy-link.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-copy-img.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-copy-code.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-ref-bg.png" />
+    <Content Include="FrontEnd\Back\Content\images\img-bg.png" />
+    <Content Include="FrontEnd\Back\Content\images\img_view_link.png" />
+    <Content Include="FrontEnd\Back\Content\images\img_view_img.png" />
+    <Content Include="FrontEnd\Back\Content\images\img_view_code.png" />
+    <Content Include="FrontEnd\Back\Content\images\WatermarkImagePreview.jpg" />
+    <Content Include="FrontEnd\Back\Content\images\WatermarkImagePreviewTemp.jpg" />
+    <Content Include="FrontEnd\Back\Content\Scripts\ajaxfileupload.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\ajaxupload.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\FeComponentsRegister.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\colorpicker.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\echarts.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\jquery.autocompleter.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\jquery.showLoading.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\jquery.zclip.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\lc_switch.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\cancel.png" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\expressInstall.swf" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\jquery.uploadify.v2.1.4.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\jquery.uploadify.v2.1.4.min.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\swfobject.js" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\uploadify.allglyphs.swf" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\uploadify.css" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\uploadify.swf" />
+    <Content Include="FrontEnd\Back\Content\Scripts\ZeroClipboard.swf" />
+    <Content Include="FrontEnd\Front\Content\Css\FeFrontCommon.css" />
+    <Content Include="FrontEnd\Front\FeTemplate\Login\Content\Css\Login.css" />
+    <Content Include="FrontEnd\Front\FeTemplate\Login\Content\Images\LoginLeftImg.jpg" />
+    <Content Include="FrontEnd\Front\FeTemplate\Register\Content\Css\Register.css" />
+    <Content Include="Global.asax" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161014_1826_Platform_修改建模脚本类属性.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161015_1142_Platform_调整文件类型模型.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161017_1510_Platform_对象和文件模型调整.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161017_1637_Platform_菜单调整.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161024_1811_Platform_字体字号和一些公共数据.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161025_1133_Platform_修改文件系统菜单地址.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161116_1727_Platform_ 国际化.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161129_1333_Platform_平台配置.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161129_1618_Platform_增加文件类型.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20161202_1630_Platform_背景图和头像.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170120_1040_Platform_删除垃圾文件.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170422_1144_Platform_权限有关模型调整.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170424_1254_Platform_用户人员组织位置.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170512_1419_Platform_类重复属性清除及位置建模bug的修改.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170527_1714_Platform_表达式&amp;消息.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170531_1732_Platform_用户登录等修改.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170606_1807_Platform_消息调整&amp;PlantUML.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170607_1622_Platform_消息相关菜单.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170608_1430_Platform_消息基础数据.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170619_1018_Platform_验证码.txt" />
+    <Content Include="ModelingScripts\00Platform\1.0.0\20170621_1526_Platform_类权限.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20160327_0959_Frontend_X.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20161020_1454_FrontEnd_图片管理模型.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20161202_1739_FrontEnd_配置模型修改.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170106_1531_FrontEnd_文章模板修改.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170106_1555_FrontEnd_模板系统目录.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170106_1615_FrontEnd_新建组件模型.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170119_0953_FrontEnd_LOGO建模.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170302_1135_FrontEnd_文件系统初始化模板与组件.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170316_1524_FrontEnd_文章模版组件.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170320_1045_FrontEnd_文章点击.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170320_1054_FrontEnd_菜单项去掉页面勾选状态.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170324_1349_FrontEnd_文章属性添加大小文件图标.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170408_1515_FrontEnd_资讯栏目配置.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170418_1721_FrontEnd_文件目录修改的组件模版数据修改.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170427_1417_FrontEnd_权限数据自动补全.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170428_0428_FrontEnd_新基线库.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170428_1629_FrontEnd_文件目录修改创建文件夹.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170428_1643_FrontEnd_会员列表菜单.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170428_1704_FrontEnd_导航菜单项.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170428_1729_FrontEnd_文章属性.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170502_1534_FrontEnd_会员新增属性.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170515_0958_FrontEnd_会员中心菜单项.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170516_0958_FrontEnd_前端层前台LOGO.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170620_0909_FrontEnd_短信扩展点.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170621_1622_FrontEnd_登录注册.txt" />
+    <Content Include="ModelingScripts\01FrontEnd\1.0.0\20170630_1346_FrontEnd_文章点击授权.txt" />
+    <Content Include="ModelingScripts\ModelingScript.txt" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\uploadify.fla" />
+    <Content Include="FrontEnd\Back\Views\FeArticleCategory\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleTemplate\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeChannel\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticle\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeTagLibrary\FeTagLibraryOperate.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeTagLibrary\FeTagLibraryPageList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleCategory\ArticleCategoryDetails.cshtml" />
+    <Content Include="FrontEnd\Back\Content\Scripts\uploadify\uploadify.fla" />
+    <Content Include="FrontEnd\Back\Views\Shared\FeArticleCategorySeachBox\_FeArticleCategorySeachBox.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Web.config" />
+    <Content Include="FrontEnd\Back\Views\FeArticle\FeArticleEdit.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleTemplate\FeArticleTemplateOperater.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleComment\FeArticleCommentPageList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeChannel\ChannelDetails.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticle\TrashFeArticle.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleComment\FeArticleCommentGridList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\Seo\_SeoKeyInput.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\SelectImg\_SelectImg.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\Tag\_TagKeyInput.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeCharacter\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeCharacter\CharacterDetails.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\FeCharacterSelect\_FeCharacterSelect.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleComment\FeArticleCommentTrashPageList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleComment\FeArticleCommentTrashGridList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleComment\FeArticleCommentDetail.cshtml" />
+    <Content Include="ModelingScripts\.gitignore" />
+    <Content Include="FrontEnd\Back\Views\FeImage\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeImageType\FeImageTypeList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeImageType\FeImageTypeOperate.cshtml" />
+    <Content Include="FrontEnd\Back\Content\Scripts\.settings\tasks.json" />
+    <Content Include="FrontEnd\Back\Content\Scripts\.vscode\tasks.json" />
+    <Content Include="FrontEnd\Back\Views\Shared\FeArticleCategorySelect\_FeArticleCategorySelect.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\FeCharacterSeachBox\_FeCharacterSeachBox.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeWatermark\FeWatermarkList.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeWatermark\FeWatermarkOperate.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeImage\ImageViewer.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeImage\Recycle.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeImage\_FeReferenceDialog.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeDocument\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeDocument\Recycle.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Web.config" />
+    <Content Include="FrontEnd\Back\Views\FeImage\Statistics.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\Index.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\List.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\Details.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleTemplate\FeArticleTemplateListBakup.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeArticleTemplate\FeArticleTemplateList.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Details.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Index.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\List.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\_FrontLayout.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUser\FeOrganizationEdit.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUser\FePersonEdit.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUser\FeUserPersonOrganizationList.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Login\Login.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeAccount\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeAccount\_LeftMenu.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeAccount\_Header.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeAccount\_Footer.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserInfo\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\Index.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserInfo\OrganizationInfo.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\UpdatePassword.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeAccount\Welcome.cshtml" />
+    <Content Include="FrontEnd\Front\FeTemplate\Register\Register.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\BindEmail.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\BindMobile.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUser\FeUserEdit.cshtml" />
+    <Content Include="FrontEnd\tsconfig.json" />
+    <Content Include="Platform\Content\Css\backCommon.css" />
+    <Content Include="Platform\Content\Css\buttons.css" />
+    <Content Include="Platform\Content\Css\colorpicker.css" />
+    <Content Include="Platform\Content\Css\font-awesome.css" />
+    <Content Include="Platform\Content\Css\font-awesome.min.css" />
+    <Content Include="Platform\Content\Css\icons\ext.png" />
+    <Content Include="Platform\Content\Css\images\arrow1.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\blank.gif" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_background.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_hex.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_hsb_b.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_hsb_h.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_hsb_s.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_indic.gif" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_overlay.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_rgb_b.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_rgb_g.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_rgb_r.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_select.gif" />
+    <Content Include="Platform\Content\Css\images\colorPicker\colorpicker_submit.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_background.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_hex.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_hsb_b.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_hsb_h.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_hsb_s.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_indic.gif" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_rgb_b.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_rgb_g.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_rgb_r.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\custom_submit.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\select.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\select2.png" />
+    <Content Include="Platform\Content\Css\images\colorPicker\slider.png" />
+    <Content Include="Platform\Content\Css\images\login_center_bg.jpg" />
+    <Content Include="Platform\Content\Css\images\menu-icon.png" />
+    <Content Include="Platform\Content\Css\images\menusub-icon.png" />
+    <Content Include="Platform\Content\Css\images\platlogo.png" />
+    <Content Include="Platform\Content\Css\images\prompt-icon.png" />
+    <Content Include="Platform\Content\Css\images\switchArr.png" />
+    <Content Include="Platform\Content\Css\images\topnav-icon.png" />
+    <Content Include="Platform\Content\Css\index.css" />
+    <Content Include="Platform\Content\Css\login.css" />
+    <Content Include="Platform\Content\Css\normalize.css" />
+    <Content Include="Platform\Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ace.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-beautify.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-elastic_tabstops_lite.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-emmet.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-error_marker.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-keybinding_menu.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-language_tools.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-linking.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-modelist.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-old_ie.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-searchbox.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-settings_menu.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-spellcheck.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-split.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-static_highlight.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-statusbar.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-textarea.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-themelist.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\ext-whitespace.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\keybinding-emacs.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\keybinding-vim.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-abap.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-abc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-actionscript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ada.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-apache_conf.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-applescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-asciidoc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-assembly_x86.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-autohotkey.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-batchfile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-bro.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-c9search.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-cirru.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-clojure.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-cobol.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-coffee.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-coldfusion.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-csharp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-css.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-curly.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-c_cpp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-d.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-dart.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-diff.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-django.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-dockerfile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-dot.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-drools.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-eiffel.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ejs.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-elixir.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-elm.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-erlang.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-forth.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-fortran.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ftl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-gcode.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-gherkin.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-gitignore.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-glsl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-gobstones.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-golang.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-groovy.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-haml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-handlebars.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-haskell.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-haskell_cabal.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-haxe.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-hjson.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-html.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-html_elixir.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-html_ruby.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ini.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-io.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-jack.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-jade.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-java.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-javascript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-json.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-jsoniq.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-jsp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-jsx.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-julia.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-kotlin.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-latex.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-less.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-liquid.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-lisp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-livescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-logiql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-lsl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-lua.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-luapage.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-lucene.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-makefile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-markdown.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-mask.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-matlab.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-maze.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-mel.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-mushcode.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-mysql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-nix.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-nsis.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-objectivec.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ocaml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-pascal.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-perl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-pgsql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-php.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-pig.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-plain_text.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-powershell.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-praat.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-prolog.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-properties.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-protobuf.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-python.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-r.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-razor.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-rdoc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-rhtml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-rst.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-ruby.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-rust.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-sass.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-scad.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-scala.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-scheme.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-scss.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-sh.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-sjs.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-smarty.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-snippets.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-soy_template.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-space.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-sql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-sqlserver.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-stylus.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-svg.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-swift.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-tcl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-tex.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-text.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-textile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-toml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-tsx.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-twig.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-typescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-vala.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-vbscript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-velocity.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-verilog.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-vhdl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-wollok.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-xml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-xquery.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\mode-yaml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\abap.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\abc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\actionscript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ada.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\apache_conf.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\applescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\asciidoc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\assembly_x86.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\autohotkey.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\batchfile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\bro.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\c9search.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\cirru.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\clojure.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\cobol.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\coffee.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\coldfusion.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\csharp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\css.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\curly.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\c_cpp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\d.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\dart.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\diff.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\django.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\dockerfile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\dot.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\drools.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\eiffel.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ejs.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\elixir.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\elm.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\erlang.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\forth.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\fortran.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ftl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\gcode.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\gherkin.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\gitignore.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\glsl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\gobstones.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\golang.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\groovy.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\haml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\handlebars.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\haskell.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\haskell_cabal.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\haxe.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\hjson.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\html.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\html_elixir.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\html_ruby.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ini.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\io.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\jack.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\jade.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\java.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\javascript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\json.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\jsoniq.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\jsp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\jsx.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\julia.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\kotlin.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\latex.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\less.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\liquid.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\lisp.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\livescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\logiql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\lsl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\lua.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\luapage.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\lucene.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\makefile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\markdown.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\mask.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\matlab.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\maze.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\mel.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\mushcode.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\mysql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\nix.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\nsis.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\objectivec.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ocaml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\pascal.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\perl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\pgsql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\php.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\pig.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\plain_text.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\powershell.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\praat.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\prolog.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\properties.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\protobuf.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\python.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\r.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\razor.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\rdoc.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\rhtml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\rst.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\ruby.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\rust.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\sass.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\scad.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\scala.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\scheme.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\scss.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\sh.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\sjs.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\smarty.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\snippets.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\soy_template.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\space.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\sql.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\sqlserver.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\stylus.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\svg.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\swift.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\tcl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\tex.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\text.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\textile.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\toml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\tsx.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\twig.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\typescript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\vala.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\vbscript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\velocity.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\verilog.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\vhdl.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\wollok.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\xml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\xquery.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\snippets\yaml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-ambiance.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-chaos.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-chrome.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-clouds.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-clouds_midnight.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-cobalt.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-crimson_editor.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-dawn.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-dreamweaver.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-eclipse.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-github.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-gob.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-idle_fingers.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-iplastic.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-katzenmilch.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-kr_theme.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-kuroir.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-merbivore.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-merbivore_soft.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-monokai.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-mono_industrial.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-pastel_on_dark.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-solarized_dark.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-solarized_light.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-sqlserver.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-terminal.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-textmate.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-tomorrow.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-tomorrow_night.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-tomorrow_night_blue.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-tomorrow_night_bright.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-tomorrow_night_eighties.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-twilight.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-vibrant_ink.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\theme-xcode.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-coffee.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-css.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-html.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-javascript.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-json.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-lua.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-php.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-xml.js" />
+    <Content Include="Platform\Content\Scripts\aceeditor\worker-xquery.js" />
+    <Content Include="Platform\Content\Scripts\ajaxupload.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\adapters\jquery.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\build-config.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\ckeditor.format.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\ckeditor.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\config.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\contents.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\af.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ar.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\bg.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\bn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\bs.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\cs.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\cy.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\da.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\de-ch.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\de.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\el.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\en-au.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\en-ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\en-gb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\en.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\eo.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\es.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\et.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\eu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\fa.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\fi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\fo.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\fr-ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\fr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\gl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\gu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\he.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\hi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\hr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\hu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\id.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\is.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\it.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ja.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ka.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\km.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ko.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ku.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\lt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\lv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\mk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\mn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ms.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\nb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\nl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\no.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\pl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\pt-br.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\pt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ro.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ru.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\si.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sq.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sr-latn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\sv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\th.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\tr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\tt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\ug.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\uk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\vi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\zh-cn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\lang\zh.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de-ch.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\icons.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\preview\preview.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\resize\plugin.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\de-ch.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\css\samples.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\img\github-top.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\img\header-bg.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\img\header-separator.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\img\logo.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\img\navigation-tip.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\index.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\js\sample.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\js\sf.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\ajax.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\api.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\appendto.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\assets\inlineall\logo.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\assets\sample.jpg" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\assets\uilanguages\languages.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\datafiltering.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\dialog\assets\my_dialog.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\dialog\dialog.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\divreplace.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\enterkey\enterkey.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\htmlwriter\outputforflash.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\htmlwriter\outputhtml.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\index.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\inlineall.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\inlinebycode.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\inlinetextarea.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\jquery.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\magicline\magicline.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\readonly.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\replacebyclass.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\replacebycode.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\sample.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\sample.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\tabindex.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\toolbar\toolbar.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\uicolor.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\uilanguages.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\wysiwygarea\fullpage.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\xhtmlstyle.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\css\fontello.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.svg" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\LICENSE.txt" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\index.html" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\js\abstracttoolbarmodifier.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\js\fulltoolbareditor.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\js\toolbarmodifier.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\js\toolbartextmodifier.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\javascript.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\neo.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.js" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\icons.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\images\spinner.gif" />
+    <Content Include="Platform\Content\Scripts\ckeditor\styles.js" />
+    <Content Include="Platform\Content\Scripts\colorpicker.js" />
+    <Content Include="Platform\Content\Scripts\Common.js" />
+    <Content Include="Platform\Content\Scripts\Components.js" />
+    <Content Include="Platform\Content\Scripts\ComponentsRegister.js" />
+    <Content Include="Platform\Content\Scripts\compress.js" />
+    <Content Include="Platform\Content\Scripts\easyloader.js" />
+    <Content Include="Platform\Content\Scripts\easyui-lang-zh_CN.js" />
+    <Content Include="Platform\Content\Scripts\jquery.easyui.min.js" />
+    <Content Include="Platform\Content\Scripts\jquery.easyui.mobile.js" />
+    <Content Include="Platform\Content\Scripts\jquery.min.js" />
+    <Content Include="Platform\Content\Scripts\jquery.table2excel.js" />
+    <Content Include="Platform\Content\Scripts\MD5.js" />
+    <Content Include="Platform\Content\Scripts\webuploader\css\style.css" />
+    <Content Include="Platform\Content\Scripts\webuploader\css\webuploader.css" />
+    <Content Include="Platform\Content\Scripts\webuploader\images\bg.png" />
+    <Content Include="Platform\Content\Scripts\webuploader\images\icons.png" />
+    <Content Include="Platform\Content\Scripts\webuploader\images\image.png" />
+    <Content Include="Platform\Content\Scripts\webuploader\images\progress.png" />
+    <Content Include="Platform\Content\Scripts\webuploader\images\success.png" />
+    <Content Include="Platform\Content\Scripts\webuploader\js\webuploader.js" />
+    <Content Include="Platform\Content\Scripts\webuploader\Uploader.swf" />
+    <Content Include="Platform\Content\Scripts\x-tag-core.min.js" />
+    <Content Include="Platform\Content\themes\black\accordion.css" />
+    <Content Include="Platform\Content\themes\black\calendar.css" />
+    <Content Include="Platform\Content\themes\black\combo.css" />
+    <Content Include="Platform\Content\themes\black\combobox.css" />
+    <Content Include="Platform\Content\themes\black\datagrid.css" />
+    <Content Include="Platform\Content\themes\black\datalist.css" />
+    <Content Include="Platform\Content\themes\black\datebox.css" />
+    <Content Include="Platform\Content\themes\black\dialog.css" />
+    <Content Include="Platform\Content\themes\black\easyui.css" />
+    <Content Include="Platform\Content\themes\black\filebox.css" />
+    <Content Include="Platform\Content\themes\black\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\black\images\blank.gif" />
+    <Content Include="Platform\Content\themes\black\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\black\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\black\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\black\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\black\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\black\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\black\images\loading.gif" />
+    <Content Include="Platform\Content\themes\black\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\black\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\black\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\black\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\black\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\black\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\black\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\black\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\black\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\black\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\black\layout.css" />
+    <Content Include="Platform\Content\themes\black\linkbutton.css" />
+    <Content Include="Platform\Content\themes\black\menu.css" />
+    <Content Include="Platform\Content\themes\black\menubutton.css" />
+    <Content Include="Platform\Content\themes\black\messager.css" />
+    <Content Include="Platform\Content\themes\black\numberbox.css" />
+    <Content Include="Platform\Content\themes\black\pagination.css" />
+    <Content Include="Platform\Content\themes\black\panel.css" />
+    <Content Include="Platform\Content\themes\black\progressbar.css" />
+    <Content Include="Platform\Content\themes\black\propertygrid.css" />
+    <Content Include="Platform\Content\themes\black\searchbox.css" />
+    <Content Include="Platform\Content\themes\black\slider.css" />
+    <Content Include="Platform\Content\themes\black\spinner.css" />
+    <Content Include="Platform\Content\themes\black\splitbutton.css" />
+    <Content Include="Platform\Content\themes\black\switchbutton.css" />
+    <Content Include="Platform\Content\themes\black\tabs.css" />
+    <Content Include="Platform\Content\themes\black\textbox.css" />
+    <Content Include="Platform\Content\themes\black\tooltip.css" />
+    <Content Include="Platform\Content\themes\black\tree.css" />
+    <Content Include="Platform\Content\themes\black\validatebox.css" />
+    <Content Include="Platform\Content\themes\black\window.css" />
+    <Content Include="Platform\Content\themes\bootstrap\accordion.css" />
+    <Content Include="Platform\Content\themes\bootstrap\calendar.css" />
+    <Content Include="Platform\Content\themes\bootstrap\combo.css" />
+    <Content Include="Platform\Content\themes\bootstrap\combobox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\datagrid.css" />
+    <Content Include="Platform\Content\themes\bootstrap\datalist.css" />
+    <Content Include="Platform\Content\themes\bootstrap\datebox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\dialog.css" />
+    <Content Include="Platform\Content\themes\bootstrap\easyui.css" />
+    <Content Include="Platform\Content\themes\bootstrap\filebox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\blank.gif" />
+    <Content Include="Platform\Content\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\loading.gif" />
+    <Content Include="Platform\Content\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\bootstrap\layout.css" />
+    <Content Include="Platform\Content\themes\bootstrap\linkbutton.css" />
+    <Content Include="Platform\Content\themes\bootstrap\menu.css" />
+    <Content Include="Platform\Content\themes\bootstrap\menubutton.css" />
+    <Content Include="Platform\Content\themes\bootstrap\messager.css" />
+    <Content Include="Platform\Content\themes\bootstrap\numberbox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\pagination.css" />
+    <Content Include="Platform\Content\themes\bootstrap\panel.css" />
+    <Content Include="Platform\Content\themes\bootstrap\progressbar.css" />
+    <Content Include="Platform\Content\themes\bootstrap\propertygrid.css" />
+    <Content Include="Platform\Content\themes\bootstrap\searchbox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\slider.css" />
+    <Content Include="Platform\Content\themes\bootstrap\spinner.css" />
+    <Content Include="Platform\Content\themes\bootstrap\splitbutton.css" />
+    <Content Include="Platform\Content\themes\bootstrap\switchbutton.css" />
+    <Content Include="Platform\Content\themes\bootstrap\tabs.css" />
+    <Content Include="Platform\Content\themes\bootstrap\textbox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\tooltip.css" />
+    <Content Include="Platform\Content\themes\bootstrap\tree.css" />
+    <Content Include="Platform\Content\themes\bootstrap\validatebox.css" />
+    <Content Include="Platform\Content\themes\bootstrap\window.css" />
+    <Content Include="Platform\Content\themes\color.css" />
+    <Content Include="Platform\Content\themes\default\accordion.css" />
+    <Content Include="Platform\Content\themes\default\calendar.css" />
+    <Content Include="Platform\Content\themes\default\combo.css" />
+    <Content Include="Platform\Content\themes\default\combobox.css" />
+    <Content Include="Platform\Content\themes\default\datagrid.css" />
+    <Content Include="Platform\Content\themes\default\datalist.css" />
+    <Content Include="Platform\Content\themes\default\datebox.css" />
+    <Content Include="Platform\Content\themes\default\dialog.css" />
+    <Content Include="Platform\Content\themes\default\easyui.css" />
+    <Content Include="Platform\Content\themes\default\filebox.css" />
+    <Content Include="Platform\Content\themes\default\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\default\images\blank.gif" />
+    <Content Include="Platform\Content\themes\default\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\default\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\default\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\default\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\default\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\default\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\default\images\loading.gif" />
+    <Content Include="Platform\Content\themes\default\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\default\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\default\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\default\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\default\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\default\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\default\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\default\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\default\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\default\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\default\layout.css" />
+    <Content Include="Platform\Content\themes\default\linkbutton.css" />
+    <Content Include="Platform\Content\themes\default\menu.css" />
+    <Content Include="Platform\Content\themes\default\menubutton.css" />
+    <Content Include="Platform\Content\themes\default\messager.css" />
+    <Content Include="Platform\Content\themes\default\numberbox.css" />
+    <Content Include="Platform\Content\themes\default\pagination.css" />
+    <Content Include="Platform\Content\themes\default\panel.css" />
+    <Content Include="Platform\Content\themes\default\progressbar.css" />
+    <Content Include="Platform\Content\themes\default\propertygrid.css" />
+    <Content Include="Platform\Content\themes\default\searchbox.css" />
+    <Content Include="Platform\Content\themes\default\slider.css" />
+    <Content Include="Platform\Content\themes\default\spinner.css" />
+    <Content Include="Platform\Content\themes\default\splitbutton.css" />
+    <Content Include="Platform\Content\themes\default\switchbutton.css" />
+    <Content Include="Platform\Content\themes\default\tabs.css" />
+    <Content Include="Platform\Content\themes\default\textbox.css" />
+    <Content Include="Platform\Content\themes\default\tooltip.css" />
+    <Content Include="Platform\Content\themes\default\tree.css" />
+    <Content Include="Platform\Content\themes\default\validatebox.css" />
+    <Content Include="Platform\Content\themes\default\window.css" />
+    <Content Include="Platform\Content\themes\gray\accordion.css" />
+    <Content Include="Platform\Content\themes\gray\calendar.css" />
+    <Content Include="Platform\Content\themes\gray\combo.css" />
+    <Content Include="Platform\Content\themes\gray\combobox.css" />
+    <Content Include="Platform\Content\themes\gray\datagrid.css" />
+    <Content Include="Platform\Content\themes\gray\datalist.css" />
+    <Content Include="Platform\Content\themes\gray\datebox.css" />
+    <Content Include="Platform\Content\themes\gray\dialog.css" />
+    <Content Include="Platform\Content\themes\gray\easyui.css" />
+    <Content Include="Platform\Content\themes\gray\filebox.css" />
+    <Content Include="Platform\Content\themes\gray\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\gray\images\blank.gif" />
+    <Content Include="Platform\Content\themes\gray\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\gray\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\gray\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\gray\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\gray\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\gray\images\loading.gif" />
+    <Content Include="Platform\Content\themes\gray\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\gray\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\gray\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\gray\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\gray\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\gray\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\gray\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\gray\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\gray\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\gray\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\gray\layout.css" />
+    <Content Include="Platform\Content\themes\gray\linkbutton.css" />
+    <Content Include="Platform\Content\themes\gray\menu.css" />
+    <Content Include="Platform\Content\themes\gray\menubutton.css" />
+    <Content Include="Platform\Content\themes\gray\messager.css" />
+    <Content Include="Platform\Content\themes\gray\numberbox.css" />
+    <Content Include="Platform\Content\themes\gray\pagination.css" />
+    <Content Include="Platform\Content\themes\gray\panel.css" />
+    <Content Include="Platform\Content\themes\gray\progressbar.css" />
+    <Content Include="Platform\Content\themes\gray\propertygrid.css" />
+    <Content Include="Platform\Content\themes\gray\searchbox.css" />
+    <Content Include="Platform\Content\themes\gray\slider.css" />
+    <Content Include="Platform\Content\themes\gray\spinner.css" />
+    <Content Include="Platform\Content\themes\gray\splitbutton.css" />
+    <Content Include="Platform\Content\themes\gray\switchbutton.css" />
+    <Content Include="Platform\Content\themes\gray\tabs.css" />
+    <Content Include="Platform\Content\themes\gray\textbox.css" />
+    <Content Include="Platform\Content\themes\gray\tooltip.css" />
+    <Content Include="Platform\Content\themes\gray\tree.css" />
+    <Content Include="Platform\Content\themes\gray\validatebox.css" />
+    <Content Include="Platform\Content\themes\gray\window.css" />
+    <Content Include="Platform\Content\themes\icon.css" />
+    <Content Include="Platform\Content\themes\icons\back.png" />
+    <Content Include="Platform\Content\themes\icons\blank.gif" />
+    <Content Include="Platform\Content\themes\icons\cancel.png" />
+    <Content Include="Platform\Content\themes\icons\clear.png" />
+    <Content Include="Platform\Content\themes\icons\cut.png" />
+    <Content Include="Platform\Content\themes\icons\edit_add.png" />
+    <Content Include="Platform\Content\themes\icons\edit_remove.png" />
+    <Content Include="Platform\Content\themes\icons\filesave.png" />
+    <Content Include="Platform\Content\themes\icons\filter.png" />
+    <Content Include="Platform\Content\themes\icons\help.png" />
+    <Content Include="Platform\Content\themes\icons\large_chart.png" />
+    <Content Include="Platform\Content\themes\icons\large_clipart.png" />
+    <Content Include="Platform\Content\themes\icons\large_picture.png" />
+    <Content Include="Platform\Content\themes\icons\large_shapes.png" />
+    <Content Include="Platform\Content\themes\icons\large_smartart.png" />
+    <Content Include="Platform\Content\themes\icons\lock.png" />
+    <Content Include="Platform\Content\themes\icons\man.png" />
+    <Content Include="Platform\Content\themes\icons\mini_add.png" />
+    <Content Include="Platform\Content\themes\icons\mini_edit.png" />
+    <Content Include="Platform\Content\themes\icons\mini_refresh.png" />
+    <Content Include="Platform\Content\themes\icons\more.png" />
+    <Content Include="Platform\Content\themes\icons\no.png" />
+    <Content Include="Platform\Content\themes\icons\ok.png" />
+    <Content Include="Platform\Content\themes\icons\pencil.png" />
+    <Content Include="Platform\Content\themes\icons\print.png" />
+    <Content Include="Platform\Content\themes\icons\redo.png" />
+    <Content Include="Platform\Content\themes\icons\reload.png" />
+    <Content Include="Platform\Content\themes\icons\search.png" />
+    <Content Include="Platform\Content\themes\icons\sum.png" />
+    <Content Include="Platform\Content\themes\icons\tip.png" />
+    <Content Include="Platform\Content\themes\icons\undo.png" />
+    <Content Include="Platform\Content\themes\material\accordion.css" />
+    <Content Include="Platform\Content\themes\material\calendar.css" />
+    <Content Include="Platform\Content\themes\material\combo.css" />
+    <Content Include="Platform\Content\themes\material\combobox.css" />
+    <Content Include="Platform\Content\themes\material\datagrid.css" />
+    <Content Include="Platform\Content\themes\material\datalist.css" />
+    <Content Include="Platform\Content\themes\material\datebox.css" />
+    <Content Include="Platform\Content\themes\material\dialog.css" />
+    <Content Include="Platform\Content\themes\material\easyui.css" />
+    <Content Include="Platform\Content\themes\material\filebox.css" />
+    <Content Include="Platform\Content\themes\material\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\material\images\blank.gif" />
+    <Content Include="Platform\Content\themes\material\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\material\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\material\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\material\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\material\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\material\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\material\images\loading.gif" />
+    <Content Include="Platform\Content\themes\material\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\material\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\material\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\material\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\material\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\material\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\material\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\material\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\material\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\material\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\material\layout.css" />
+    <Content Include="Platform\Content\themes\material\linkbutton.css" />
+    <Content Include="Platform\Content\themes\material\menu.css" />
+    <Content Include="Platform\Content\themes\material\menubutton.css" />
+    <Content Include="Platform\Content\themes\material\messager.css" />
+    <Content Include="Platform\Content\themes\material\numberbox.css" />
+    <Content Include="Platform\Content\themes\material\pagination.css" />
+    <Content Include="Platform\Content\themes\material\panel.css" />
+    <Content Include="Platform\Content\themes\material\progressbar.css" />
+    <Content Include="Platform\Content\themes\material\propertygrid.css" />
+    <Content Include="Platform\Content\themes\material\searchbox.css" />
+    <Content Include="Platform\Content\themes\material\slider.css" />
+    <Content Include="Platform\Content\themes\material\spinner.css" />
+    <Content Include="Platform\Content\themes\material\splitbutton.css" />
+    <Content Include="Platform\Content\themes\material\switchbutton.css" />
+    <Content Include="Platform\Content\themes\material\tabs.css" />
+    <Content Include="Platform\Content\themes\material\textbox.css" />
+    <Content Include="Platform\Content\themes\material\tooltip.css" />
+    <Content Include="Platform\Content\themes\material\tree.css" />
+    <Content Include="Platform\Content\themes\material\validatebox.css" />
+    <Content Include="Platform\Content\themes\material\window.css" />
+    <Content Include="Platform\Content\themes\metro\accordion.css" />
+    <Content Include="Platform\Content\themes\metro\calendar.css" />
+    <Content Include="Platform\Content\themes\metro\combo.css" />
+    <Content Include="Platform\Content\themes\metro\combobox.css" />
+    <Content Include="Platform\Content\themes\metro\datagrid.css" />
+    <Content Include="Platform\Content\themes\metro\datalist.css" />
+    <Content Include="Platform\Content\themes\metro\datebox.css" />
+    <Content Include="Platform\Content\themes\metro\dialog.css" />
+    <Content Include="Platform\Content\themes\metro\easyui.css" />
+    <Content Include="Platform\Content\themes\metro\filebox.css" />
+    <Content Include="Platform\Content\themes\metro\images\accordion_arrows.png" />
+    <Content Include="Platform\Content\themes\metro\images\blank.gif" />
+    <Content Include="Platform\Content\themes\metro\images\calendar_arrows.png" />
+    <Content Include="Platform\Content\themes\metro\images\combo_arrow.png" />
+    <Content Include="Platform\Content\themes\metro\images\datagrid_icons.png" />
+    <Content Include="Platform\Content\themes\metro\images\datebox_arrow.png" />
+    <Content Include="Platform\Content\themes\metro\images\layout_arrows.png" />
+    <Content Include="Platform\Content\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="Platform\Content\themes\metro\images\loading.gif" />
+    <Content Include="Platform\Content\themes\metro\images\menu_arrows.png" />
+    <Content Include="Platform\Content\themes\metro\images\messager_icons.png" />
+    <Content Include="Platform\Content\themes\metro\images\pagination_icons.png" />
+    <Content Include="Platform\Content\themes\metro\images\panel_tools.png" />
+    <Content Include="Platform\Content\themes\metro\images\searchbox_button.png" />
+    <Content Include="Platform\Content\themes\metro\images\slider_handle.png" />
+    <Content Include="Platform\Content\themes\metro\images\spinner_arrows.png" />
+    <Content Include="Platform\Content\themes\metro\images\tabs_icons.png" />
+    <Content Include="Platform\Content\themes\metro\images\tree_icons.png" />
+    <Content Include="Platform\Content\themes\metro\images\validatebox_warning.png" />
+    <Content Include="Platform\Content\themes\metro\layout.css" />
+    <Content Include="Platform\Content\themes\metro\linkbutton.css" />
+    <Content Include="Platform\Content\themes\metro\menu.css" />
+    <Content Include="Platform\Content\themes\metro\menubutton.css" />
+    <Content Include="Platform\Content\themes\metro\messager.css" />
+    <Content Include="Platform\Content\themes\metro\numberbox.css" />
+    <Content Include="Platform\Content\themes\metro\pagination.css" />
+    <Content Include="Platform\Content\themes\metro\panel.css" />
+    <Content Include="Platform\Content\themes\metro\progressbar.css" />
+    <Content Include="Platform\Content\themes\metro\propertygrid.css" />
+    <Content Include="Platform\Content\themes\metro\searchbox.css" />
+    <Content Include="Platform\Content\themes\metro\slider.css" />
+    <Content Include="Platform\Content\themes\metro\spinner.css" />
+    <Content Include="Platform\Content\themes\metro\splitbutton.css" />
+    <Content Include="Platform\Content\themes\metro\switchbutton.css" />
+    <Content Include="Platform\Content\themes\metro\tabs.css" />
+    <Content Include="Platform\Content\themes\metro\textbox.css" />
+    <Content Include="Platform\Content\themes\metro\tooltip.css" />
+    <Content Include="Platform\Content\themes\metro\tree.css" />
+    <Content Include="Platform\Content\themes\metro\validatebox.css" />
+    <Content Include="Platform\Content\themes\metro\window.css" />
+    <Content Include="Platform\Content\themes\mobile.css" />
+    <Content Include="Platform\readme.txt" />
+    <Content Include="Platform\Views\_ViewStart.cshtml" />
+    <Content Include="Platform\Views\Web.config" />
+    <Content Include="Platform\Views\Shared\_PropertyView.cshtml" />
+    <Content Include="Platform\Views\Shared\_ObjektView.cshtml" />
+    <Content Include="Platform\Views\Shared\_ObjektCollectionView.cshtml" />
+    <Content Include="Platform\Views\Shared\_Layout.cshtml" />
+    <Content Include="Platform\Views\Shared\_Error.cshtml" />
+    <Content Include="Platform\Views\Shared\_BackLayout.cshtml" />
+    <Content Include="Platform\Views\Platform\SystemConfigCollectionView.cshtml" />
+    <Content Include="Platform\Views\Platform\ObjektReferencedCollectionView.cshtml" />
+    <Content Include="Platform\Views\Login\Index.cshtml" />
+    <Content Include="Platform\Views\Home\Index.cshtml" />
+    <Content Include="Platform\Views\File\FileCollectionView.cshtml" />
+    <Content Include="Platform\Content\themes\material\images\Thumbs.db" />
+    <Content Include="Platform\Content\Scripts\tsconfig.json" />
+    <Content Include="Platform\Content\Scripts\ckeditor\skins\moono\readme.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\sample_posteddata.php" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="Platform\Content\Scripts\ckeditor\samples\old\assets\posteddata.php" />
+    <Content Include="Platform\Content\Scripts\ckeditor\README.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\LICENSE.md" />
+    <Content Include="Platform\Content\Scripts\ckeditor\CHANGES.md" />
+    <Content Include="Platform\Content\Scripts\.vscode\tasks.json" />
+    <Content Include="Platform\Content\Scripts\.settings\tasks.json" />
+    <Content Include="Platform\Content\fonts\FontAwesome.otf" />
+    <Content Include="Platform\Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Platform\Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Platform\Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Platform\Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="FrontEnd\version.json" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\BindEmail1.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\UnbindEmail.cshtml" />
+    <Content Include="FrontEnd\Back\Views\FeUserSafe\BindEmailSuccess.cshtml" />
+    <None Include="Properties\PublishProfiles\deployweb.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EventListener\readme.txt" />
+    <Content Include="Extension\readme.txt" />
+    <Content Include="FrontEnd\readme.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\FeAccount\FeAccountController.cs" />
+    <Compile Include="Controllers\FeAccount\FeUserInfoController.cs" />
+    <Compile Include="Controllers\FeAccount\FeUserSafeController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleCategoryController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleCommentController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleConfigurationController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleColumnConfigurationController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleController.cs" />
+    <Compile Include="Controllers\FeArticle\FeArticleTemplateController.cs" />
+    <Compile Include="Controllers\FeArticle\FeChannelController.cs" />
+    <Compile Include="Controllers\FeArticle\FeCharacterController.cs" />
+    <Compile Include="Controllers\FeArticle\FeTagLibraryController.cs" />
+    <Compile Include="Controllers\FeFileManagement\FeDocumentController.cs" />
+    <Compile Include="Controllers\FeFileManagement\FeFileUploadConfigController.cs" />
+    <Compile Include="Controllers\FeFileManagement\FeImageController.cs" />
+    <Compile Include="Controllers\FeFileManagement\FeImageTypeController.cs" />
+    <Compile Include="Controllers\FeFileManagement\FeWatermarkController.cs" />
+    <Compile Include="Controllers\FeSystem\FeDecorationController.cs" />
+    <Compile Include="Controllers\FeUser\FeUserController.cs" />
+    <Compile Include="Controllers\Shared\BaseController.cs" />
+    <Compile Include="Controllers\Shared\FeCharacterSelectController.cs" />
+    <Compile Include="Controllers\Shared\FeCharacterSeachBoxController.cs" />
+    <Compile Include="Controllers\Shared\FeArticleCategorySelectController.cs" />
+    <Compile Include="Controllers\Shared\FeCommentController.cs" />
+    <Compile Include="Controllers\Shared\FeDataGridController.cs" />
+    <Compile Include="Controllers\Shared\FeImageSelectorController.cs" />
+    <Compile Include="Controllers\Shared\FeLogoController.cs" />
+    <Compile Include="Controllers\Shared\FeTemplateEngineController.cs" />
+    <Compile Include="Controllers\Shared\FrontEndController.cs" />
+    <Compile Include="Controllers\Shared\FrontEndLoginController.cs" />
+    <Compile Include="Controllers\Shared\FrontEndRegisterController.cs" />
+    <Compile Include="Controllers\Shared\ModelStateHelper.cs" />
+    <Compile Include="Controllers\Shared\FeArticleCategorySeachBoxController.cs" />
+    <Compile Include="Controllers\Shared\SelectImgController.cs" />
+    <Compile Include="Controllers\Shared\TagController.cs" />
+    <Compile Include="Controllers\Shared\SeoController.cs" />
+    <Compile Include="EventListener\CreateFrontEndViewDirectorysEventListener.cs" />
+    <Compile Include="EventListener\DoSmsBaoHttpSmsMessageSendingEventListener.cs" />
+    <Compile Include="EventListener\DoAddLayoutResourceEventListener.cs" />
+    <Compile Include="EventListener\DoGetComponentResourcesEventListener.cs" />
+    <Compile Include="Models\FeArticleCategoryListModel.cs" />
+    <Compile Include="Models\FeArticleFrontChannelIndexViewModel.cs" />
+    <Compile Include="Models\FeArticleFrontIndexViewModel.cs" />
+    <Compile Include="Models\FeCharacterSeachBoxViewModel.cs" />
+    <Compile Include="Models\FeArticleCategorySeachBoxViewModel.cs" />
+    <Compile Include="Models\FeArticleCategoryViewModel.cs" />
+    <Compile Include="Models\FeArticleCommentViewModel.cs" />
+    <Compile Include="Models\FeArticleModel.cs" />
+    <Compile Include="Models\FeArticleTemplateModel.cs" />
+    <Compile Include="Models\FeChannelViewModel.cs" />
+    <Compile Include="Models\FeCharacterViewModel.cs" />
+    <Compile Include="Models\FeCommentViewModel.cs" />
+    <Compile Include="Models\FeDataGridColumnViewModel.cs" />
+    <Compile Include="Models\FeDataGridItemViewModel.cs" />
+    <Compile Include="Models\FeDataGridNavigationItemViewModel.cs" />
+    <Compile Include="Models\FeDataGridViewModel.cs" />
+    <Compile Include="Models\FeFileModel.cs" />
+    <Compile Include="Models\FeFileStatisticsModel.cs" />
+    <Compile Include="Models\FeFont.cs" />
+    <Compile Include="Models\FeImageViewerListItemViewModel.cs" />
+    <Compile Include="Models\FeImageViewerSizeListItemViewModel.cs" />
+    <Compile Include="Models\FeImageSizeModel.cs" />
+    <Compile Include="Models\FeImageTypeModel.cs" />
+    <Compile Include="Models\FeImageViewerViewModel.cs" />
+    <Compile Include="Models\FeOrganizationEditViewModel.cs" />
+    <Compile Include="Models\FeUserPersonOrganizationListViewModel.cs" />
+    <Compile Include="Models\FePersonViewEditModel.cs" />
+    <Compile Include="Models\FeReferenceDialogViewModel.cs" />
+    <Compile Include="Models\FeSeoKeyViewModel.cs" />
+    <Compile Include="Models\FeTagModel.cs" />
+    <Compile Include="Models\FeTemplateEngineResourceItemModel.cs" />
+    <Compile Include="Models\FeTemplateEngineResourcesJsonModel.cs" />
+    <Compile Include="Models\FeUserEditViewModel.cs" />
+    <Compile Include="Models\FeWatermarkModel.cs" />
+    <Compile Include="Models\FrontArticleDetailViewModel.cs" />
+    <Compile Include="Models\FrontArticleSearchViewModel.cs" />
+    <Compile Include="Models\FrontEndDefaultViewModel.cs" />
+    <Compile Include="Models\FrontEndLoginViewModel.cs" />
+    <Compile Include="Models\FrontEndRegisterViewModel.cs" />
+    <Compile Include="Models\ImgViewModel.cs" />
+    <Compile Include="Models\JsonActionResult.cs" />
+    <Compile Include="Models\ReferenceListViewModel.cs" />
+    <Compile Include="Models\SelectImgViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GroupflyGroup.FrontEnd.ObjectFramework\GroupflyGroup.FrontEnd.ObjectFramework.csproj">
+      <Project>{6b02b0c2-603d-406b-8534-a368a7130139}</Project>
+      <Name>GroupflyGroup.FrontEnd.ObjectFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GroupflyGroup.FrontEnd.Service\GroupflyGroup.FrontEnd.Service.csproj">
+      <Project>{325b0a26-6c02-49cf-99fb-cfd4651bb9c6}</Project>
+      <Name>GroupflyGroup.FrontEnd.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="fileupload\" />
+    <Folder Include="FrontEnd\Back\Content\Scripts\DatePicker\" />
+    <Folder Include="FrontEnd\Back\Content\Scripts\Global\ComponentDataList\Images\" />
+    <Folder Include="FrontEnd\Front\FeTemplate\Article\ChannelTemplate\ArticleChannelTemplate\Content\Scripts\" />
+    <Folder Include="FrontEnd\Front\FeTemplate\Article\HomeTemplate\ArticleHomeTemplate\Content\Scripts\" />
+    <Folder Include="FrontEnd\Front\FeTemplate\Login\Content\Scripts\" />
+    <Folder Include="FrontEnd\Front\FeTemplate\Register\Content\Images\" />
+    <Folder Include="FrontEnd\Front\FeTemplate\Register\Content\Scripts\" />
+    <Folder Include="Platform\Views\FeAccountCommen\" />
+    <Folder Include="Platform\Views\FeAccount\" />
+    <Folder Include="Platform\Views\FrontEndLogin\" />
+    <Folder Include="Platform\Views\FrontEndRegister\" />
+    <Folder Include="Platform\Views\FrontEnd\" />
+    <Folder Include="Platform\Views\Front\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="FrontEnd\Back\Content\Scripts\FeComponents.ts" />
+    <TypeScriptCompile Include="FrontEnd\Back\Content\Scripts\Global\ComponentDataList\Gf-FeDataList.ts" />
+    <TypeScriptCompile Include="FrontEnd\Back\Content\Scripts\FeComponentsRegister.ts" />
+    <TypeScriptCompile Include="Platform\Content\Scripts\Components.ts" />
+    <TypeScriptCompile Include="Platform\Content\Scripts\ComponentsRegister.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4398</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/GroupflyGroup.FrontEnd.Web</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/GroupflyGroup.FrontEnd.Web</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

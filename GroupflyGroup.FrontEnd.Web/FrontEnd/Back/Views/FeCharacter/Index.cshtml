@@ -1,0 +1,179 @@
+﻿
+
+<script type="text/javascript">
+    $.parser.parse();
+    $(function () {
+        var columns = [];
+
+        columns.push({ title: '属性名称', field: 'Name', align: 'center', halign: 'center', width: "335px" });
+        columns.push({
+            title: '字体图标',
+            field: 'Icon',
+            align: 'center',
+            halign: 'center',
+            width: "335px",
+            formatter: function (value, rowData) {
+                return "<span class='" + value + "'></span>";
+            }
+        });
+        columns.push({
+            title: '排序',
+            field: 'SortOrder',
+            align: 'center',
+            halign: 'center',
+            width: "335px",
+            //格式化分类排序列，用numberbox显示数据，并可以编辑
+            formatter: function (value, rowData) {
+                var content = "<input recordId=\"" + rowData.Id + "\" type=\"text\" class=\"easyui-numberbox J_numberbox\" value=\"" + value + "\" style=\"width:80px;\" data-options=\"min:0,precision:2\">";
+                return content;
+            }
+        });
+        columns.push({
+            title: '是否启用',
+            field: 'IsDisplay',
+            align: 'center',
+            width: "335px",
+            halign: 'center',
+            formatter: function (value, row, index) {
+
+                var content;
+
+                if (value == "on") {
+                    content = "<input data-options=\"onText:'是',offText:'否'\" recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" checked />";
+                } else {
+
+
+                    content = "<input data-options=\"onText:'是',offText:'否'\" recordId=\"" + row.Id + "\" class=\"easyui-switchbutton J_switchbutton\" />";
+                }
+
+                return content;
+
+            }
+        });
+
+        var frozenColumns = [];
+        frozenColumns.push({
+            title: '操作',
+            field: 'Id',
+            width: "335px",
+            align: 'center',
+            halign: 'center',
+
+            //格式化操作列，显示编辑和删除按钮
+            formatter: function (value, rowData) {
+
+                var content = "<a href=\"javascript:void(0);\" onclick=\"CharacterEdit(this);\" recordId=\"" + value + "\" class=\"listedit\">编辑</a>";
+                content += "<a href=\"javascript:void(0);\" onclick=\"CharacterDelete(this);\" recordId=\"" + value + "\" class=\"listdelete ml20\">删除</a>";
+
+                return content;
+            }
+        });
+
+        document.querySelector("#FeCharacterFeDataList").SetDataGrid(columns, frozenColumns);
+
+
+        document.querySelector("#FeCharacterFeDataList").registerEventHandler("SetDataGridLoadSuccess", function (row, data) {
+            FecharacterBindEasyUI();
+        });
+
+        FecharacterBindData();
+    });
+
+    function FecharacterBindData(pagenumber) {
+        var url = '@Url.Content("~/FeCharacter/Get")';
+        document.querySelector("#FeCharacterFeDataList").SearchData(url, "", pagenumber);
+    }
+
+    function FecharacterBindEasyUI() {
+
+        $("#FecharacterGridListMain").find('.J_numberbox').numberbox({
+            min: 0,
+            precision: 2,
+            onChange: function (newValue, oldValue) {
+                var recordId = $(this).attr("recordId");
+                FecharacterSortOrderChange(newValue, recordId);
+            }
+        });
+
+        $("#FecharacterGridListMain").find('.J_switchbutton').switchbutton({
+            onChange: function (checked) {
+                var recordId = $(this).attr("recordId");
+                FecharacterIsDisplayChange(checked, recordId);
+            }
+        });
+    }
+
+    function FecharacterIsDisplayChange(checked, recordId) {
+        platformAjax({
+            url: '@Url.Content("~/FeCharacter/SetIsDisplay")',
+            data: { id: recordId, value: checked },
+            success: function (result) {
+                if (result.Code != 1) {
+                    $.messager.alert('更新错误', result.ErrorMessage);
+                }
+            },
+            finallyCall: function () {
+                FecharacterBindData();
+            }
+        });
+    }
+
+    function FecharacterSortOrderChange(newValue, recordId) {
+        platformAjax({
+            url: '@Url.Content("~/FeCharacter/SetSortOrder")',
+            data: { id: recordId, value: newValue },
+            success: function (result) {
+                if (result.Code != 1) {
+                    $.messager.alert('更新错误', result.ErrorMessage);
+                }
+            },
+            finallyCall: function () {
+                FecharacterBindData();
+            }
+        });
+
+    }
+
+    function CharacterEdit(obj) {
+        var id = $(obj).attr("recordId");
+        document.body.tabGoto("@Url.Content("~/FeCharacter/Edit?id=")" + id);
+    }
+
+    function CharacterDelete(obj) {
+
+
+        var id = $(obj).attr("recordId");
+
+        platformAjax({
+            url: '@Url.Content("~/FeCharacter/Del")',
+            data: { id: id },
+            success: function (result) {
+                if (result.Code != 1) {
+                    $.messager.alert('更新错误', result.ErrorMessage);
+                }
+            },
+            finallyCall: function () {
+                FecharacterBindData();
+            }
+        });
+
+    }
+
+</script>
+
+
+
+<div id="FecharacterGridListMain" data-options="fit:true" class="main easyui-layout FecharacterGridListMain" style="width: 100%; height: 100%; overflow: hidden;">
+    <div data-options="region:'north',split:false" style="height:46px;max-height:200px; border-top-width:0px;" class="tablelist">
+
+        <div class="datagrid-toolbar">
+            <a class="easyui-linkbutton" onclick="document.body.tabGoto('@Url.Content("~/FeCharacter/Create")');"
+               href="javascript:void(0);">添加属性</a>
+        </div>
+
+    </div>
+    <div data-options="region:'center',split:false">
+        <Gf-FeDataList id="FeCharacterFeDataList"></Gf-FeDataList>
+    </div>
+</div>
+

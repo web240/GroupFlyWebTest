@@ -1,0 +1,12 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es6",
+    "noImplicitAny": false,
+    "module": "amd",
+    "removeComments": false,
+    "sourceMap": false,
+    "outFile": "Platform/Content/Scripts/Components.js"
+  }
+}
+//"outFile": "Platform/Content/Scripts/Components.js"

@@ -1,0 +1,152 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models;
+@model FeArticleCommentViewModel
+@{
+
+    string FeCommentID = Request.QueryString["FeCommentID"] ?? "";
+
+    ViewBag.Title = "评论详细";
+}
+
+
+<div class="main" id="FeArticleCommentDetailMainID">
+    <div class="editbox Commentbox">
+        <h1><b>评论基本信息</b></h1>
+        <div class="Comment clearfix">
+            <h4>
+                <b>@Model.Creator</b>
+                <span class="time">@Model.CreatedOn</span>
+            </h4>
+            <div class="cont">@Html.Raw(Model.Content)</div>
+            <a class="replybtn" name="replyBtn">回复</a>
+        </div>
+
+        <div class="replybox" name="replyDiv" style="display:none;">
+            <p>回复<span>@Model.Creator</span>：</p>
+            <div class="replyform">
+                <input type="text" name="FeCommentContent" style="width:720px; height:40px;" /><a class="inpbtn" name="FeArticleCommentDetailReplay" recordParentID="@Model.ID" recordArticleID="@Model.ArticleID">提交</a>
+                <p name="error" class="error" style="display:none;">评论内容不能为空!</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="editbox Commentbox" name="commentReply">
+        <h1><b>评论回复</b></h1>
+
+    </div>
+
+    <div class="LayerBtn"><a class="closedbtn" onclick="document.body.tabGoback();" href="javascript:void(0);">返回</a></div>
+</div>
+
+<script>
+    //获取顶级评论的所有回复
+    function FeArticleCommentDetailGetFecommentReply() {
+        platformAjax({
+            url: "@Url.Action("GetFeCommentChildrenByID", "FeArticleComment")",
+            type: "post",
+            data: { FeCommentID: "@Model.ID" },
+            success: function (result) {
+                var divReply = $("#FeArticleCommentDetailMainID").find("[name='commentReply']");
+                divReply.html("");
+
+                var data = eval("(" + result.Data + ")");
+                $(data).each(function (index, data) {
+                    var chtml = "";
+                    chtml = "<div class='replyitem'>";
+                    chtml += "<div class='replytop clearfix'>";
+                    chtml += "<h5><span>" + data.Creator + "</span>";
+                    chtml += "回复";
+                    chtml += "<span>" + data.ReplyUpPerson + "</span>：</h5>";
+                    chtml += "<p class='cont'>" + data.Content + "</p>";
+                    chtml += "<span class='time'>" + data.CreatedOn + "</span>";
+                    chtml += "<a name='replyBtn' class='blue' >回复</a>"
+                    chtml += "</div>";
+
+                    chtml += "<div class='replybox' name='replyDiv' style='display:none;'>";
+                    chtml += "<p>回复<span>" + data.Creator + "</span>：</p>";
+                    chtml += "<div class='replyform'>";
+                    chtml += "<input type='text' style='width:720px; height:40px;'  name='FeCommentContent' />";
+                    chtml += "<a name='FeArticleCommentDetailReplay' class='inpbtn' recordParentID=" + data.ID + " recordArticleID=" + data.ArticleID + ">提交</a>";
+                    chtml += "<p name='error' class='error' style='display:none;'>评论内容不能为空!</p>";
+                    chtml += "</div></div></div>";
+                    divReply.append(chtml);
+
+                });
+
+                //按钮事件
+                FeArticleCommentDetailBindButton();
+
+            }
+        });
+    };
+    //阻止事件冒泡
+    function FeArticleCommentDetailstopPropagation(e) {
+        if (e.stopPropagation)
+            e.stopPropagation();
+        else
+            e.cancelBubble = true;
+    }
+    //绑定按钮事件
+    function FeArticleCommentDetailBindButton() {
+
+
+        $("#FeArticleCommentDetailMainID").find("[name='replyBtn']").linkbutton(function () {
+
+        });
+
+        $("#FeArticleCommentDetailMainID").find("[name='FeArticleCommentDetailReplay']").linkbutton(function () {
+
+        });
+
+        $("#FeArticleCommentDetailMainID").find("[name='FeCommentContent']").textbox(function () {
+
+        });
+
+        //回复显示按钮
+        $("#FeArticleCommentDetailMainID").find("[name='replyBtn']").click(function (e) {
+            $(this).parent().next("[name='replyDiv']").show();
+            FeArticleCommentDetailstopPropagation(e);
+        });
+
+        //回复框阻止冒泡
+        $("#FeArticleCommentDetailMainID").find("[name='replyDiv']").click(function (e) {
+            FeArticleCommentDetailstopPropagation(e);
+        });
+
+        ////回复框隐藏
+        $(document).click(function (e) {
+            $("#FeArticleCommentDetailMainID").find("[name='replyDiv']").hide();
+        });
+
+        //回复评论按钮
+        $("#FeArticleCommentDetailMainID").find("[name='FeArticleCommentDetailReplay']").click(function () {
+            //评论ID
+            var ParentID = $(this).attr("recordParentID");
+            //文章ID
+            var ArticleID = $(this).attr("recordArticleID");
+            //评论内容
+            var FeCommentContent = $(this).parent().find("[name='FeCommentContent']").val();
+
+            if (FeCommentContent == "") {
+                $(this).parent().find("[name='error']").show();
+                return;
+            }
+
+            platformAjax({
+                url: "@Url.Action("AddArticleComment", "FeArticleComment")",
+                type: "post",
+                data: { ParentID: ParentID, ArticleID: ArticleID, FeCommentContent: FeCommentContent },                
+                success: function (result) {
+
+                    FeArticleCommentDetailGetFecommentReply()
+                }
+            });
+        });
+
+    }
+
+
+    $(function () {
+        //获取顶级评论的所有回复
+        FeArticleCommentDetailGetFecommentReply();
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@using GroupflyGroup.FrontEnd.Web.Models
+@model FeArticleTemplateModelList
+@{
+    IEnumerable<FeArticleTemplateModel> list;
+    if (ViewBag.TemplateType == FeValueValues.FeTemplateType_ArticleSystem)
+    {
+        list = Model.listArticleTemplateModel;
+    }
+    else
+    {
+        list = Model.listChannelTemplateModel;
+    }
+}
+@foreach (var item in list)
+{
+    <li>
+        <div class="img" data-type="@item.TemplateType" data-templateid="@item.Id"><img src="@item.ImageURL" alt="" onload="SetImgAutoSize(this)" /></div>
+        <div class="info">
+            <p>
+                模板名称：<span title="@item.TemplateName ">
+                    @if (item.TemplateName.Length > 10)
+                { @(item.TemplateName.Substring(0, 10) + "...") }
+                else
+                { @item.TemplateName}
+                </span>
+                <b class="fa fa-download fa-lg fr" onclick="downTemplate('@item.Id')"></b>
+                @if (!item.IsSystemTemplate)
+                { <b class="fa fa-pencil fa-lg fr" onclick="editTemplate('@item.TemplateType','@item.Id','list')"></b>}
+            </p>
+            <p>模板说明：<span title="@item.Description">@item.Description </span></p>
+            <p>模板目录：<span title="@item.DirectoryName">@item.DirectoryName</span></p>
+            <div class="btn">
+
+                <span><b class="fa fa-files-o"></b><a href="javascript:void(0);" onclick="$.messager.confirm('提示', '确认复制?', function(r){if (r){backupTemplate('@item.Id','@item.TemplateType','new'); }})">复制</a></span>
+                @*系统模板不能删除和备份*@
+                @if (item.IsSystemTemplate)
+                {
+                    <span class="enabled"><b class="fa fa-cloud-upload"></b>备份</span>
+                    <span class="enabled"><b class="fa fa-bitbucket"></b>删除</span>
+                }
+                else
+                {
+                    <span><b class="fa fa-cloud-upload"></b><a href="javascript:void(0);" onclick="$.messager.confirm('提示', '确认备份?', function(r){if (r){backupTemplate('@item.Id','@item.TemplateType','backup');}})">备份</a></span>
+                    <span><b class="fa fa-bitbucket"></b><a href="javascript:void(0);" onclick="$.messager.confirm('提示', '这将会把该模板的备份模板一起删除,确认删除?', function(r){if (r){delTemplate('@item.TemplateType','@item.Id','list');}})">删除</a></span>
+                }
+                @if (item.IsDefault)
+                {
+                    <span class="enabled"><b class="fa fa-lock"></b>禁用</span>
+                }
+                else
+                {
+                    if (item.IsEnable)
+                    {
+                    <span><b class="fa fa-lock"></b><a href="javascript:void(0)" onclick="OperateTemplate('@item.Id','@item.TemplateType','enable')">禁用</a></span>
+                    }
+                    else
+                    {
+                    <span><b class="fa fa-unlock"></b><a href="javascript:void(0)" onclick="OperateTemplate('@item.Id','@item.TemplateType','able')">启用</a></span>
+                    }
+                }
+                @*未启用模板不能应用*@
+                @if (item.IsDefault || !item.IsEnable)
+                {
+                    <span class="enabled"><b class="fa fa-user"></b>设为默认</span>
+                }
+                else
+                {
+                    <span><b class="fa fa-user"></b><a href="javascript:void(0);" onclick="$.messager.confirm('提示', '确认设为默认?', function(r){if (r){OperateTemplate('@item.Id','@item.TemplateType','default');}})">设为默认</a></span>
+                }
+
+            </div>
+        </div>
+        @if (item.IsSystemTemplate)
+        {
+            <em class="system">系统预设</em>
+        }
+        @if (item.IsDefault)
+        {
+            <em class="btn used">默 认</em>
+        }
+        @if (!item.IsEnable)
+        {
+            <span class="mark">--未启用--</span>
+        }
+        <input type="checkbox" checked="checked" class="templateselected" />
+    </li>
+}

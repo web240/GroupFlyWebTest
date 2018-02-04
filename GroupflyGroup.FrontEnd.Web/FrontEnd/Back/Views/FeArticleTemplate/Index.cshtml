@@ -1,0 +1,362 @@
+﻿<style>
+    .FeArticleTemplateList .tablelist .tabs-header {
+        border: none;
+        background: none;
+        
+    }
+
+    .FeArticleTemplateList .tabs {
+        margin-top: 0px;
+    }
+
+    .FeArticleTemplateList .datagrid-view {
+        margin-top: 0px;
+    }
+
+    .FeArticleTemplateList .tabs-panels {
+        padding-top: 10px;
+    }
+</style>
+
+@using GroupflyGroup.FrontEnd.ObjectFramework.Strings
+@*@using GroupflyGroup.FrontEnd.Web.Models
+    @model FeArticleTemplateModelList*@
+
+
+<div id="main" class="main FeArticleTemplateList">
+    <div class="tablelist">
+        <div class="datagrid-toolbar">
+                        @*@Html.ActionLink("导入模板", "AddTemplate", null, new
+       {
+           @class = "easyui-linkbutton"
+       })*@
+       <a class="easyui-linkbutton" onclick="document.body.tabGoto('@Url.Action("AddTemplate","FeArticleTemplate")');" href="javascript:void(0);">导入模板</a>
+            <img id="loading " src="~/FrontEnd/Back/Content/images/loading.gif" style="display:none;">
+        </div>
+        <div class="easyui-tabs newtabs">
+            <div title="首页模板">
+                <ul class="templatetabsul clearfix" id="J_system"></ul>
+                <div class="easyui-tabs">
+                    <div title="备份模板">
+                        <ul class="templatetabsul clearfix" id="J_system_bak"></ul>
+                    </div>
+                </div>
+            </div>
+            <div title="频道模板">
+                <ul class="templatetabsul clearfix" id="J_channel"></ul>
+                <div class="easyui-tabs">
+                    <div title="备份模板">
+                        <ul class="templatetabsul clearfix" id="J_channel_bak"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editTemplateWindow" style="display: none;">
+    <div class="item">
+        <label>模板名称：</label>
+        <input id="textboxTitle" class="easyui-textbox" style="width:300px;" size="50">
+    </div>
+    <div class="item">
+        <label>模板说明：</label>
+        <input id="textboxDesciption" class="easyui-textbox" multiline="true" style="width:300px;height:72px" >
+    </div>
+    <div class="item">
+        <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" id="buttonSubmit" style="margin-left:40%">确定修改</a>
+    </div>
+</div>
+
+
+<script>
+    $.parser.parse();
+</script>
+<script>
+
+    $(function () {
+        TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+        TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+    })
+
+    //模板列表
+    function TemplateList(lid, opreatetype) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("TemplateList", "FeArticleTemplate")',
+            data: { templateType: opreatetype },
+            datatype: "json",
+            async: true,
+            cache: false,
+            success: function (result) {
+                //console.log(result);
+                if (result) {
+                    $("#" + lid).html(result);
+                    GetBakTemplateList();
+                }
+            },
+            error: function (xhr) {
+                $.messager.alert('异常', xhr.responseText, "error");
+            }
+        });
+
+    }
+
+    function GetBakTemplateList() {
+        $(".mark").on("click", function () {
+            var img = $(this).siblings(".img");
+            var lid = img.parent().parent().attr("id");
+            var id = img.attr("data-templateid");
+            var type = img.attr("data-type");
+            $("#" + lid).find(".img").css("border", "1px solid #ffffff").siblings(".selected").hide();
+            img.css("border", "1px solid #4e9cce").siblings(".selected").show();
+            $("#" + lid + "_bak").attr("source-template",id);
+            BakTemplateList(lid + "_bak", id, type);
+        })
+
+        $(".img").on("click", function () {
+            var lid = $(this).parent().parent().attr("id");
+            var id = $(this).attr("data-templateid");
+            var type = $(this).attr("data-type");
+            //console.log("lid:" + lid + "_bak" + ",id:" + id + ",type:" + type + ".");
+            $("#" + lid).find(".img").css("border", "1px solid #ffffff").siblings(".selected").hide();
+            $(this).css("border", "1px solid #4e9cce").siblings(".selected").show();
+            $("#" + lid + "_bak").attr("source-template", id);
+            BakTemplateList(lid + "_bak", id, type);
+        });
+
+    }
+
+    //备份模板列表
+    function BakTemplateList(lid, id, opratetype) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("BackupTemplateList", "FeArticleTemplate")',
+            data: { templateId: id, templateType: opratetype },
+            datatype: "json",
+            async: true,
+            cache: false,
+            success: function (result) {
+                //console.log(result);
+                if (result) {
+                    $("#" + lid).html(result);
+                }
+            }
+        });
+
+    }
+
+    //备份模板、复制模板
+    function backupTemplate(id, templatetype, status) {
+
+        $("#main").showLoading();//动态加载小图标
+
+        @*location.href = '@Url.Action("BackupTemplate", "FeArticleTemplate")?templatetid=' + id+"&type"+type;*@
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("BackupTemplate", "FeArticleTemplate")',
+            data: { sourceTemplatetId: id, type: status },
+            datatype: "json",
+            async: true,
+            success: function (result) {
+                if (result) {
+                    //页面重新加载
+                    if (templatetype == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                        if (status == "new") {
+                            TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+                        } else {
+                            var imgs=$("#J_system").find(".img");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == id) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_system_bak", id, "@FeValueValues.FeTemplateType_ArticleSystem");
+                        }
+                    } else {
+                        if (status == "new") {
+                            TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+                        } else {
+                            var imgs = $("#J_channel").find(".img");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == id) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_channel_bak", id, "@FeValueValues.FeTemplateType_Channel");
+                        }
+                    }
+                }
+                else {
+                    $.messager.alert('异常', result, "error");
+                    return;
+                }
+            }
+        });
+
+        $("#main").hideLoading();  //取消显示动态小图标
+    }
+
+
+    //从备份恢复
+    function OperateBackHistory(o, t) {
+        $("#main").showLoading();//动态加载小图标
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("RecoverTemplate", "FeArticleTemplate")',
+            data: { backupTemplatetId: o },
+            datatype: "json",
+            success: function (result) {
+
+                $("#main").hideLoading();  //取消显示动态小图标
+
+                if (result.IsSuccess) {
+                    @*if (t == "@FeValueValues.FeTemplateType_ArticleSystem") {
+                        TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+                    } else {
+                        TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+                    }*@
+                }
+
+            }
+        });
+    }
+
+    //启用、禁用、默认
+    function OperateTemplate(o, t, s) {
+
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("OperateTemplateStatus", "FeArticleTemplate")',
+            data: { templatetId: o, templateType: t, status: s },
+            datatype: "json",
+            success: function (result) {
+                if (result.IsSuccess) {
+                    if (t == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                        TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+                    } else {
+                        TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+                    }
+                }
+            }
+        });
+
+    }
+
+    //编辑模板
+    function editTemplate(templatetype, id,type) {
+        $('#editTemplateWindow').window({ title:"修改模板名称及说明",
+            modal: true, closed: true, iconCls: 'icon-edit', width: 400, height: 250, minimizable: false, maximizable: false, collapsible:false
+        });
+        $('#editTemplateWindow').attr("data-templateid", id).attr("data-templatetype", templatetype).attr("data-operatetype", type);
+        $("#textboxTitle").val(""); $("#textboxDesciption").val("");
+        $('#editTemplateWindow').window('open');
+    }
+    $("#buttonSubmit").on("click", function () {
+        var id = $('#editTemplateWindow').attr("data-templateid");
+        var templatetype = $('#editTemplateWindow').attr("data-templatetype");
+        var opratetype = $('#editTemplateWindow').attr("data-operatetype");
+        if ($("#textboxTitle").val() != '' && $("#textboxDesciption").val() != '') {
+            platformAjax({
+                type: "POST",
+                url: '@Url.Action("OperateTemplateTitle", "FeArticleTemplate")',
+                data: { templatetId: id, name: $("#textboxTitle").val(), description: $("#textboxDesciption").val() },
+                datatype: "json",
+                success: function (result) {
+                    if (result.Data == "false") {
+                        $.messager.alert('警告', "修改失败", "waring");
+                    }
+                    else {
+                        if (opratetype == "list") {
+                            if (templatetype == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                                TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+                            } else {
+                                TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+                            }
+                        } else {
+                            if (templatetype == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                                var imgs = $("#J_system").find(".img");
+                            var sourceid = $("#J_system_bak").attr("source-template");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == sourceid) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_system_bak", sourceid, "@FeValueValues.FeTemplateType_ArticleSystem");
+                            } else {
+                                var imgs = $("#J_channel").find(".img");
+                                var sourceid = $("#J_channel_bak").attr("source-template");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == sourceid) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_channel_bak", sourceid, "@FeValueValues.FeTemplateType_Channel");
+                            }
+                        }
+                        $('#editTemplateWindow').window('close');
+                        //$.messager.alert('信息', "修改成功", "info");
+                    }
+                }
+            });
+        } else {
+            $.messager.alert('警告', "不能全部为空", "waring");
+        }
+    });
+
+    //下载模板
+    function downTemplate(obj) {
+
+        $("#main").showLoading();//动态加载小图标
+
+        location.href = '@Url.Action("DownloadTemplate", "FeArticleTemplate")?templatetid=' + obj;
+
+        $("#main").hideLoading();  //取消显示动态小图标
+    }
+
+    //删除模板
+    function delTemplate(templatetype, obj, operatetype) {
+
+        $("#main").showLoading();//动态加载小图标
+
+        platformAjax({
+            type: "POST",
+            url: '@Url.Action("DeleteTemplate", "FeArticleTemplate")',
+            data: { id: obj },
+            datatype: "json",
+            success: function (result) {
+
+                $("#main").hideLoading();  //取消显示动态小图标
+
+                if (result.Data == "false") {
+                    $.messager.alert('警告', "使用中的模板不允许删除", "waring");
+                }
+                else {
+                    if (operatetype == "list") {
+                        if (templatetype == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                            TemplateList("J_system", "@FeValueValues.FeTemplateType_ArticleSystem");
+                            $("#J_system_bak").html("");
+                        } else {
+                            TemplateList("J_channel", "@FeValueValues.FeTemplateType_Channel");
+                            $("#J_channel_bak").html("");
+                        }
+                    } else {
+                        if (templatetype == '@FeValueValues.FeTemplateType_ArticleSystem') {
+                            var imgs = $("#J_system").find(".img");
+                            var id = $("#J_system_bak").attr("source-template");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == id) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_system_bak", id, "@FeValueValues.FeTemplateType_ArticleSystem");
+                        } else {
+                            var imgs = $("#J_channel").find(".img");
+                            var id = $("#J_channel_bak").attr("source-template");
+                            for (var i = 0; i < imgs.length; i++) {
+                                if (imgs.eq(i).attr("data-templateid") == id) { imgs.eq(i).css("border", "1px solid #4e9cce").siblings(".selected").show(); } else { imgs.eq(i).css("border", "1px solid #ffffff").siblings(".selected").hide(); }
+                            }
+                            BakTemplateList("J_channel_bak", id, "@FeValueValues.FeTemplateType_Channel");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+</script>
+
+
+
+
+

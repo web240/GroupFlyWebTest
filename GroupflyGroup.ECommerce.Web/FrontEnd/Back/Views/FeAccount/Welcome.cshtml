@@ -1,0 +1,22 @@
+﻿@using GroupflyGroup.Platform.ObjectFramework.Persistence
+<div class="dpsc_mian">
+    <p class="ptitle">
+        <a href="@Url.Action("Index","FeAccount")">账户管理</a><span class="breadcrume_icon">>></span><span class="breadcrume_text">我的账户</span>
+    </p>
+    <div id="A_Welcome">
+        <div class="myzh">
+            <div class="myzh_right">
+                <div class="pxian">
+                    欢迎！<span class="redht">
+                        @SessionContext.Current.User.Name
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;">
+        </div>
+        <div class="tixq">
+        </div>
+
+    </div>
+</div>

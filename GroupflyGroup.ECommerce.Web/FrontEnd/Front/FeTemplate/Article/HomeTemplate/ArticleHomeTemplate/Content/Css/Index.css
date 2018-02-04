@@ -1,0 +1,62 @@
+﻿body {
+    font: 12px Arial,Helvetica,sans-serif;
+    position: relative;
+    min-width: 1190px;
+    background: #ffffff;
+}
+
+.covers {
+    width: 1190px;
+    margin: 0 auto;
+    zoom: 1;
+}
+
+.covers .left {
+    float: left;
+}
+
+.covers .left a {
+    color: #808080;
+    text-decoration: none;
+}
+
+.con.j-top {
+    margin-top: -10px;
+}
+
+.con {
+    margin-top: 20px;
+}
+
+.con .con-fl {
+    width: 880px;
+}
+
+.con .j-con-fr {
+    width: 290px;
+}
+
+.fr {
+    float: right;
+}
+
+.js-ads {
+    margin: 20px 0;
+}
+
+.js-ads img {
+    width: 290px;
+    height: 180px;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

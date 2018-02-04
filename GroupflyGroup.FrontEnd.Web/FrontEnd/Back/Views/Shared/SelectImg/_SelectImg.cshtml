@@ -1,0 +1,152 @@
+﻿@using GroupflyGroup.FrontEnd.Web.Models
+
+@model SelectImgViewModel
+<script type="text/javascript" src="@Url.Content("~/FrontEnd/Back/Content/Scripts/ajaxupload.js")"></script>
+<script type="text/javascript">
+    $(function(){
+        var oBtn = $("#@Model.UnloadId");
+        new AjaxUpload(oBtn, {
+            action: "@Url.Action("UploadImg", "SelectImg")",
+            name: "upload",
+            responseType:"json",
+            onSubmit: function (file, ext) {
+                if (ext && /^(jpg|jpeg|png|gif|bmp)$/.test(ext)) {
+                    //设置当前选中树参数
+                    this.setData({ FileId: $('#@Model.TreeId').val() });
+                    //ext是后缀名
+                    oBtn.val("正在上传…");
+                    oBtn.attr("disabled", "disabled")//设置为disabled
+                } else {
+                    $.messager.alert('提示', "请选择后缀为：jpg、jpeg、png、gif、bmp的图片上传！", "info");
+                    return false;
+                }
+            },
+            onComplete: function (file, response) {
+                oBtn.removeAttr("disabled");//去除元素的disabled属性
+                oBtn.val("上传图片");
+                if (!response.IsSuccess) {
+                    $.messager.alert('异常', "上传失败,失败原因："+response.Message, "error");
+                    return;
+                }
+                else
+                {
+                    BindImgList(1,24);
+                }
+            }
+        });
+        $(document).delegate('.J_img', 'click', function (e) {
+            var isMultiselect=@Model.IsMultiselect.ToString().ToLower();
+            $(this).toggleClass("cur")
+            if (!isMultiselect) {
+                $(this).siblings().removeClass("cur");
+            }
+        });
+        $("#@Model.QueryId").click(function(){
+            BindImgList(1,24)
+        });
+    });
+
+    function BindImgList(page, rows) {
+        var treeId = $('#@Model.TreeId').val();
+        var FileName = $("#@Model.SeachBoxId").val();
+        $.ajax({
+            url: "@Url.Action("GetImgList", "SelectImg")",
+            type: "post",
+            data: { Page: page, Rows: rows, FileId: treeId, FileName: FileName },
+            dataType: "json",
+            success: function (result) {
+                if (result.IsSuccess) {
+                    var data=JSON.parse(result.Data);
+                    CreateImgList(data);
+                    $("#@Model.PaginationId").pagination({
+                        total:data.total,
+                        pageNumber: page, //默认显示第几页
+                        pageSize: 24,
+                        pageList: [24],
+                        beforePageText: '第',
+                        afterPageText: '页     共{pages}页',
+                        displayMsg: '当前显示{from}-{to}条记录  共{total}条记录',
+                        onSelectPage: function (pageNumber, pageSize) {
+                            BindImgList(pageNumber, pageSize);
+                        }
+                    });
+                }
+                else {
+                    $.messager.alert('异常', result.Message, "error");
+                    return;
+                }
+            }
+        });
+    }
+    function CreateImgList(data)
+    {
+        var imgs = [];
+        for (var i = 0; i < data.rows.length; i++) {
+            var row=data.rows[i];
+            imgs.push('<li class="J_img" fileId="' + row.Id + '" fileParentId="' + row.ParentId + '" fileName="' + row.Name + '"  ><span><img src="' + row.PathName + '" /></span><div class="name">' + row.Name + '</div><em></em></li>');
+        }
+        $("#@Model.ImgPanelId").html(imgs.join(""));
+
+    }
+    function OpenSelectImg(Callback) {
+        $('#@Model.DialogId').dialog({
+            title: '选择图片',
+            width: 800,
+            height: 550,
+            closed: true,
+            cache: false,
+            modal: true,
+            buttons: [
+                        {
+                            text: "确认", handler: function () {
+                                var isMultiselect=@Model.IsMultiselect.ToString().ToLower();
+                                var img=[];
+                                $(".J_img.cur").each(function(){
+                                    img.push({fileId:$(this).attr("fileId"),fileParentId:$(this).attr("fileParentId"), fileName:$(this).attr("fileName")})
+                                });
+                                if (img.length>0) {
+                                    if (!isMultiselect) {
+                                        img=img[0];
+                                    }
+                                    Callback(img);
+                                    $('#@Model.DialogId').dialog("close");
+                                }
+                                else
+                                {
+                                    $.messager.alert('提示', "请选择图片！", "info");
+                                }
+                            }
+                        },
+                        { text: "关闭", handler: function () { $('#@Model.DialogId').dialog("close") } }
+            ]
+        });
+        $('#@Model.DialogId').dialog('open');
+        $('#@Model.TreeId').val('@Model.DirectoryId');
+        $("#@Model.QueryId").trigger("click");
+    }
+</script>
+<input id="@Model.TreeId" type="hidden" />
+<div  id="@Model.DialogId" class="Layerbox" style="overflow:hidden; display: none;">
+    <div id="@Model.LayoutId" class="easyui-layout" style="width:100%;height:100%;">
+        <div data-options="region:'north'" class="Upimg-h clearfix">
+            <div class="querybox fl">
+                <input id="@Model.SeachBoxId" class="easyui-textbox" data-options="prompt:'请输入图片名称'" style="width:220px;">
+                <a id="@Model.QueryId" class="easyui-linkbutton ml20" data-options="iconCls:'icon-search'">查询</a><a id="@Model.UnloadId" class="easyui-linkbutton ml20" data-options="iconCls:'icon-uploadimg'">上传图片</a>
+            </div>
+            
+        </div>
+        <div data-options="region:'west'" style="width:200px;border-right: 1px solid #e1e6eb;">
+            <Gf-Tree data="@Html.Raw(Model.TreeData.Replace("\"", "'"))" hidefoldericon
+                     url="@Url.Action("GetSubFiles","File")"
+                     click="function(node){ $('#@Model.TreeId').val(node.id); BindImgList(1,24); }"></Gf-Tree>
+        </div>
+        <div data-options="region:'center'" class="Upimg-con">
+            <div id="@Model.PanelId" class="easyui-panel" style="width:100%;">
+                <ul id="@Model.ImgPanelId" class="Upimg-list clearfix">
+                </ul>
+            </div>
+            <div id="@Model.PaginationId" class="easyui-pagination" style="border:1px solid #ccc;">
+            </div>
+        </div>
+    </div>
+</div>

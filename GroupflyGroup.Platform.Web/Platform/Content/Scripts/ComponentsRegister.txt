@@ -1,0 +1,104 @@
+﻿/* class TestCallBack implements IComponentExtend {
+    beforeCreate(element) {
+        alert(element.innerHTML);
+    }
+
+    afterCreate(element) {
+        alert(element.innerHTML);
+        element.disable();
+    }
+
+    afterAttributeChange(element, attrName, oldValue, newValue) {
+        alert("attrName : " + attrName + "; oldValue : " + oldValue + "; newValue : " + newValue);
+    }
+
+}
+
+new GfPage().register();
+new GfLayOut().register();
+new GfPanel().register();
+new GfDialog().register();
+new GfTabs().register();
+new GfTree().register();
+new GfPager().register();
+new GfColumn().register();
+new GfOption().register();
+new GfToolBar().register();
+new GfObjektView().register();
+new GfStringPropertyView().register();
+new GfTextPropertyView().register();
+new GfIntPropertyView().register();
+new GfBigIntPropertyView().register();
+new GfNumberPropertyView().register();
+new GfListPropertyView().register();
+new GfDatePropertyView().register();
+new GfBooleanPropertyView().register();
+new GfDateTimePropertyView().register();
+new GfSourceCodePropertyView().register();
+new GfRichContentPropertyView().register();
+new GfColorStringPropertyView().register();
+new GfTimePropertyView().register();
+new GfMD5PropertyView().register();
+new GfObjektPropertyView().register();
+new GfObjektCollectionView().register();
+new GfUpFileDialog().register();
+new GfButtonComboBox().register();
+new GfQueryCondition().register();
+new GfRocAdd().register();
+new GfMultDropDownList().register();
+new GfAuthorization().register();
+new GfVerifyCode().register();
+new GfUmlParams().register();
+new GfMessageCode().register();
+new GfLifecycle().register();
+new GfViewEditor().register();
+new GfView().register();
+new GfWidget().register();
+new GfDashboard().register();
+new GfCalcu().register();
+new GfObjektDetailView().register();
+
+/*
+var createGridHeaderContextMenu = function(e, field) {  
+    e.preventDefault();  
+    var grid = $(this);
+    var headerContextMenu = this.headerContextMenu;
+    var okCls = 'tree-checkbox1';//选中  
+    var emptyCls = 'tree-checkbox0';//取消  
+    if (!headerContextMenu) {  
+        var tmenu = $('<div style="width:100px;"></div>').appendTo('body');  
+        var fields = grid.datagrid('getColumnFields');  
+        for ( var i = 0; i < fields.length; i++) {  
+            var fildOption = grid.datagrid('getColumnOption', fields[i]);  
+            if (!fildOption.hidden) {  
+                $('<div iconCls="'+okCls+'" field="' + fields[i] + '"/>').html(fildOption.title).appendTo(tmenu);  
+            } else {  
+                $('<div iconCls="'+emptyCls+'" field="' + fields[i] + '"/>').html(fildOption.title).appendTo(tmenu);  
+            }  
+        }  
+        headerContextMenu = this.headerContextMenu = tmenu.menu({  
+            onClick : function(item) {  
+                var field = $(item.target).attr('field');  
+                if (item.iconCls == okCls) {  
+                    grid.datagrid('hideColumn', field);  
+                    $(this).menu('setIcon', {  
+                        target : item.target,  
+                        iconCls : emptyCls  
+                    });  
+                } else {  
+                    grid.datagrid('showColumn', field);  
+                    $(this).menu('setIcon', {  
+                        target : item.target,  
+                        iconCls : okCls  
+                    });  
+                }  
+            }  
+        });  
+    }  
+    headerContextMenu.menu('show', {  
+        left : e.pageX,  
+        top : e.pageY  
+    });  
+};  
+$.fn.datagrid.defaults.onHeaderContextMenu = createGridHeaderContextMenu;  
+$.fn.treegrid.defaults.onHeaderContextMenu = createGridHeaderContextMenu;  */ 
